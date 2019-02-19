@@ -109,9 +109,7 @@ public class Signin2Activity extends AppCompatActivity {
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.signinfinish:
-                        Intent intent1 = new Intent(getApplicationContext(),LoginmainActivity.class);
-                        startActivity(intent1);
-                        finish();
+
                         break;
                     case R.id.signin:
                         genderresult=findViewById(gender.getCheckedRadioButtonId());
@@ -151,7 +149,7 @@ public class Signin2Activity extends AppCompatActivity {
             SharedPreferences sp_userID = getSharedPreferences("userID", MODE_PRIVATE);
             String userID = sp_userID.getString("userID", "");
             String postParameters = "name="+name+"&email="+email+"&profile="+profile;
-            Log.e("sign-postParameters", postParameters);
+            Log.e("moisture-postParameters", postParameters);
 
             try {
                 URL url = new URL(serverURL);
@@ -171,11 +169,11 @@ public class Signin2Activity extends AppCompatActivity {
                 // response
                 int responseStatusCode = httpURLConnection.getResponseCode();
                 String responseStatusMessage = httpURLConnection.getResponseMessage();
-                Log.e("response-sign", "POST response Code - " + responseStatusCode);
-                Log.e("response-sign", "POST response Message - "+ responseStatusMessage);
+                Log.e("response-moisture", "POST response Code - " + responseStatusCode);
+                Log.e("response-moisture", "POST response Message - "+ responseStatusMessage);
 
             } catch (Exception e) {
-                Log.e("ERRORsign", "InsertDataError ", e);
+                Log.e("ERROR", "InsertDataError ", e);
             }
             return null;
 
