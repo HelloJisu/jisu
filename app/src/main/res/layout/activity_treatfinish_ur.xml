@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    tools:context=".DoneActivity">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="250dp"
+        android:layout_margin="20dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Done"
+            android:textColor="#180018"
+            android:textFontWeight="500"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:fontFamily="@font/roboto" />
+
+        <TextView
+            android:id="@+id/finishtxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Great job!\nYou have done it sucessfully\nLet's move to the opposit zone."
+            android:textColor="#180018"
+            android:textSize="15dp"
+            app:fontFamily="@font/roboto" />
+
+        <!-- okay -->
+        <TextView
+            android:id="@+id/yes_ur"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:text="YES"
+            android:textColor="#9E0958"
+            android:textFontWeight="500"
+            android:textSize="15dp"
+            app:fontFamily="@font/roboto" />
+
+        <TextView
+            android:id="@+id/cancle_ur"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:text="CANCLE"
+            android:textColor="#9E0958"
+            android:textFontWeight="500"
+            android:textSize="15dp"
+            app:fontFamily="@font/roboto" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

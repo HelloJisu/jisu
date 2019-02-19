@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.widget.RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    tools:context=".MoistureActivity">
+
+
+    <com.ssomai.android.scalablelayout.ScalableLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:scale_base_height="160"
+        app:scale_base_width="1440">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Wrinkle Measurement"
+            android:textColor="#180018"
+            android:textStyle="bold"
+            app:fontFamily="@font/roboto"
+            app:scale_height="100"
+            app:scale_left="46"
+            app:scale_textsize="70"
+            app:scale_top="60"
+            app:scale_width="800"
+            tools:ignore="MissingPrefix" />
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:scale_left="1300"
+            app:scale_top="81"
+            app:scale_width="63"
+            app:scale_height="63"
+            android:scaleType="fitCenter"
+            android:background="@android:color/transparent"
+            app:srcCompat="@drawable/xicon"
+            android:layout_alignParentRight="true"
+            tools:ignore="MissingPrefix" />
+
+    </com.ssomai.android.scalablelayout.ScalableLayout>
+
+    <com.ssomai.android.scalablelayout.ScalableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/header"
+        app:scale_base_height="1750"
+        app:scale_base_width="1440">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="100dp"
+            android:layout_marginBottom="50dp"
+            android:text="Photo guide"
+            android:textColor="#180018"
+            app:fontFamily="@font/roboto"
+            app:scale_height="89"
+            app:scale_left="113"
+            app:scale_textsize="60"
+            app:scale_top="153"
+            app:scale_width="925"
+            tools:ignore="MissingPrefix" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:scale_left="251"
+            app:scale_top="610"
+            app:scale_width="200"
+            app:scale_height="200"
+            android:src="@drawable/group1"
+            tools:ignore="MissingPrefix" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="Wash thoroughly"
+            android:textColor="#000000"
+            android:textSize="17dp"
+            app:fontFamily="@font/roboto"
+            app:scale_height="200"
+            app:scale_left="495"
+            app:scale_textsize="60"
+            app:scale_top="610"
+            app:scale_width="610"
+            tools:ignore="MissingPrefix" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:scale_left="251"
+            app:scale_top="1045"
+            app:scale_width="200"
+            app:scale_height="200"
+            android:src="@drawable/group2"
+            tools:ignore="MissingPrefix" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="Don't cover porehead"
+            android:textColor="#000000"
+            android:textSize="17dp"
+            app:fontFamily="@font/roboto"
+            app:scale_height="200"
+            app:scale_left="495"
+            app:scale_textsize="60"
+            app:scale_top="1045"
+            app:scale_width="610"
+            tools:ignore="MissingPrefix" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:scale_left="251"
+            app:scale_top="1482"
+            app:scale_width="200"
+            app:scale_height="200"
+            android:src="@drawable/group3"
+            tools:ignore="MissingPrefix" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="Wash thoroughly"
+            android:textColor="#000000"
+            android:textSize="17dp"
+            app:fontFamily="@font/roboto"
+            app:scale_height="200"
+            app:scale_left="495"
+            app:scale_textsize="60"
+            app:scale_top="1482"
+            app:scale_width="610"
+            tools:ignore="MissingPrefix" />
+
+    </com.ssomai.android.scalablelayout.ScalableLayout>
+
+    <RelativeLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_below="@id/header">
+    </RelativeLayout>
+
+    <!-- ready -->
+    <TextView
+        android:id="@+id/ready"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/content"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:text="I'm ready"
+        android:textColor="#9E0958"
+        android:textFontWeight="500"
+        android:textSize="14dp"
+        app:fontFamily="@font/roboto" />
+
+</android.widget.RelativeLayout>

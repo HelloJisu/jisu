@@ -1,0 +1,124 @@
+{
+  "project_info": {
+    "project_number": "1041067070844",
+    "firebase_url": "https://reziena1.firebaseio.com",
+    "project_id": "reziena1",
+    "storage_bucket": "reziena1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1041067070844:android:d9604ae6e5ca965d",
+        "android_client_info": {
+          "package_name": "com.example.user.openCV"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1041067070844-ijmf37v4571254nhjmt4r80cj9r3n9hj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4ahTQTufRh-Q6CPDCsy-oBb4TH_2_sTo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1041067070844:android:011054a823ec2182",
+        "android_client_info": {
+          "package_name": "com.reziena.user.reziena_1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1041067070844-vt0msjo19i0fhbp1hkgpkl2vs3lqsh79.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.reziena.user.reziena_1",
+            "certificate_hash": "ba428bddf638d44561c60aabe7747cf25190303e"
+          }
+        },
+        {
+          "client_id": "1041067070844-ijmf37v4571254nhjmt4r80cj9r3n9hj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4ahTQTufRh-Q6CPDCsy-oBb4TH_2_sTo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1041067070844-ijmf37v4571254nhjmt4r80cj9r3n9hj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1041067070844-k07996p1mas14336c8h55nges6pmtc5b.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.user.openCV"
+              }
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1041067070844:android:5cbac38fb7a3db32",
+        "android_client_info": {
+          "package_name": "com.reziena.user.reziena_ver2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1041067070844-ijmf37v4571254nhjmt4r80cj9r3n9hj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4ahTQTufRh-Q6CPDCsy-oBb4TH_2_sTo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

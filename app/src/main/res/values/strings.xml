@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">reziena</string>
+
+    <string name="q1">"1 _ After washing your face, don't apply any moisturizer, sunscreen, toner, powder, or other products. Two to three hours later, look in a mirror under bright lights. Your forehead and cheeks feel or appear:"</string>
+    <string name="q2">"2 _ Your facial skin is oily?"</string>
+    <string name="q3">"3 _ If not moisturized, your facial skin feels tight:"</string>
+    <string name="q4">"4 _ Look in a magnifying mirror. How many large pores, the size of the end of a pin or greater, do you have?"</string>
+
+    <string name="q5">"5 _ Have you ever been diagnosed with a acne or rosacea?"</string>
+    <string name="q6">"6 _ If you wear jewelry that is not 14-carat gold, how often do you get a rash?"</string>
+    <string name="q7">"7 _ Fragranced bubble bath, massage oil, or body lotions make your skin break out, itch, or feel dry:"</string>
+    <string name="q8">"8 _ Your face looks red in photographs:"</string>
+
+    <string name="q9">"9 _ Do the dark patches on your face get worse when you go in the sun?"</string>
+    <string name="q10">"10 _ Do you have, or have you ever had, small brown spots(freckles or sun spots) on your face, chest, back, or arms?"</string>
+    <string name="q11">"11 _ After you cut yourself, how long does the brown (not pin) mark remain?"</string>
+    <string name="q12">"12 _ What is your natural hair color?If gray, state color before graying:(Blond-1 Brown-2 Black-3 Red-4)"</string>
+
+    <string name="q13">"13 _ Do you have facial wrinkles?"</string>
+    <string name="q14">"14 _ During the last five years, how often have you alowed your skin tot tan either intentionally or unintentionally through outdoor sports or other activities?"</string>
+    <string name="q15">"15 _ Based on the places you've lived, how much daily sun exposure have you received in your life?"</string>
+    <string name="q16">"16 _ How often do you currently eat fruits and vegetables?"</string>
+    <string name="facebook_app_id">2544519015562288</string>
+    <string name="kakao_app_key"> 96ded70d36cb40fe98317129bdd5f53f</string>
+    <string name="client_id">c3bbe70b4b274e4b948bd974928da387</string>
+    <string name="callback_url">https://instagram.com/</string>
+    <string name="base_url">https://api.instagram.com/</string>
+    <string name="redirect_url">https://instagram.com/</string>
+    <string name="get_user_info_url">https://api.instagram.com/v1/users/self/?access_token=</string>
+</resources>

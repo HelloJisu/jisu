@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/treatayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="411dp"
+        android:background="@drawable/faceim">
+
+        <ImageView
+            android:id="@+id/loading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/underleftback"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="2960"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/treatup_ul2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="460"
+                tools:ignore="Orientation" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1970"/>
+
+            <ImageView
+                android:id="@+id/treatdown_ul2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="570"
+                tools:ignore="Orientation" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="2960"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="460"
+                android:weightSum="1"
+                android:background="#80FFFFFF"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.27"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.535"
+                    android:weightSum="1"
+                    android:orientation="horizontal">
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.08"/>
+
+                    <ImageView
+                        android:id="@+id/back_treat"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.08"
+                        app:srcCompat="@drawable/askimg" />
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.13"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.4"
+                        android:gravity="center"
+                        android:letterSpacing="0.1"
+                        android:text="CARE GUIDE"
+                        android:textAlignment="center"
+                        android:textColor="#FFFFFF"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        app:fontFamily="@font/roboto"
+                        tools:layout_editor_absoluteX="176dp"
+                        tools:layout_editor_absoluteY="25dp" />
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.13"/>
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.13"
+                        app:srcCompat="@drawable/grouphomethera_none_icon"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1970"
+                android:weightSum="1"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.05"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.87"
+                    android:weightSum="1440"
+                    android:orientation="horizontal">
+
+                    <com.ssomai.android.scalablelayout.ScalableLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        app:scale_base_width="1440"
+                        app:scale_base_height="1800">
+
+                        <ImageView
+                            android:id="@+id/eyeright_cl"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:scale_height="494.13"
+                            app:scale_left="350"
+                            app:scale_top="683"
+                            app:scale_width="972"
+                            app:srcCompat="@drawable/nonunderleft"
+                            tools:ignore="MissingPrefix" />
+
+                            <ImageView
+                                android:id="@+id/u_tleft_line1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:scale_height="70"
+                                app:scale_left="632.82"
+                                app:scale_top="748"
+                                app:scale_width="245.45"
+                                android:background="@drawable/underleftanim2"
+                                tools:ignore="MissingPrefix" />
+
+                            <ImageView
+                                android:id="@+id/u_tleft_line2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:scale_height="70"
+                                app:scale_left="593.81"
+                                app:scale_top="798"
+                                app:scale_width="245.45"
+                                tools:ignore="MissingPrefix"
+                                android:background="@drawable/underleftanim2" />
+
+                            <ImageView
+                                android:id="@+id/u_tleft_line3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:scale_height="70"
+                                app:scale_left="554.8"
+                                app:scale_top="848"
+                                app:scale_width="245.45"
+                                tools:ignore="MissingPrefix"
+                                android:background="@drawable/underleftanim2" />
+
+                            <ImageView
+                                android:id="@+id/u_tleft_line4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:scale_height="70"
+                                app:scale_left="515.79"
+                                app:scale_top="898"
+                                app:scale_width="245.45"
+                                tools:ignore="MissingPrefix"
+                                android:background="@drawable/underleftanim2" />
+
+                            <ImageView
+                                android:id="@+id/u_tleft_line5"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:scale_height="70"
+                                app:scale_left="476.78"
+                                app:scale_top="948"
+                                app:scale_width="245.45"
+                                tools:ignore="MissingPrefix"
+                                android:background="@drawable/underleftanim2" />
+
+                            <ImageView
+                                android:id="@+id/u_tleft_line6"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:scale_height="70"
+                                app:scale_left="437.77"
+                                app:scale_top="998"
+                                app:scale_width="245.45"
+                                tools:ignore="MissingPrefix"
+                                android:background="@drawable/underleftanim2" />
+
+                            <ImageView
+                                android:id="@+id/u_tleft_line7"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:scale_height="70"
+                                app:scale_left="398.76"
+                                app:scale_top="1048"
+                                app:scale_width="245.45"
+                                tools:ignore="MissingPrefix"
+                                android:background="@drawable/underleftanim2" />
+
+                            <ImageView
+                                android:id="@+id/u_tleft_line8"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:scale_height="40"
+                                app:scale_left="930.7"
+                                app:scale_top="773"
+                                app:scale_width="245.45"
+                                tools:ignore="MissingPrefix"
+                                android:background="@drawable/underleftanim1" />
+
+                            <ImageView
+                                android:id="@+id/u_tleft_line9"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:scale_height="40"
+                                app:scale_left="914.88"
+                                app:scale_top="833"
+                                app:scale_width="245.45"
+                                tools:ignore="MissingPrefix"
+                                android:background="@drawable/underleftanim1" />
+
+                            <ImageView
+                                android:id="@+id/u_tleft_line10"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:scale_height="40"
+                                app:scale_left="899.06"
+                                app:scale_top="893"
+                                app:scale_width="245.45"
+                                tools:ignore="MissingPrefix"
+                                android:background="@drawable/underleftanim1" />
+
+                            <ImageView
+                                android:id="@+id/u_tleft_line11"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:scale_height="40"
+                                app:scale_left="883.24"
+                                app:scale_top="953"
+                                app:scale_width="245.45"
+                                tools:ignore="MissingPrefix"
+                                android:background="@drawable/underleftanim1" />
+
+                            <ImageView
+                                android:id="@+id/u_tleft_line12"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:scale_height="40"
+                                app:scale_left="867.43"
+                                app:scale_top="1013"
+                                app:scale_width="245.45"
+                                tools:ignore="MissingPrefix"
+                                android:background="@drawable/underleftanim1" />
+
+                            <ImageView
+                                android:id="@+id/u_tleft_line13"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:scale_height="40"
+                                app:scale_left="851.51"
+                                app:scale_top="1073"
+                                app:scale_width="245.45"
+                                tools:ignore="MissingPrefix"
+                                android:background="@drawable/underleftanim1" />
+
+                        <TextView
+                            android:id="@+id/u_tleft_txt1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="6 left"
+                            android:textColor="#FFFFFF"
+                            android:textStyle="bold"
+                            app:fontFamily="@font/roboto"
+                            app:scale_height="108"
+                            app:scale_left="833"
+                            app:scale_textsize="70"
+                            app:scale_top="1184"
+                            app:scale_width="257"
+                            tools:ignore="MissingPrefix" />
+
+                        <TextView
+                            android:id="@+id/u_tleft_txt2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="7 left"
+                            android:textColor="#FFFFFF"
+                            android:textStyle="bold"
+                            app:fontFamily="@font/roboto"
+                            app:scale_height="108"
+                            app:scale_left="339"
+                            app:scale_textsize="70"
+                            app:scale_top="1134"
+                            app:scale_width="257"
+                            tools:ignore="MissingPrefix" />
+
+
+                    </com.ssomai.android.scalablelayout.ScalableLayout>
+
+                </RelativeLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/component"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="570"
+                android:weightSum="1"
+                android:orientation="vertical"
+                android:background="#80FFFFFF">
+
+                <TextView
+                    android:id="@+id/componenttxt_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.2"
+                    android:gravity="center"
+                    android:text="DIRECTION"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    app:fontFamily="@font/roboto" />
+
+                <TextView
+                    android:id="@+id/componenttxt_ul"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="0dp"
+                    android:layout_weight="0.7"
+                    android:gravity="center"
+                    android:text="THIS COLUMN HAS 7 LINES.\nPLACE THE DEVICE TO THE COLORED LINE AS\nSHOWN. AND PRESS THE CENTER BUTTON TO\n START TREATING ONE LINE"
+                    android:textAlignment="center"
+                    android:textColor="#180018"
+                    app:fontFamily="@font/roboto" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+
+
+    <!--underleft-->
+
+
+    <!--cheekright-->
+
+
+    <!--cheekleft-->
+
+
+
+
+
+</android.support.constraint.ConstraintLayout>
