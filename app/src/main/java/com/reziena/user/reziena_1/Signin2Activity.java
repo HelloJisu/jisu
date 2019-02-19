@@ -121,7 +121,8 @@ public class Signin2Activity extends AppCompatActivity {
                             toast.show();
                         }else{
                             setData task = new setData();
-                            task.execute("http://"+IP_Address+"/saveUser.php", namestring, emailstring, profileurl);
+                            task.execute("http://"+IP_Address+"/saveMoisture.php", namestring, emailstring, profileurl);
+
                             Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
                             intent.putExtra("name","skintypedialog");
                             startActivity(intent);
@@ -144,7 +145,7 @@ public class Signin2Activity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
-            Log.e("onPostExecute", "response - " + result);
+            Log.e("sign-onPostExecute", "response - " + result);
         }
 
         @Override
@@ -157,7 +158,7 @@ public class Signin2Activity extends AppCompatActivity {
             SharedPreferences sp_userID = getSharedPreferences("userID", MODE_PRIVATE);
             String userID = sp_userID.getString("userID", "");
             String postParameters = "name="+name+"&email="+email+"&profile="+profile;
-            Log.e("moisture-postParameters", postParameters);
+            Log.e("sign-postParameters", postParameters);
 
             try {
                 URL url = new URL(serverURL);
@@ -178,16 +179,16 @@ public class Signin2Activity extends AppCompatActivity {
                 InputStream inputStream;
                 int responseStatusCode = httpURLConnection.getResponseCode();
                 String responseStatusMessage = httpURLConnection.getResponseMessage();
-                Log.e("response", "POST response Code - " + responseStatusCode);
-                Log.e("response", "POST response Message - "+ responseStatusMessage);
+                Log.e("sign-response", "POST response Code - " + responseStatusCode);
+                Log.e("sign-response", "POST response Message - "+ responseStatusMessage);
 
                 if (responseStatusCode == HttpURLConnection.HTTP_OK) {
                     // 정상적인 응답 데이터
-                    Log.e("inputstream: ", "정상적");
+                    Log.e("sign-inputstream: ", "정상적");
                     inputStream = httpURLConnection.getInputStream();
                 } else {
                     // error
-                    Log.e("inputstream: ", "비정상적: " + httpURLConnection.getErrorStream());
+                    Log.e("sign-inputstream: ", "비정상적: " + httpURLConnection.getErrorStream());
                     inputStream = httpURLConnection.getErrorStream();
                 }
 
@@ -204,7 +205,7 @@ public class Signin2Activity extends AppCompatActivity {
                 return sb.toString().trim();
 
             } catch (Exception e) {
-                Log.e("ERROR", "InsertDataError ", e);
+                Log.e("sign-ERROR", "InsertDataError ", e);
             }
             return null;
 
