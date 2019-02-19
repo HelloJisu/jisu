@@ -184,27 +184,27 @@ public class DoneActivity extends AppCompatActivity implements View.OnClickListe
                     if(finishtxt.getText().equals("finish")){
                         intent = new Intent(v.getContext(), TreatActivity.class);
                         v.getContext().startActivity(intent);
-                        underright.finish();
                         finish();
+                        //underright.finish();
                     }
                     else {
                         intent = new Intent(v.getContext(), TreatActivity_underleft2.class);
                         v.getContext().startActivity(intent);
-                        underright.finish();
                         finish();
+                        //underright.finish();
                     }
                 }
                 if (stringlist.equals("underleft")) {
                     if(finishtxt.getText().equals("finish")){
                         intent = new Intent(v.getContext(), TreatActivity.class);
                         v.getContext().startActivity(intent);
-                        underleft.finish();
                         finish();
+                        //underleft.finish();
                     }
                     else {
                         intent = new Intent(v.getContext(), TreatActivity_underright2.class);
                         v.getContext().startActivity(intent);
-                        underleft.finish();
+                        //underleft.finish();
                         finish();
                     }
                 }
@@ -212,13 +212,13 @@ public class DoneActivity extends AppCompatActivity implements View.OnClickListe
                     if(finishtxt.getText().equals("finish")){
                         intent = new Intent(v.getContext(), TreatActivity.class);
                         v.getContext().startActivity(intent);
-                        cheekright.finish();
+                        //cheekright.finish();
                         finish();
                     }
                     else {
                         intent = new Intent(v.getContext(), TreatActivity_cheekleft2.class);
                         v.getContext().startActivity(intent);
-                        cheekright.finish();
+                        //cheekright.finish();
                         finish();
                     }
                 }
@@ -226,13 +226,13 @@ public class DoneActivity extends AppCompatActivity implements View.OnClickListe
                     if(finishtxt.getText().equals("finish")){
                         intent = new Intent(v.getContext(), TreatActivity.class);
                         v.getContext().startActivity(intent);
-                        cheekleft.finish();
+                        //cheekleft.finish();
                         finish();
                     }
                     else {
                         intent = new Intent(v.getContext(), TreatActivity_cheekright2.class);
                         v.getContext().startActivity(intent);
-                        cheekleft.finish();
+                        //cheekleft.finish();
                         finish();
                     }
                 }

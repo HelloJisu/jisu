@@ -33,17 +33,24 @@
         </activity>
 
         <activity android:name=".TreatActivity" />
+        <activity android:name=".Signin2Activity"/>
+        <activity android:name=".SkintypeAsk"/>
         <activity android:name=".TreatActivity_cheekleft" />
         <activity android:name=".TreatActivity_cheekright" />
         <activity android:name=".TreatActivity_underleft" />
         <activity android:name=".TreatActivity_underright" />
-        <activity android:name=".TreatActivity_cheekleft2" />
-        <activity android:name=".TreatActivity_cheekright2" />
-        <activity android:name=".TreatActivity_underleft2" />
-        <activity android:name=".TreatActivity_underright2" />
+        <activity android:name=".TreatActivity_cheekleft2"
+            android:noHistory="true"/>
+        <activity android:name=".TreatActivity_cheekright2"
+            android:noHistory="true"/>
+        <activity android:name=".TreatActivity_underleft2"
+            android:noHistory="true"/>
+        <activity android:name=".TreatActivity_underright2"
+            android:noHistory="true"/>
         <activity android:name=".LoadingActivity"/>
         <activity android:name=".HomeActivity"/>
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".MainActivity"
+            android:noHistory="true"/>
         <activity android:name=".SigninActivity"/>
         <activity android:name=".LoginmainActivity"/>
         <activity

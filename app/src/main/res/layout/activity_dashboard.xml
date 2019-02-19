@@ -27,7 +27,6 @@
             tools:ignore="Orientation,Suspicious0dp"
             android:id="@+id/toolbar_dash"
             android:orientation="vertical"
-            android:background="@android:color/transparent"
             android:weightSum="1">
         </LinearLayout>
         <LinearLayout
@@ -105,7 +104,7 @@
                             android:id="@+id/arrow_dash"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="0.085">
+                            android:layout_weight="0.1">
                             <ImageView
                                 android:layout_centerHorizontal="true"
                                 android:layout_width="18dp"
@@ -120,7 +119,6 @@
                     android:layout_height="0dp"
                     android:layout_weight="0.01"/>
                 <LinearLayout
-                    android:id="@+id/dash7"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="0.40"
@@ -377,10 +375,99 @@
                         </RelativeLayout>
                     </LinearLayout>
                 </LinearLayout>
+                <TextView
+                    android:id="@+id/personal_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.035"
+                    android:gravity="center"
+                    android:letterSpacing="0.1"
+                    android:text="PERSONAL INFORMATION"
+                    android:textColor="#ACAABE"
+                    android:textSize="12dp"
+                    app:fontFamily="@font/roboto"
+                    tools:ignore="MissingPrefix" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.205"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.205"
+                    android:orientation="horizontal"
+                    android:weightSum="1"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/bigrectangle"
+                        android:orientation="vertical"
+                        android:weightSum="1">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.1"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.19"
+                            android:gravity="center"
+                            android:letterSpacing="0.1"
+                            android:padding="5dp"
+                            android:text="SELECT PROGAM"
+                            android:textColor="#ACAABE"
+                            android:textSize="10dp"
+                            app:fontFamily="@font/roboto"
+                            tools:ignore="MissingPrefix" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.42"
+                            android:orientation="horizontal"
+                            android:weightSum="1">
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.9"
+                                android:weightSum="1"
+                                android:orientation="horizontal">
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.172"></LinearLayout>
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.8"
+                                    android:layout_centerInParent="true"
+                                    android:gravity="center"
+                                    android:text="Intensive Rejuvenating"
+                                    android:textColor="#180018"
+                                    android:textSize="21dp"
+                                    android:textStyle="bold"
+                                    app:fontFamily="@font/roboto"
+                                    tools:ignore="MissingPrefix" />
+                            </LinearLayout>
+                            <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.02"
+                                android:layout_centerVertical="true"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginRight="10dp"
+                                android:src="@drawable/polygon_right"
+                                tools:ignore="MissingPrefix" />
+                        </LinearLayout>
+                    </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
-
     <LinearLayout
         android:id="@+id/dash8"
         android:layout_width="match_parent"
@@ -391,20 +478,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1849"/>
+            android:layout_weight="1949"/>
 
-        <TextView
-            android:id="@+id/personal_text"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="100"
-            android:gravity="center"
-            android:letterSpacing="0.1"
-            android:text="PERSONAL INFORMATION"
-            android:textColor="#ACAABE"
-            android:textSize="12dp"
-            app:fontFamily="@font/roboto"
-            tools:ignore="MissingPrefix" />
         <LinearLayout
             android:id="@+id/skin_type"
             android:layout_width="match_parent"
@@ -417,11 +492,11 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.016"/>
+                android:layout_weight="0.047"/>
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.968"
+                android:layout_weight="0.905"
                 android:background="@drawable/bigrectangle"
                 android:orientation="vertical"
                 android:weightSum="1">
@@ -442,10 +517,48 @@
                     android:textSize="10dp"
                     app:fontFamily="@font/roboto"
                     tools:ignore="MissingPrefix" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.1"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.22"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.9">
+                    </LinearLayout>
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.02"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/polygon_right"
+                        tools:ignore="MissingPrefix" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/question"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_below="@+id/lay"
+                    android:layout_weight="0.29"
+                    android:gravity="center"
+                    android:letterSpacing="0.04"
+                    android:text="Do you want to find out your skin type?"
+                    android:textColor="#ACAABE"
+                    android:textSize="10dp"
+                    app:fontFamily="@font/roboto"
+                    tools:ignore="MissingPrefix" />
 
             </LinearLayout>
-
-
         </LinearLayout>
 
     </LinearLayout>
@@ -475,19 +588,11 @@
             android:textStyle="bold"
             app:fontFamily="@font/roboto"
             tools:ignore="MissingPrefix" />
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="70"></LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/dash2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:ignore="RtlCompat"
-        android:orientation="vertical"
-        android:weightSum="2960">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1949"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -497,169 +602,14 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.89">
-        </LinearLayout>
+            android:layout_weight="0.12"></LinearLayout>
         <ImageView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.02"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/polygon_right"
-            tools:ignore="MissingPrefix" />
-    </LinearLayout>
+            android:layout_weight="0.08"
+            android:src="@drawable/wrikleiconwrinkleicon" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/dash3"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:ignore="RtlCompat"
-        android:orientation="vertical"
-        android:weightSum="2960">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2189"/>
-
-        <TextView
-            android:id="@+id/question"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_below="@+id/lay"
-            android:layout_weight="211"
-            android:gravity="center"
-            android:letterSpacing="0.04"
-            android:text="Do you want to find out your skin type?"
-            android:textColor="#ACAABE"
-            android:textSize="10dp"
-            app:fontFamily="@font/roboto"
-            app:scale_textsize="50"
-            tools:ignore="MissingPrefix" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/dash4"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:ignore="RtlCompat"
-        android:orientation="vertical"
-        android:weightSum="2960">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2435"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="486"
-            android:orientation="horizontal"
-            android:weightSum="1"
-            >
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.016"/>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.968"
-                android:background="@drawable/bigrectangle"
-                android:orientation="vertical"
-                android:weightSum="1">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.1"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.19"
-                    android:gravity="center"
-                    android:letterSpacing="0.1"
-                    android:padding="5dp"
-                    android:text="SELECT PROGAM"
-                    android:textColor="#ACAABE"
-                    android:textSize="10dp"
-                    app:fontFamily="@font/roboto"
-                    tools:ignore="MissingPrefix" />
-
-            </LinearLayout>
-        </LinearLayout>
-</LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/dash5"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:ignore="RtlCompat"
-        android:orientation="vertical"
-        android:weightSum="2960">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2435"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="486"
-            android:orientation="horizontal"
-            android:weightSum="1">
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.12"></LinearLayout>
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.08"
-                android:src="@drawable/wrikleiconwrinkleicon" />
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:layout_weight="0.69">
-            </LinearLayout>
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.02"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"
-                android:src="@drawable/polygon_right"
-                tools:ignore="MissingPrefix" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/dash6"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:ignore="RtlCompat"
-        android:orientation="vertical"
-        android:weightSum="2960">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2435"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_centerInParent="true"
-            android:layout_weight="486"
-            android:gravity="center"
-            android:text="Intensive Rejuvenating"
-            android:textColor="#180018"
-            android:textSize="21dp"
-            android:textStyle="bold"
-            app:fontFamily="@font/roboto"
-            tools:ignore="MissingPrefix" />
     </LinearLayout>
 
     <View

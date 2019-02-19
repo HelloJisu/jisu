@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -90,11 +91,9 @@ public class SigninActivity extends AppCompatActivity {
                     return;
                 }
 
-                Intent result = new Intent();
-                result.putExtra("email", etEmail.getText().toString());
-
-                // 자신을 호출한 Activity로 데이터를 보낸다.
-                setResult(RESULT_OK, result);
+                Intent intent = new Intent(getApplicationContext(),Signin2Activity.class);
+                intent.putExtra("email",etEmail.getText().toString());
+                startActivity(intent);
                 finish();
             }
         });
@@ -129,6 +128,8 @@ public class SigninActivity extends AppCompatActivity {
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),Signin2Activity.class);
+                startActivity(intent);
                 finish();
             }
         });

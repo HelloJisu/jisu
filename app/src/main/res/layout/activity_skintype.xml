@@ -176,14 +176,14 @@
                         android:layout_width="1dp"
                         android:layout_height="16dp"
                         android:layout_marginTop="7dp"
-                        android:layout_marginLeft="111dp"
+                        android:layout_marginLeft="121dp"
                         android:background="@drawable/progress" />
 
                     <View
                         android:layout_width="1dp"
                         android:layout_height="16dp"
                         android:layout_marginTop="7dp"
-                        android:layout_marginRight="111dp"
+                        android:layout_marginRight="121dp"
                         android:background="@drawable/progress"
                         android:layout_alignParentRight="true" />
 
@@ -241,14 +241,14 @@
                         android:layout_width="1dp"
                         android:layout_height="16dp"
                         android:layout_marginTop="7dp"
-                        android:layout_marginLeft="111dp"
+                        android:layout_marginLeft="121dp"
                         android:background="@drawable/progress" />
 
                     <View
                         android:layout_width="1dp"
                         android:layout_height="16dp"
                         android:layout_marginTop="7dp"
-                        android:layout_marginRight="111dp"
+                        android:layout_marginRight="121dp"
                         android:background="@drawable/progress"
                         android:layout_alignParentRight="true" />
 
@@ -306,14 +306,14 @@
                         android:layout_width="1dp"
                         android:layout_height="16dp"
                         android:layout_marginTop="7dp"
-                        android:layout_marginLeft="111dp"
+                        android:layout_marginLeft="121dp"
                         android:background="@drawable/progress" />
 
                     <View
                         android:layout_width="1dp"
                         android:layout_height="16dp"
                         android:layout_marginTop="7dp"
-                        android:layout_marginRight="111dp"
+                        android:layout_marginRight="121dp"
                         android:background="@drawable/progress"
                         android:layout_alignParentRight="true" />
 
@@ -370,14 +370,14 @@
                         android:layout_width="1dp"
                         android:layout_height="16dp"
                         android:layout_marginTop="7dp"
-                        android:layout_marginLeft="111dp"
+                        android:layout_marginLeft="121dp"
                         android:background="@drawable/progress" />
 
                     <View
                         android:layout_width="1dp"
                         android:layout_height="16dp"
                         android:layout_marginTop="7dp"
-                        android:layout_marginRight="111dp"
+                        android:layout_marginRight="121dp"
                         android:background="@drawable/progress"
                         android:layout_alignParentRight="true" />
 

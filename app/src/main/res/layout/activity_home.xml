@@ -116,6 +116,33 @@
                         app:fontFamily="@font/roboto"
                         tools:ignore="MissingPrefix" />
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.2"
+                    android:weightSum="1"
+                    android:orientation="horizontal">
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.07"></LinearLayout>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.9"
+                        android:gravity="center_vertical"
+                        android:shadowColor="#59450969"
+                        android:shadowDx="0"
+                        android:shadowDy="0"
+                        android:shadowRadius="20"
+                        android:text="INTENSIVE REJUVENATING TREATMENT"
+                        android:textColor="#450969"
+                        android:textSize="14.5sp"
+                        android:textStyle="bold"
+                        app:fontFamily="@font/roboto"
+                        tools:ignore="MissingPrefix" />
+                </LinearLayout>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -497,6 +524,201 @@
                     android:textSize="14.5sp"
                     app:fontFamily="@font/roboto" />
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="50"/>
+            <LinearLayout
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:background="@drawable/dashrectangle"
+                android:layout_height="0dp"
+                android:layout_weight="842"
+                android:weightSum="1"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.14"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.24"
+                    android:weightSum="1"
+                    android:orientation="horizontal">
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.1"/>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.145">
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:id="@+id/image_main"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ellipseprofile" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.04"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.5"
+                        android:gravity="center_vertical"
+                        android:shadowColor="#52331476"
+                        android:shadowDx="0"
+                        android:shadowDy="0"
+                        android:shadowRadius="20"
+                        android:text="GOOD MORNING, JENNY!"
+                        android:textColor="#180018"
+                        android:textSize="14.5sp"
+                        android:textStyle="bold"
+                        app:fontFamily="@font/roboto"
+                        tools:ignore="MissingPrefix" />
+                    <RelativeLayout
+                        android:id="@+id/tueCheck2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.085">
+                        <ImageView
+                            android:layout_centerHorizontal="true"
+                            android:layout_width="18dp"
+                            android:layout_height="match_parent"
+                            app:srcCompat="@drawable/uparrowdash"/>
+                    </RelativeLayout>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.05"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.5"
+                    android:weightSum="1"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.13"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.425"
+                        android:gravity="center_vertical"
+                        android:lineSpacingExtra="3dp"
+                        android:text="INTENSE\nREJUVENATING\nPROGRAM"
+                        android:textColor="#B3180018"
+                        android:textSize="14.5sp"
+                        app:fontFamily="@font/roboto"></TextView>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.15"
+                        android:orientation="vertical"
+                        android:weightSum="1">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.05"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.02"
+                            android:weightSum="1"
+                            android:orientation="horizontal">
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.3">
+                            </LinearLayout>
+                            <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.4"
+                                android:src="@drawable/linelong"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.05"></LinearLayout>
+
+                        <TextView
+                            android:id="@+id/moisture_result_main"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.3"
+                            android:gravity="center"
+                            android:text="A"
+                            android:textColor="#B3180018"
+                            android:textSize="21sp"
+                            android:textStyle="bold"
+                            app:fontFamily="@font/roboto" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.03"></LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.15"
+                        android:orientation="vertical"
+                        android:weightSum="1">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.05"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.02"
+                            android:weightSum="1"
+                            android:orientation="horizontal">
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.3">
+                            </LinearLayout>
+                            <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.4"
+                                android:src="@drawable/linelong"/>
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.05"></LinearLayout>
+
+                        <TextView
+                            android:id="@+id/wrinkle_result_main"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.3"
+                            android:gravity="center"
+                            android:text="B"
+                            android:textColor="#B3180018"
+                            android:textSize="21sp"
+                            android:textStyle="bold"
+                            app:fontFamily="@font/roboto" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
         
         <LinearLayout
@@ -515,26 +737,6 @@
                 android:layout_weight="143"
                 android:weightSum="1"
                 android:orientation="horizontal">
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.07"></LinearLayout>
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.9"
-                    android:gravity="center_vertical"
-                    android:shadowColor="#59450969"
-                    android:shadowDx="0"
-                    android:shadowDy="0"
-                    android:shadowRadius="20"
-                    android:text="INTENSIVE REJUVENATING TREATMENT"
-                    android:textColor="#450969"
-                    android:textSize="14.5sp"
-                    android:textStyle="bold"
-                    app:fontFamily="@font/roboto"
-                    tools:ignore="MissingPrefix" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -655,197 +857,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="2120"/>
-            <LinearLayout
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:background="@drawable/dashrectangle"
-                android:layout_height="0dp"
-                android:layout_weight="842"
-                android:weightSum="1"
-                android:orientation="vertical">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="0.14"/>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="0.24"
-                        android:weightSum="1"
-                        android:orientation="horizontal">
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.1"/>
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.145">
-                            <de.hdodenhof.circleimageview.CircleImageView
-                                xmlns:app="http://schemas.android.com/apk/res-auto"
-                                android:id="@+id/image_main"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:src="@drawable/ellipseprofile" />
-                        </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.04"/>
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.5"
-                            android:gravity="center_vertical"
-                            android:shadowColor="#52331476"
-                            android:shadowDx="0"
-                            android:shadowDy="0"
-                            android:shadowRadius="20"
-                            android:text="GOOD MORNING, JENNY!"
-                            android:textColor="#180018"
-                            android:textSize="14.5sp"
-                            android:textStyle="bold"
-                            app:fontFamily="@font/roboto"
-                            tools:ignore="MissingPrefix" />
-                        <RelativeLayout
-                            android:id="@+id/tueCheck2"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.085">
-                            <ImageView
-                                android:layout_centerHorizontal="true"
-                                android:layout_width="18dp"
-                                android:layout_height="match_parent"
-                                app:srcCompat="@drawable/uparrowdash"/>
-                        </RelativeLayout>
-
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="0.05"/>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="0.5"
-                        android:weightSum="1"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.13"/>
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.425"
-                            android:gravity="center_vertical"
-                            android:lineSpacingExtra="3dp"
-                            android:text="INTENSE\nREJUVENATING\nPROGRAM"
-                            android:textColor="#B3180018"
-                            android:textSize="14.5sp"
-                            app:fontFamily="@font/roboto"></TextView>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.15"
-                            android:orientation="vertical"
-                            android:weightSum="1">
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_weight="0.05"/>
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_weight="0.02"
-                                android:weightSum="1"
-                                android:orientation="horizontal">
-                                <LinearLayout
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="0.3">
-                                </LinearLayout>
-                                <ImageView
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="0.4"
-                                    android:src="@drawable/linelong"/>
-                            </LinearLayout>
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_weight="0.05"></LinearLayout>
-
-                            <TextView
-                                android:id="@+id/moisture_result_main"
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_weight="0.3"
-                                android:gravity="center"
-                                android:text="A"
-                                android:textColor="#B3180018"
-                                android:textSize="21sp"
-                                android:textStyle="bold"
-                                app:fontFamily="@font/roboto" />
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.03"></LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.15"
-                            android:orientation="vertical"
-                            android:weightSum="1">
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_weight="0.05"/>
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_weight="0.02"
-                                android:weightSum="1"
-                                android:orientation="horizontal">
-                                <LinearLayout
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="0.3">
-                                </LinearLayout>
-                                <ImageView
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="0.4"
-                                    android:src="@drawable/linelong"/>
-
-                            </LinearLayout>
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_weight="0.05"></LinearLayout>
-
-                            <TextView
-                                android:id="@+id/wrinkle_result_main"
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_weight="0.3"
-                                android:gravity="center"
-                                android:text="B"
-                                android:textColor="#B3180018"
-                                android:textSize="21sp"
-                                android:textStyle="bold"
-                                app:fontFamily="@font/roboto" />
-
-                        </LinearLayout>
-                    </LinearLayout>
-                </LinearLayout>
             </LinearLayout>
         <LinearLayout
             android:id="@+id/home4"
@@ -995,7 +1007,11 @@
             </LinearLayout>
         </LinearLayout>
 
-
+        <ImageView
+            android:id="@+id/layer1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/dashbackground2"/>
 
         <LinearLayout
             android:id="@+id/home8"
@@ -1050,6 +1066,8 @@
             </LinearLayout>
         </LinearLayout>
 
+
+
         <LinearLayout
             android:id="@+id/home9"
             android:layout_width="match_parent"
@@ -1083,11 +1101,6 @@
             </LinearLayout>
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/layer1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/dashbackground2"/>
 
 
         <ImageView

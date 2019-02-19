@@ -58,7 +58,7 @@ public class HomeActivity extends AppCompatActivity {
     RelativeLayout card, design_bottom_sheet, arrow;
     LinearLayout toolbar_dash,moisture,wrinkles,skin_type, toolbar,treatbtn, historyBtn, dashboard;
     LinearLayout home1,home2,home3,home4,home5,home8,home9;
-    LinearLayout dash6,dash2,dash3,dash4,dash5,dash1,dash7,dash8,dash9,dash10;
+    LinearLayout dash7,dash8,dash9;
     ImageView layer1, logo,backgroundimg,dashback;
     CircleImageView image, image_main;
     BottomSheetBehavior bottomSheetBehavior;
@@ -116,13 +116,6 @@ public class HomeActivity extends AppCompatActivity {
         home5=findViewById(R.id.home5);
         home8=findViewById(R.id.home8);
         home9=findViewById(R.id.home9);
-        dash1=findViewById(R.id.dash1);
-        dash2=findViewById(R.id.dash2);
-        dash3=findViewById(R.id.dash3);
-        dash4=findViewById(R.id.dash4);
-        dash5=findViewById(R.id.dash5);
-        dash6=findViewById(R.id.dash6);
-        dash7=findViewById(R.id.dash7);
         dash8=findViewById(R.id.dash8);
         dash9=findViewById(R.id.dash9);
         backgroundimg=findViewById(R.id.backgroundimage);
@@ -130,6 +123,7 @@ public class HomeActivity extends AppCompatActivity {
         skintype_main=findViewById(R.id.skintype_main);
         screenshot=findViewById(R.id.screenshot);
         screenshotdash=findViewById(R.id.screenshotdash);
+        String dialogask;
 
 
 // check
@@ -175,6 +169,27 @@ public class HomeActivity extends AppCompatActivity {
                 friCheck.setImageResource(R.drawable.check);
                 break;
         }
+
+        Intent subintent = getIntent();
+
+        dialogask = subintent.getExtras().getString("name");
+
+
+
+        if(dialogask!=null){
+        if(dialogask.equals("skintypedialog")){
+            Intent intent = new Intent(getApplicationContext(), SkintypeAsk.class);
+            overridePendingTransition(0,0);
+            startActivity(intent);
+            new Handler().postDelayed(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    screenshot();
+                }
+            }, 20);
+        }}
 
         // init the Bottom Sheet Behavior
         bottomSheetBehavior = BottomSheetBehavior.from(design_bottom_sheet);
@@ -320,13 +335,6 @@ public class HomeActivity extends AppCompatActivity {
                         home3.setVisibility(View.INVISIBLE);
                         home4.setVisibility(View.INVISIBLE);
                         home5.setVisibility(View.INVISIBLE);
-                        dash1.setVisibility(View.VISIBLE);
-                        dash2.setVisibility(View.VISIBLE);
-                        dash3.setVisibility(View.VISIBLE);
-                        dash4.setVisibility(View.VISIBLE);
-                        dash5.setVisibility(View.VISIBLE);
-                        dash6.setVisibility(View.VISIBLE);
-                        dash7.setVisibility(View.VISIBLE);
                         dash8.setVisibility(View.VISIBLE);
                         dash9.setVisibility(View.VISIBLE);
                         layer1.setVisibility(View.VISIBLE);
@@ -343,13 +351,6 @@ public class HomeActivity extends AppCompatActivity {
                         home3.setVisibility(View.VISIBLE);
                         home4.setVisibility(View.VISIBLE);
                         home5.setVisibility(View.VISIBLE);
-                        dash1.setVisibility(View.INVISIBLE);
-                        dash2.setVisibility(View.INVISIBLE);
-                        dash3.setVisibility(View.INVISIBLE);
-                        dash4.setVisibility(View.INVISIBLE);
-                        dash5.setVisibility(View.INVISIBLE);
-                        dash6.setVisibility(View.INVISIBLE);
-                        dash7.setVisibility(View.INVISIBLE);
                         dash8.setVisibility(View.INVISIBLE);
                         dash9.setVisibility(View.INVISIBLE);
                         layer1.startAnimation(alpha2);

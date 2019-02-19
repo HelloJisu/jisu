@@ -392,6 +392,7 @@ public class SkintypeActivity extends AppCompatActivity {
                         break;
                     case R.id.imageButton: case R.id.okay:
                         homeactivity.dashback.setImageResource(0);
+                        homeactivity.backgroundimg.setImageResource(0);
                         finish();
                         break;
                 }
