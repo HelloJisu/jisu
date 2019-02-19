@@ -90,6 +90,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     String kaname, kaemail, kaprofile;
     String isname, isprofile;
     AccessToken accessToken;
+    AccessToken tokenfab;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,6 +115,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         if (tokeninsta != null) {
             getUserInfoByAccessToken(tokeninsta);
+        }
+
+        if(tokenfb != null){
+
         }
 
         FacebookSdk.sdkInitialize(this.getApplicationContext());
@@ -340,64 +345,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 });
     }
 
-    public void signinintent (String name, String email, String profile){
-
-    }
-
-    private void initFacebook() {//FaceBook Init
-        FacebookSdk.sdkInitialize(this.getApplicationContext());
-        callbackManager = CallbackManager.Factory.create();
-        LoginManager.getInstance().registerCallback(callbackManager,
-                new FacebookCallback<LoginResult>() {
-                    @Override
-                    public void onSuccess(LoginResult loginResult) {
-
-                        Log.d("Success", String.valueOf(loginResult.getAccessToken()));
-                        Log.d("Success", String.valueOf(Profile.getCurrentProfile().getId())); //페이스북 아이디
-                        Log.d("Success", String.valueOf(Profile.getCurrentProfile().getName())); //페이스북 이름
-                        Log.d("Success", String.valueOf(Profile.getCurrentProfile().getProfilePictureUri(300, 300))); //페이스북 이미지
-                        requestUserProfile(loginResult);
-                    }
-
-                    @Override
-                    public void onCancel() {
-
-                        Log.e("나간다","나간다고");
-                    }
-
-                    @Override
-                    public void onError(FacebookException exception) {
-                    }
-                });
-    }
-
-    public void requestUserProfile(LoginResult loginResult){
-        GraphRequest request = GraphRequest.newMeRequest(
-                loginResult.getAccessToken(),
-                new GraphRequest.GraphJSONObjectCallback() {
-                    @Override
-                    public void onCompleted(JSONObject object, GraphResponse response) {
-                        try {
-                            String email = response.getJSONObject().getString("email").toString();
-                            String name = response.getJSONObject().getString("name").toString();
-                            String profile = String.valueOf(Profile.getCurrentProfile().getProfilePictureUri(300, 300));
-                            Intent intent = new Intent(getApplicationContext(),Signin2Activity.class);
-                            intent.putExtra("name",name);
-                            intent.putExtra("email",email);
-                            intent.putExtra("profile",profile);
-                            startActivity(intent);
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                });
-        Bundle parameters = new Bundle();
-        parameters.putString("fields", "id,name,email,gender,birthday");
-        request.setParameters(parameters);
-        request.executeAsync();
-    }
 
     private void getAppKeyHash() {
         try {
@@ -463,6 +410,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         public void onSuccess(LoginResult loginResult) {
             Log.e("Callback :: ", "onSuccess");
             requestMe(loginResult.getAccessToken());
+            tokenfab=loginResult.getAccessToken();
+            tokenfb=loginResult.getAccessToken().toString();
         }
 
 

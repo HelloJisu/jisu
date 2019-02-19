@@ -58,6 +58,7 @@ public class SkintypeAsk extends AppCompatActivity {
                 }
             }
         };
+        no.setOnClickListener(onClickListener);
         okay.setOnClickListener(onClickListener);
     }
 
