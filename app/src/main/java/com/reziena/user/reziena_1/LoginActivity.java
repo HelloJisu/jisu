@@ -100,13 +100,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         appPreferences = new AppPreferences(this);
 
         Log.e("start", "login");
-        SharedPreferences sp_userName = getSharedPreferences("userName", MODE_PRIVATE);
-        String userName = sp_userName.getString("userName", "");
-        Log.e("userName", userName);
-        /*if (userName!=null) {
+        SharedPreferences userName = getSharedPreferences("userName", MODE_PRIVATE);
+        String name = userName.getString("userName", "userName=none");
+        Log.e("userName", name);
+        if (!name.equals("userName=none")) {
             Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
             startActivity(intent);
-        }*/
+        }
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
