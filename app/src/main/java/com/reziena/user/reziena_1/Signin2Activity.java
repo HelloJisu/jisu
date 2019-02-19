@@ -232,7 +232,7 @@ public class Signin2Activity extends AppCompatActivity {
                     editor2.putString("userID", emailstring);
                     editor1.commit();
                     editor2.commit();
-                    Log.e("Login ", namestring+"님 로그인!!");
+                    Log.e("Login ", namestring+"님 로그인");
                     Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                     intent.putExtra("name","skintypedialog");
                     startActivity(intent);
