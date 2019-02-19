@@ -33,8 +33,11 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -118,8 +121,7 @@ public class Signin2Activity extends AppCompatActivity {
                             toast.show();
                         }else{
                             setData task = new setData();
-                            task.execute("http://"+IP_Address+"/saveMoisture.php", namestring, emailstring, profileurl);
-
+                            task.execute("http://"+IP_Address+"/saveUser.php", namestring, emailstring, profileurl);
                             Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
                             intent.putExtra("name","skintypedialog");
                             startActivity(intent);
@@ -138,6 +140,12 @@ public class Signin2Activity extends AppCompatActivity {
     }
 
     class setData extends AsyncTask<String, Void, String> {
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            Log.e("onPostExecute", "response - " + result);
+        }
 
         @Override
         protected String doInBackground(String... params) {
@@ -167,10 +175,33 @@ public class Signin2Activity extends AppCompatActivity {
                 outputStream.close();
 
                 // response
+                InputStream inputStream;
                 int responseStatusCode = httpURLConnection.getResponseCode();
                 String responseStatusMessage = httpURLConnection.getResponseMessage();
-                Log.e("response-moisture", "POST response Code - " + responseStatusCode);
-                Log.e("response-moisture", "POST response Message - "+ responseStatusMessage);
+                Log.e("response", "POST response Code - " + responseStatusCode);
+                Log.e("response", "POST response Message - "+ responseStatusMessage);
+
+                if (responseStatusCode == HttpURLConnection.HTTP_OK) {
+                    // 정상적인 응답 데이터
+                    Log.e("inputstream: ", "정상적");
+                    inputStream = httpURLConnection.getInputStream();
+                } else {
+                    // error
+                    Log.e("inputstream: ", "비정상적: " + httpURLConnection.getErrorStream());
+                    inputStream = httpURLConnection.getErrorStream();
+                }
+
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+                StringBuilder sb = new StringBuilder();
+                String line;
+
+                while((line = bufferedReader.readLine()) != null){
+                    sb.append(line);
+                }
+                bufferedReader.close();
+                return sb.toString().trim();
 
             } catch (Exception e) {
                 Log.e("ERROR", "InsertDataError ", e);
