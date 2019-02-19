@@ -61,21 +61,31 @@ public class WrinkleResultActivity extends AppCompatActivity {
     result_per = findViewById(R.id.result_per);
 
     Random rand = new Random();
-    int r = rand.nextInt(3);
+    int r = rand.nextInt(6);
     switch (r) {
       case 0:
-        grade = "A"; per = "10%"; break;
+        grade = "A+"; per = "100"; break;
       case 1:
-        grade = "B"; per = "20%";break;
+        grade = "A"; per = "95"; break;
       case 2:
-        grade = "C"; per = "30%";break;
+        grade = "B+"; per = "90"; break;
+      case 3:
+        grade = "B"; per = "85"; break;
+      case 4:
+        grade = "C+"; per = "80"; break;
+      case 5:
+        grade = "C"; per = "75";break;
     }
 
+    setData task = new setData();
+    task.execute("http://"+IP_Address+"/saveWrinkle.php", per);
+
+    Log.e("Wrinkle-grade", grade);
 
     result_grade.setText(grade);
     result_per.setText(per +"% of wrinkle \n detected");
 
-    databaseReference.child("result").child("winkle").setValue(grade);
+    databaseReference.child("result").child("winkle").setValue(per);
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
       @Override
@@ -91,9 +101,6 @@ public class WrinkleResultActivity extends AppCompatActivity {
     };
     imageButton.setOnClickListener(onClickListener);
     okay.setOnClickListener(onClickListener);
-
-    setData task = new setData();
-    task.execute("http://"+IP_Address+"/saveWrinkle.php", grade);
   }
 
   class setData extends AsyncTask<String, Void, String> {
@@ -105,7 +112,6 @@ public class WrinkleResultActivity extends AppCompatActivity {
       SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ( "yyyy-MM-dd", Locale.KOREA );
       Date currentTime = new Date();
       String date = mSimpleDateFormat.format ( currentTime );
-
 
       SharedPreferences sp_userID = getSharedPreferences("userID", MODE_PRIVATE);
       String userID = sp_userID.getString("userID", "");

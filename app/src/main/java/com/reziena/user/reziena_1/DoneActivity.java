@@ -63,8 +63,6 @@ public class DoneActivity extends AppCompatActivity implements View.OnClickListe
     public String underrightstring, underleftstring, cheekrightstring, cheekleftstring;
     TextView finishtxt;
 
-
-
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_treatfinish_ur);

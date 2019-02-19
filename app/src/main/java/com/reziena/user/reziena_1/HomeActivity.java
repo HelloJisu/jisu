@@ -79,6 +79,7 @@ public class HomeActivity extends AppCompatActivity {
     BluetoothAdapter mBtAdapter;
     String deviceName;
     private String mDeviceAddress = "";
+    LoginActivity loginActivity = (LoginActivity) LoginActivity.loginactivity;
 
     BluetoothDevice device;
 
@@ -98,6 +99,7 @@ public class HomeActivity extends AppCompatActivity {
     RenderScript rs, rs2;
     Bitmap blurBitMap, blurBitMap2;
     private static Bitmap bitamp, bitamp2;
+    LoginActivity loginactivity = (LoginActivity) LoginActivity.loginactivity;
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
     private DatabaseReference wrinkle_txt, moisture_txt, skintype_txt, wrinklemain_txt, moisturemain_txt, crdata, cldata, urdata, uldata,filepathdata;
@@ -123,6 +125,8 @@ public class HomeActivity extends AppCompatActivity {
     View screenshot, screenshotdash;
     TextView home_setName, dash_setName;
 
+    int moisture_per=0, wrinkle_per=0;
+
     ImageView mois_up, mois_down, wrinkle_up, wrinkle_down;
     int max_mois, max_wrink;
 
@@ -137,6 +141,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         homeactivity = HomeActivity.this;
+        loginActivity.finish();
 
         checkPermissions();
 
@@ -645,13 +650,30 @@ public class HomeActivity extends AppCompatActivity {
                 JSONObject jsonObject = new JSONObject(result);
                 JSONArray jsonArray = jsonObject.getJSONArray("getData");
 
+                String level="";
                 for(int i=0;i<jsonArray.length();i++){
 
                     JSONObject item = jsonArray.getJSONObject(i);
-                    DB_moisture = item.getString("level");
+                    level= item.getString("level");
+                    moisture_per = item.getInt("level");
                     max_mois = item.getInt("id");
                     max_mois -= 1;
                     Log.e("moisture-level ", DB_moisture+"!!!!!!!!!!");
+                }
+                Log.e("moisture::::", String.valueOf(moisture_per));
+                switch (level) {
+                    case "100":
+                        DB_moisture = "A+"; break;
+                    case "95":
+                        DB_moisture = "A"; break;
+                    case "90":
+                        DB_moisture = "B+"; break;
+                    case "85":
+                        DB_moisture = "B"; break;
+                    case "80":
+                        DB_moisture = "C+"; break;
+                    case "75":
+                        DB_moisture = "C"; break;
                 }
 
             } catch (JSONException e) {
@@ -743,19 +765,33 @@ public class HomeActivity extends AppCompatActivity {
                 JSONObject jsonObject = new JSONObject(result);
                 JSONArray jsonArray = jsonObject.getJSONArray("getData");
 
+                String level="";
                 for(int i=0;i<jsonArray.length();i++){
-
                     JSONObject item = jsonArray.getJSONObject(i);
-
-                    DB_wrinkle= item.getString("level");
+                    level= item.getString("level");
+                    wrinkle_per = item.getInt("level");
                     max_wrink = item.getInt("id");
                     max_wrink -= 1;
+                }
+                Log.e("wrinkle::::", String.valueOf(wrinkle_per));
+                switch (level) {
+                    case "100":
+                        DB_wrinkle = "A+"; break;
+                    case "95":
+                        DB_wrinkle = "A"; break;
+                    case "90":
+                        DB_wrinkle = "B+"; break;
+                    case "85":
+                        DB_wrinkle = "B"; break;
+                    case "80":
+                        DB_wrinkle = "C+"; break;
+                    case "75":
+                        DB_wrinkle = "C"; break;
                 }
 
             } catch (JSONException e) {
                 Log.d("wrinkle-JSON", "showResult : ", e);
             }
-
         }
     }
 
@@ -860,14 +896,6 @@ public class HomeActivity extends AppCompatActivity {
             Log.e("setArrow-Result", getResult);
             Log.e("현재디비", DB_moisture+DB_wrinkle);
 
-            /*if (getResult.contains("No_results")&&getResult.contains("moisture")) {
-                mois_up.setVisibility(View.INVISIBLE);
-                mois_down.setVisibility(View.INVISIBLE);
-            }
-            else if (getResult.contains("No_results")&&getResult.contains("wrinkle")) {
-                wrinkle_up.setVisibility(View.INVISIBLE);
-                wrinkle_down.setVisibility(View.INVISIBLE);
-            }*/
             if (getResult.contains("No_results")) {
                 if (getResult.contains("moisture")) {
                     mois_up.setVisibility(View.INVISIBLE);
@@ -895,6 +923,7 @@ public class HomeActivity extends AppCompatActivity {
                     mois_up.setVisibility(View.INVISIBLE);
                     mois_down.setVisibility(View.INVISIBLE);
                 }
+                moisture_status.setText("Great!");
             } if (getResult.contains("wrinkle")) {
                 if(wrink.equals("up")) {
                     Log.e("setting-wrinkle", "up");
@@ -911,6 +940,7 @@ public class HomeActivity extends AppCompatActivity {
                     wrinkle_up.setVisibility(View.INVISIBLE);
                     wrinkle_down.setVisibility(View.INVISIBLE);
                 }
+                wrinkle_status.setText("Good Balance");
             }
         }
 
@@ -986,54 +1016,18 @@ public class HomeActivity extends AppCompatActivity {
                     dbName = item.getString("dbName");
 
                     if (dbName.equals("moisture")) {
-                        String before_mois = item.getString("level");
-                        switch (DB_moisture) {
-                            case "A+": before = 6; break;
-                            case "A": before = 5; break;
-                            case "B+": before = 4; break;
-                            case "B": before = 3; break;
-                            case "C+": before = 2; break;
-                            case "C": before = 1; break;
-                        }
-                        switch (before_mois) {
-                            case "A+": now = 6; break;
-                            case "A": now = 5; break;
-                            case "B+": now = 4; break;
-                            case "B": now = 3; break;
-                            case "C+": now = 2; break;
-                            case "C": now = 1; break;
-                        }
+                        int before_mois = item.getInt("level");
+                        if (before_mois < moisture_per) { mois = "up"; }
+                        else if (before_mois == moisture_per) { mois = "else"; }
+                        else { mois = "down"; }
                         Log.e("setArrow", dbName + "/현재값:" + DB_moisture  + "/전에값" + before_mois);
                     }
                     if (dbName.equals("wrinkle")) {
-                        String before_wrink = item.getString("level");
-                        switch (DB_wrinkle) {
-                            case "A+": before = 6; break;
-                            case "A": before = 5; break;
-                            case "B+": before = 4; break;
-                            case "B": before = 3; break;
-                            case "C+": before = 2; break;
-                            case "C": before = 1; break;
-                        }
-                        switch (before_wrink) {
-                            case "A+": now = 6; break;
-                            case "A": now = 5; break;
-                            case "B+": now = 4; break;
-                            case "B": now = 3; break;
-                            case "C+": now = 2; break;
-                            case "C": now = 1; break;
-                        }
+                        int before_wrink = item.getInt("level");
+                        if (before_wrink < moisture_per) { wrink = "up"; }
+                        else if (before_wrink == moisture_per) { wrink = "else"; }
+                        else { wrink = "down"; }
                         Log.e("setArrow", dbName + "/현재값:" + DB_wrinkle  + "/전에값" + before_wrink);
-                    }
-                    if (before > now) {
-                        if (dbName.equals("moisture")) { mois = "up"; }
-                        else if (dbName.equals("wrinkle")) { wrink = "up"; }
-                    } else if (before == now) {
-                        if (dbName.equals("moisture")) { mois = "else"; }
-                        else if (dbName.equals("wrinkle")) { wrink = "else"; }
-                    } else if (before < now) {
-                        if (dbName.equals("moisture")) { mois = "down"; }
-                        else if (dbName.equals("wrinkle")) { wrink = "down"; }
                     }
                 }
                 Log.e("setArrow:::", "/숫자(현,전)" +now+before);

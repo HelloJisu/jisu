@@ -1,7 +1,9 @@
 package com.reziena.user.reziena_1;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -88,12 +90,20 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     String gomail, goname, goprofile;
     String kaname, kaemail, kaprofile;
     String isname, isprofile;
+    public static Activity loginactivity;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        loginactivity = LoginActivity.this;
         mLoginCallback = new LoginCallback();
         appPreferences = new AppPreferences(this);
+
+        SharedPreferences sp_userName = getSharedPreferences("userName", MODE_PRIVATE);
+        if (sp_userName!=null) {
+            Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
+            startActivity(intent);
+        }
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
