@@ -63,7 +63,7 @@ public class Signin2Activity extends AppCompatActivity {
     Button signin, signinfinish;
     private Uri mImageCaptureUri;
     private int id_view;
-    private String absolutePath;
+    private String absolutePath;//
     CircleImageView profile;
     public static Activity skinhistoryactivity;
     HomeActivity homeactivity = (HomeActivity)HomeActivity.homeactivity;
