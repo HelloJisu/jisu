@@ -32,6 +32,10 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
@@ -85,7 +89,7 @@ public class Signin2Activity extends AppCompatActivity {
         profile = findViewById(R.id.signinprofile);
         signin = findViewById(R.id.signin);
         signinfinish = findViewById(R.id.signinfinish);
-        gender = findViewById(R.id.radioGroup1);
+        gender = findViewById(R.id.radioGroup1); //ㅎㅎ
 
         Spinner s = (Spinner)findViewById(R.id.spinner1);
         s.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -146,6 +150,13 @@ public class Signin2Activity extends AppCompatActivity {
             super.onPostExecute(result);
 
             Log.e("sign-onPostExecute", "response - " + result);
+
+            if (result == null){
+                Log.e("onPostExecute", "erre");
+            }
+            else {
+                settings(result);
+            }
         }
 
         @Override
@@ -208,6 +219,34 @@ public class Signin2Activity extends AppCompatActivity {
                 Log.e("sign-ERROR", "InsertDataError ", e);
             }
             return null;
+
+        }
+
+        private void settings(String result){
+            try {
+                JSONObject jsonObject = new JSONObject(result);
+                JSONArray jsonArray = jsonObject.getJSONArray("login");
+
+                for(int i=0;i<jsonArray.length();i++){
+
+                    SharedPreferences sp_userName = getSharedPreferences("userName", MODE_PRIVATE);
+                    SharedPreferences sp_userID = getSharedPreferences("userID", MODE_PRIVATE);
+                    SharedPreferences.Editor editor1 = sp_userName.edit();
+                    SharedPreferences.Editor editor2 = sp_userID.edit();
+                    editor1.putString("userName", namestring);
+                    editor2.putString("userID", emailstring);
+                    editor1.commit();
+                    editor2.commit();
+                    Log.e("Login ", namestring+"님 로그인");
+                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                    intent.putExtra("name","skintypedialog");
+                    startActivity(intent);
+                    finish();
+                }
+
+            } catch (JSONException e) {
+                Log.d("JSON", "showResult : ", e);
+            }
 
         }
     }
