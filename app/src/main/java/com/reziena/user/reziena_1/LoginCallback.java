@@ -16,7 +16,7 @@ import com.facebook.login.LoginResult;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class LoginCallback implements FacebookCallback<LoginResult> {
+public class LoginCallback extends AppCompatActivity implements FacebookCallback<LoginResult> {
     // 로그인 성공 시 호출 됩니다. Access Token 발급 성공.
 
     @Override
@@ -49,6 +49,12 @@ public class LoginCallback implements FacebookCallback<LoginResult> {
                             String email = response.getJSONObject().getString("email").toString();
                             String name = response.getJSONObject().getString("name").toString();
                             String profile = String.valueOf(Profile.getCurrentProfile().getProfilePictureUri(300, 300));
+                            Intent intent = new Intent(getApplicationContext(),Signin2Activity.class);
+                            intent.putExtra("name",email);
+                            intent.putExtra("profile",profile);
+                            intent.putExtra("email",email);
+                            startActivity(intent);
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
