@@ -1,5 +1,6 @@
 package com.reziena.user.reziena_1;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -30,14 +31,20 @@ public class LoginmainActivity extends AppCompatActivity {
     private String IP_Address = "52.32.36.182";
     private String id;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_main);
 
+
         etID = findViewById(R.id.etID);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
+
+        etID.setText("reziena");
+        etPassword.setText("1234");
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,6 +53,7 @@ public class LoginmainActivity extends AppCompatActivity {
 
                 Login task = new Login();
                 task.execute("http://"+IP_Address+"/login.php", id, pw);
+
             }
         });
     }
@@ -64,6 +72,8 @@ public class LoginmainActivity extends AppCompatActivity {
             else {
                 showResult(result);
             }
+            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+            startActivity(intent);
         }
 
         @Override
@@ -148,6 +158,7 @@ public class LoginmainActivity extends AppCompatActivity {
                     Log.e("Login ", name+"님 로그인");
                     Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                     startActivity(intent);
+                    finish();
                 }
 
             } catch (JSONException e) {

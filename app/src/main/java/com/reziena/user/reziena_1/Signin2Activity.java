@@ -4,9 +4,11 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -33,6 +35,12 @@ import com.bumptech.glide.Glide;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -55,6 +63,7 @@ public class Signin2Activity extends AppCompatActivity {
     String namestring, emailstring, profileurl;
     private static final String DEFAULT_LOCAL = "Portugal";
 
+    private String IP_Address = "52.32.36.182";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +84,6 @@ public class Signin2Activity extends AppCompatActivity {
         signinfinish = findViewById(R.id.signinfinish);
         gender = findViewById(R.id.radioGroup1);
 
-
         Spinner s = (Spinner)findViewById(R.id.spinner1);
         s.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -85,8 +93,6 @@ public class Signin2Activity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
         });
-
-
 
         if(namestring!=null){
             name.setText(namestring);
@@ -113,6 +119,9 @@ public class Signin2Activity extends AppCompatActivity {
                             Toast toast = Toast.makeText(getApplicationContext(),"돌아가라",Toast.LENGTH_LONG);
                             toast.show();
                         }else{
+                            setData task = new setData();
+                            task.execute("http://"+IP_Address+"/saveMoisture.php", namestring, emailstring, profileurl);
+
                             Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
                             intent.putExtra("name","skintypedialog");
                             startActivity(intent);
@@ -128,6 +137,49 @@ public class Signin2Activity extends AppCompatActivity {
         signin.setOnClickListener(onClickListener);
         signinfinish.setOnClickListener(onClickListener);
         profile.setOnClickListener(onClickListener);
+    }
+
+    class setData extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            String serverURL = params[0];
+            String name = params[1];
+            String email = params[2];
+            String profile = params[3];
+
+            SharedPreferences sp_userID = getSharedPreferences("userID", MODE_PRIVATE);
+            String userID = sp_userID.getString("userID", "");
+            String postParameters = "name="+name+"&email="+email+"&profile="+profile;
+            Log.e("moisture-postParameters", postParameters);
+
+            try {
+                URL url = new URL(serverURL);
+
+                HttpURLConnection httpURLConnection= (HttpURLConnection)url.openConnection();
+                httpURLConnection.setReadTimeout(5000);
+                httpURLConnection.setConnectTimeout(5000);;
+
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.connect();
+
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                outputStream.write(postParameters.getBytes("UTF-8"));
+                outputStream.flush();
+                outputStream.close();
+
+                // response
+                int responseStatusCode = httpURLConnection.getResponseCode();
+                String responseStatusMessage = httpURLConnection.getResponseMessage();
+                Log.e("response-moisture", "POST response Code - " + responseStatusCode);
+                Log.e("response-moisture", "POST response Message - "+ responseStatusMessage);
+
+            } catch (Exception e) {
+                Log.e("ERROR", "InsertDataError ", e);
+            }
+            return null;
+
+        }
     }
 
     public void doTakeAlbumAction(){

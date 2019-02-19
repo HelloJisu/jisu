@@ -1,7 +1,9 @@
 package com.reziena.user.reziena_1;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -91,13 +93,24 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     String isname, isprofile;
     AccessToken accessToken;
     AccessToken tokenfab;
+    public static Activity loginactivity;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        loginactivity = LoginActivity.this;
         mLoginCallback = new LoginCallback();
         appPreferences = new AppPreferences(this);
         accessToken = AccessToken.getCurrentAccessToken();
+
+        Log.e("start", "login");
+        SharedPreferences sp_userName = getSharedPreferences("userName", MODE_PRIVATE);
+        String userName = sp_userName.getString("userName", "");
+        Log.e("userName", userName);
+        /*if (userName!=null) {
+            Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
+            startActivity(intent);
+        }*/
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -154,7 +167,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         intent.putExtra("name",isname);
         intent.putExtra("profile",isprofile);
         startActivity(intent);
-
     }
 
     public void logout() {
@@ -219,8 +231,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             }
         }
     }
-
-
 
     private void isKakaoLogin() {
         // 카카오 세션을 오픈한다
@@ -399,7 +409,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 authenticationDialog.setCancelable(true);
                 authenticationDialog.show();
                 break;
-
         }
     }
 
