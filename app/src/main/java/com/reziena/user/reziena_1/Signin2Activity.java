@@ -117,7 +117,7 @@ public class Signin2Activity extends AppCompatActivity {
                     case R.id.signin:
                         genderresult=findViewById(gender.getCheckedRadioButtonId());
                         if(genderresult==null){
-                            Toast toast = Toast.makeText(getApplicationContext(),"돌아가라",Toast.LENGTH_LONG);
+                            Toast toast = Toast.makeText(getApplicationContext(),"돌아가라!",Toast.LENGTH_LONG);
                             toast.show();
                         }else{
                             setData task = new setData();
