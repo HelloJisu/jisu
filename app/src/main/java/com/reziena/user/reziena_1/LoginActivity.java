@@ -64,7 +64,7 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.util.Arrays;
 
-public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener,View.OnClickListener{
+public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener,View.OnClickListener,AuthenticationListener{
     LinearLayout login, signin;
     private InputMethod.SessionCallback callback;
     SignInButton btn_login;
@@ -80,7 +80,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     Intent intent;
     private Context mContext;
     private SessionCallback mKakaocallback;
-    private String token = null;
+    private String tokeninsta = null;
     private AppPreferences appPreferences = null;
     private AuthenticationDialog authenticationDialog = null;
     private View info = null;
@@ -103,6 +103,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         mAuth = FirebaseAuth.getInstance();
 
+        tokeninsta = appPreferences.getString(AppPreferences.TOKEN);
+        if (tokeninsta != null) {
+            getUserInfoByAccessToken(tokeninsta);
+        }
 
         FacebookSdk.sdkInitialize(this.getApplicationContext());
         AppEventsLogger.activateApp(this);
@@ -115,9 +119,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         login = findViewById(R.id.login);
         btn_login = findViewById(R.id.googlelogin);
         twittericon=findViewById(R.id.twitter);
-        token = appPreferences.getString(AppPreferences.TOKEN);
-
-        token = appPreferences.getString(AppPreferences.TOKEN);
+        tokeninsta = appPreferences.getString(AppPreferences.TOKEN);
 
         getAppKeyHash();
         twittericon.setOnClickListener(this);
@@ -131,7 +133,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
 
     public void login() {
-        info.setVisibility(View.VISIBLE);
         String profile = appPreferences.getString(AppPreferences.PROFILE_PIC); //인스타그램 프로필
         //Picasso.with(this).load().into(pic);
         String id = appPreferences.getString(AppPreferences.USER_ID); //인스타그램 아이디
@@ -139,10 +140,66 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     public void logout() {
-        token = null;
+        tokeninsta = null;
         info.setVisibility(View.GONE);
         appPreferences.clear();
     }
+
+    public void onTokenReceived(String auth_token) {
+        if (auth_token == null)
+            return;
+        appPreferences.putString(AppPreferences.TOKEN, auth_token);
+        tokeninsta = auth_token;
+        getUserInfoByAccessToken(tokeninsta);
+    }
+
+    private void getUserInfoByAccessToken(String token) {
+        new RequestInstagramAPI().execute();
+    }
+    private class RequestInstagramAPI extends AsyncTask<Void, String, String> {
+
+        @Override
+        protected String doInBackground(Void... params) {
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpGet httpGet = new HttpGet(getResources().getString(R.string.get_user_info_url) + tokeninsta);
+            try {
+                HttpResponse response = httpClient.execute(httpGet);
+                HttpEntity httpEntity = response.getEntity();
+                return EntityUtils.toString(httpEntity);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String response) {
+            super.onPostExecute(response);
+            if (response != null) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    Log.e("response", jsonObject.toString());
+                    JSONObject jsonData = jsonObject.getJSONObject("data");
+                    if (jsonData.has("id")) {
+                        //сохранение данных пользователя
+                        appPreferences.putString(AppPreferences.USER_ID, jsonData.getString("id")); //인스타그램 아이디
+                        appPreferences.putString(AppPreferences.USER_NAME, jsonData.getString("username")); //인스타그램 이름
+                        appPreferences.putString(AppPreferences.PROFILE_PIC, jsonData.getString("profile_picture")); //인스타그램 프로필 사진
+
+                        //TODO: сохранить еще данные
+                        login();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            } else {
+                Toast toast = Toast.makeText(getApplicationContext(),"Ошибка входа!",Toast.LENGTH_LONG);
+                toast.show();
+            }
+        }
+    }
+
 
 
     private void isKakaoLogin() {
@@ -343,7 +400,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 isKakaoLogin();
                 break;
             case R.id.twitter:
-
+                authenticationDialog = new AuthenticationDialog(this, this);
+                authenticationDialog.setCancelable(true);
+                authenticationDialog.show();
                 break;
 
         }

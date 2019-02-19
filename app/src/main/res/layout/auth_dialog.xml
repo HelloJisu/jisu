@@ -14,8 +14,8 @@
 
         <WebView
             android:id="@+id/webView"
-            android:layout_width="500dp"
-            android:layout_height="400dp">
+            android:layout_width="550dp"
+            android:layout_height="650dp">
         </WebView>
     </LinearLayout>
 

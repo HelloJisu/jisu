@@ -32,7 +32,7 @@ android {
     buildToolsVersion '28.0.3'
     productFlavors {
     }
-
+    useLibrary 'org.apache.http.legacy'
 }
 
 dependencies {
@@ -64,10 +64,6 @@ dependencies {
     implementation 'devs.mulham.horizontalcalendar:horizontalcalendar:1.1.7'
     implementation 'com.google.android.gms:play-services-auth:15.0.1'
     api 'com.kakao.sdk:usermgmt:1.14.0'
-    implementation files('src/main/JniLibs/httpcore-4.4.11.jar')
-    implementation files('src/main/JniLibs/httpclient-4.5.7.jar')
-    provided 'org.jbundle.util.osgi.wrapped:org.jbundle.util.osgi.wrapped.org.apache.http.client:4.1.2'
-
 }
 
 apply plugin: 'com.google.gms.google-services'
