@@ -40,6 +40,7 @@ public class SkintypeAsk extends AppCompatActivity {
         getWindow().getAttributes().height = height;
 
         okay = findViewById(R.id.okay);
+        no = findViewById(R.id.no);
 
         View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override

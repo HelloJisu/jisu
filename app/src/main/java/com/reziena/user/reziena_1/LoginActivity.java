@@ -131,7 +131,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         }
 
         if(tokenfb != null){
-
+            LoginManager loginManager = LoginManager.getInstance();
+            loginManager.logInWithReadPermissions(LoginActivity.this, Arrays.asList("public_profile", "email"));
+            loginManager.registerCallback(callbackManager, mLoginCallback);
         }
 
         FacebookSdk.sdkInitialize(this.getApplicationContext());

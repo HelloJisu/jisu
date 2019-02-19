@@ -151,7 +151,7 @@ public class Signin2Activity extends AppCompatActivity {
             SharedPreferences sp_userID = getSharedPreferences("userID", MODE_PRIVATE);
             String userID = sp_userID.getString("userID", "");
             String postParameters = "name="+name+"&email="+email+"&profile="+profile;
-            Log.e("moisture-postParameters", postParameters);
+            Log.e("sign-postParameters", postParameters);
 
             try {
                 URL url = new URL(serverURL);
@@ -171,11 +171,11 @@ public class Signin2Activity extends AppCompatActivity {
                 // response
                 int responseStatusCode = httpURLConnection.getResponseCode();
                 String responseStatusMessage = httpURLConnection.getResponseMessage();
-                Log.e("response-moisture", "POST response Code - " + responseStatusCode);
-                Log.e("response-moisture", "POST response Message - "+ responseStatusMessage);
+                Log.e("response-sign", "POST response Code - " + responseStatusCode);
+                Log.e("response-sign", "POST response Message - "+ responseStatusMessage);
 
             } catch (Exception e) {
-                Log.e("ERROR", "InsertDataError ", e);
+                Log.e("ERRORsign", "InsertDataError ", e);
             }
             return null;
 
