@@ -99,11 +99,14 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         mLoginCallback = new LoginCallback();
         appPreferences = new AppPreferences(this);
 
+        Log.e("start", "login");
         SharedPreferences sp_userName = getSharedPreferences("userName", MODE_PRIVATE);
-        if (sp_userName!=null) {
+        String userName = sp_userName.getString("userName", "");
+        Log.e("userName", userName);
+        /*if (userName!=null) {
             Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
             startActivity(intent);
-        }
+        }*/
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -155,7 +158,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         intent.putExtra("name",isname);
         intent.putExtra("profile",isprofile);
         startActivity(intent);
-
     }
 
     public void logout() {
@@ -219,8 +221,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             }
         }
     }
-
-
 
     private void isKakaoLogin() {
         // 카카오 세션을 오픈한다
@@ -455,7 +455,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 authenticationDialog.setCancelable(true);
                 authenticationDialog.show();
                 break;
-
         }
     }
 }

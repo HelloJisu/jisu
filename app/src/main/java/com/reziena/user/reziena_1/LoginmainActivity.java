@@ -72,7 +72,8 @@ public class LoginmainActivity extends AppCompatActivity {
             else {
                 showResult(result);
             }
-            finish();
+            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+            startActivity(intent);
         }
 
         @Override
@@ -157,6 +158,7 @@ public class LoginmainActivity extends AppCompatActivity {
                     Log.e("Login ", name+"님 로그인");
                     Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                     startActivity(intent);
+                    finish();
                 }
 
             } catch (JSONException e) {
