@@ -60,4 +60,18 @@ public class SkintypeAsk extends AppCompatActivity {
         };
         okay.setOnClickListener(onClickListener);
     }
+
+    public boolean dispatchTouchEvent(MotionEvent ev){
+        Rect dialogBounds = new Rect();
+        getWindow().getDecorView().getHitRect(dialogBounds);
+        if(!dialogBounds.contains((int)ev.getX(),(int) ev.getY())){
+            return false;
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+    }
 }

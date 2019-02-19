@@ -81,6 +81,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private Context mContext;
     private SessionCallback mKakaocallback;
     private String tokeninsta = null;
+    private String tokenfb = null;
     private AppPreferences appPreferences = null;
     private AuthenticationDialog authenticationDialog = null;
     private View info = null;
@@ -88,12 +89,14 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     String gomail, goname, goprofile;
     String kaname, kaemail, kaprofile;
     String isname, isprofile;
+    AccessToken accessToken;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         mLoginCallback = new LoginCallback();
         appPreferences = new AppPreferences(this);
+        accessToken = AccessToken.getCurrentAccessToken();
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -108,6 +111,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         mAuth = FirebaseAuth.getInstance();
 
         tokeninsta = appPreferences.getString(AppPreferences.TOKEN);
+
         if (tokeninsta != null) {
             getUserInfoByAccessToken(tokeninsta);
         }
@@ -165,6 +169,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private void getUserInfoByAccessToken(String token) {
         new RequestInstagramAPI().execute();
     }
+
     private class RequestInstagramAPI extends AsyncTask<Void, String, String> {
 
         @Override
@@ -346,6 +351,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
+
                         Log.d("Success", String.valueOf(loginResult.getAccessToken()));
                         Log.d("Success", String.valueOf(Profile.getCurrentProfile().getId())); //페이스북 아이디
                         Log.d("Success", String.valueOf(Profile.getCurrentProfile().getName())); //페이스북 이름
@@ -427,8 +433,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 startActivity(intent);
                 break;
             case R.id.facebook:
-                LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "email", "user_friends"));
-                initFacebook();
+                LoginManager loginManager = LoginManager.getInstance();
+                loginManager.logInWithReadPermissions(LoginActivity.this, Arrays.asList("public_profile", "email"));
+                loginManager.registerCallback(callbackManager, mLoginCallback);
                 break;
             case R.id.google:
                 btn_login.performClick();

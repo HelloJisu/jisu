@@ -186,6 +186,7 @@ public class HomeActivity extends AppCompatActivity {
         screenshotdash=findViewById(R.id.screenshotdash);
         home_setName = findViewById(R.id.home_setName);
         dash_setName = findViewById(R.id.dash_setName);
+        String dialogstring;
 
         mois_up = findViewById(R.id.mois_up);
         mois_down = findViewById(R.id.mois_down);
@@ -248,6 +249,25 @@ public class HomeActivity extends AppCompatActivity {
 
         // set hideable or not
         bottomSheetBehavior.setHideable(false);
+
+        Intent subintent = getIntent();
+        dialogstring = subintent.getExtras().getString("name");
+
+        if(dialogstring!=null){
+            if(dialogstring.equals("skintypedialog")){
+                final Intent intent = new Intent(getApplicationContext(),SkintypeAsk.class);
+                new Handler().postDelayed(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        startActivity(intent);
+                        screenshot();
+                    }
+                }, 100);
+            }
+        }
+
 
         //animation
         final Animation scaletranslate = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_scaletranslate);

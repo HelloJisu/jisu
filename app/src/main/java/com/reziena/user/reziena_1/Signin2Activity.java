@@ -103,7 +103,9 @@ public class Signin2Activity extends AppCompatActivity {
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.signinfinish:
-
+                        Intent intent1 = new Intent(getApplicationContext(),LoginmainActivity.class);
+                        startActivity(intent1);
+                        finish();
                         break;
                     case R.id.signin:
                         genderresult=findViewById(gender.getCheckedRadioButtonId());

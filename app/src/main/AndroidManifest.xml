@@ -40,7 +40,7 @@
 
         <activity android:name=".TreatActivity" />
         <activity android:name=".Signin2Activity"/>
-        <activity android:name=".SkintypeAsk"/>
+        <activity android:name=".SkintypeAsk" android:theme="@style/NoTitleDialog" />
         <activity android:name=".TreatActivity_cheekleft" />
         <activity android:name=".TreatActivity_cheekright" />
         <activity android:name=".TreatActivity_underleft" />
@@ -51,8 +51,7 @@
             android:noHistory="true"/>
         <activity android:name=".TreatActivity_underleft2"
             android:noHistory="true"/>
-        <activity android:name=".TreatActivity_underright2"
-            android:noHistory="true"/>
+        <activity android:name=".TreatActivity_underright2" android:noHistory="true"/>
         <activity android:name=".LoadingActivity"/>
         <activity android:name=".HomeActivity"/>
         <activity android:name=".MainActivity"
