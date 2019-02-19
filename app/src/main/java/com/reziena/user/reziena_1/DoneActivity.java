@@ -44,6 +44,7 @@ public class DoneActivity extends AppCompatActivity implements View.OnClickListe
     private float mDownScaleFactor;
     private boolean mDimming;
     private boolean mDebug;
+    //하하하 이 시발
     private Context context;
     String donestring;
     Intent intent;
