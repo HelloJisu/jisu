@@ -44,7 +44,7 @@ public class LoadingActivity extends AppCompatActivity {
         second = new TimerTask() {
             @Override
             public void run() {
-                Log.e("카운터", String.valueOf(count));
+                //Log.e("카운터_main", String.valueOf(count));
                 count++;
                 runOnUiThread(new Runnable() {
                     @Override

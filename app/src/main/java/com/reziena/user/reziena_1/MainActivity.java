@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -27,6 +28,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.opencv.android.BaseLoaderCallback;
@@ -53,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         capure=(View)findViewById(R.id.capture);
+
         mainnactivity=MainActivity.this;
         View.OnClickListener onClickListener = new View.OnClickListener() {
             Intent intent;
@@ -71,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
         capure.setOnClickListener(onClickListener);
         mCameraTextureView = (TextureView) findViewById(R.id.textureView);
         mPreview = new Preview(this, mCameraTextureView);
-
     }
 
     @Override

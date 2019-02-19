@@ -2,9 +2,12 @@ package com.reziena.user.reziena_1;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Rect;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,6 +18,13 @@ import android.widget.TextView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Random;
 
 public class WrinkleResultActivity extends AppCompatActivity {
@@ -26,6 +36,8 @@ public class WrinkleResultActivity extends AppCompatActivity {
   String grade, per;
   HomeActivity homeactivity = (HomeActivity)HomeActivity.homeactivity;
   MainActivity mainActivity = (MainActivity)MainActivity.mainnactivity;
+
+  private String IP_Address = "52.32.36.182";
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +91,56 @@ public class WrinkleResultActivity extends AppCompatActivity {
     };
     imageButton.setOnClickListener(onClickListener);
     okay.setOnClickListener(onClickListener);
+
+    setData task = new setData();
+    task.execute("http://"+IP_Address+"/saveWrinkle.php", grade);
   }
+
+  class setData extends AsyncTask<String, Void, String> {
+
+    @Override
+    protected String doInBackground(String... params) {
+      String serverURL = params[0];
+      String grade = params[1];
+      SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ( "yyyy-MM-dd", Locale.KOREA );
+      Date currentTime = new Date();
+      String date = mSimpleDateFormat.format ( currentTime );
+
+
+      SharedPreferences sp_userID = getSharedPreferences("userID", MODE_PRIVATE);
+      String userID = sp_userID.getString("userID", "");
+      String postParameters = "date="+date+"&id="+userID+"&grade="+grade;
+      Log.e("wrinkle-postParameters", "/////"+postParameters);
+
+      try {
+        URL url = new URL(serverURL);
+
+        HttpURLConnection httpURLConnection= (HttpURLConnection)url.openConnection();
+        httpURLConnection.setReadTimeout(5000);
+        httpURLConnection.setConnectTimeout(5000);;
+
+        httpURLConnection.setRequestMethod("POST");
+        httpURLConnection.connect();
+
+        OutputStream outputStream = httpURLConnection.getOutputStream();
+        outputStream.write(postParameters.getBytes("UTF-8"));
+        Log.e("postParameters", postParameters);
+        outputStream.flush();
+        outputStream.close();
+
+        // response
+        int responseStatusCode = httpURLConnection.getResponseCode();
+        String responseStatusMessage = httpURLConnection.getResponseMessage();
+        Log.e("response-moisture", "POST response Code - " + responseStatusCode);
+        Log.e("response-moisture", "POST response Message - "+ responseStatusMessage);
+
+      } catch (Exception e) {
+        Log.e("ERROR", "InsertDataError ", e);
+      }
+      return null;
+    }
+  }
+
   public boolean dispatchTouchEvent(MotionEvent ev){
     Rect dialogBounds = new Rect();
     getWindow().getDecorView().getHitRect(dialogBounds);

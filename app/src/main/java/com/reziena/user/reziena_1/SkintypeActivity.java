@@ -1,7 +1,10 @@
 package com.reziena.user.reziena_1;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Rect;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -18,7 +21,20 @@ import android.widget.TextView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class SkintypeActivity extends AppCompatActivity {
 
@@ -40,9 +56,10 @@ public class SkintypeActivity extends AppCompatActivity {
     LinearLayout content1, content2;
     int width;
 
+    private String IP_Address = "52.32.36.182";
+
     public SkintypeActivity() {
     }
-
 
     private void setPage() {
         if(page==5) {
@@ -155,6 +172,75 @@ public class SkintypeActivity extends AppCompatActivity {
         Log.i("pn: ", String.valueOf(wpn));
         Log.i("wt: ", String.valueOf(wwt));
 
+        setData task = new setData();
+        task.execute("http://"+IP_Address+"/saveSkintype.php", skin_type);
+
+    }
+
+    class setData extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            String serverURL = params[0];
+            String result = params[1];
+            SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ( "yyyy-MM-dd", Locale.KOREA );
+            Date currentTime = new Date();
+            String date = mSimpleDateFormat.format ( currentTime );
+
+            SharedPreferences sp_userID = getSharedPreferences("userID", MODE_PRIVATE);
+            String userID = sp_userID.getString("userID", "");
+            String postParameters = "date="+date+"&id="+userID+"&result="+result;
+            Log.e("skintype-postParameters", postParameters);
+
+            try {
+                URL url = new URL(serverURL);
+
+                HttpURLConnection httpURLConnection= (HttpURLConnection)url.openConnection();
+                httpURLConnection.setReadTimeout(5000);
+                httpURLConnection.setConnectTimeout(5000);;
+
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.connect();
+
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                outputStream.write(postParameters.getBytes("UTF-8"));
+                Log.e("postParameters", postParameters);
+                outputStream.flush();
+                outputStream.close();
+
+                // response
+                int responseStatusCode = httpURLConnection.getResponseCode();
+                String responseStatusMessage = httpURLConnection.getResponseMessage();
+                Log.e("response-skintype", "POST response Code - " + responseStatusCode);
+                Log.e("response-skintype", "POST response Message - "+ responseStatusMessage);
+
+                InputStream inputStream;
+                if (responseStatusCode == HttpURLConnection.HTTP_OK) {
+                    // 정상적인 응답 데이터
+                    inputStream = httpURLConnection.getInputStream();
+                    Log.e("skintype-inputstream: ", "정상적");
+                } else {
+                    // error
+                    inputStream = httpURLConnection.getErrorStream();
+                    Log.e("skintype-inputstream: ", "비정상적: " + httpURLConnection.getErrorStream());
+                }
+
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+                StringBuilder sb = new StringBuilder();
+                String line = null;
+
+                while ((line=bufferedReader.readLine()) != null) {
+                    sb.append(line);
+                    Log.e("read", String.valueOf(sb.append(line)));
+                }
+
+            } catch (Exception e) {
+                Log.e("skintype-ERROR", "InsertDataError ", e);
+            }
+            return null;
+        }
     }
 
     private void setSeekbar() {
@@ -392,7 +478,6 @@ public class SkintypeActivity extends AppCompatActivity {
                         break;
                     case R.id.imageButton: case R.id.okay:
                         homeactivity.dashback.setImageResource(0);
-                        homeactivity.backgroundimg.setImageResource(0);
                         finish();
                         break;
                 }

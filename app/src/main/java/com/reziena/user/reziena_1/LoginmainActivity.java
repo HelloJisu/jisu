@@ -1,6 +1,9 @@
 package com.reziena.user.reziena_1;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -9,47 +12,148 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 public class LoginmainActivity extends AppCompatActivity {
 
-    private EditText etEmail;
-    private Button btnRegist;
+    private EditText etID, etPassword;
+    private Button btnLogin;
+    private String IP_Address = "52.32.36.182";
+    private String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_main);
 
-        etEmail = (EditText) findViewById(R.id.etEmail);
-        btnRegist = (Button) findViewById(R.id.btnRegist);
-        btnRegist.setOnClickListener(new View.OnClickListener() {
+        etID = findViewById(R.id.etID);
+        etPassword = findViewById(R.id.etPassword);
+        btnLogin = findViewById(R.id.btnLogin);
+        btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                String id = etID.getText().toString();
+                String pw = etPassword.getText().toString();
 
-                // SINGLE_TOP : 이미 만들어진게 있으면 그걸 쓰고, 없으면 만들어서 써라
-                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-
-                // 동시에 사용 가능
-                // intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-                // intent를 보내면서 다음 액티비티로부터 데이터를 받기 위해 식별번호(1000)을 준다.
-                startActivityForResult(intent, 1000);
+                Login task = new Login();
+                task.execute("http://"+IP_Address+"/login.php", id, pw);
             }
         });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    class Login extends AsyncTask<String, Void, String> {
 
-        // setResult를 통해 받아온 요청번호, 상태, 데이터
-        Log.d("RESULT", requestCode + "");
-        Log.d("RESULT", resultCode + "");
-        Log.d("RESULT", data + "");
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
 
-        if(requestCode == 1000 && resultCode == RESULT_OK) {
-            Toast.makeText(LoginmainActivity.this, "회원가입을 완료했습니다!", Toast.LENGTH_SHORT).show();
-            etEmail.setText(data.getStringExtra("email"));
+            Log.e("onPostExecute", "response - " + result);
+
+            if (result == null){
+                Log.e("onPostExecute", "erre");
+            }
+            else {
+                showResult(result);
+            }
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            String serverURL = params[0];
+
+            id = params[1];
+            String pw = params[2];
+
+            String postParameters = "id="+id+"&pw="+pw;
+
+            try {
+                URL url = new URL(serverURL);
+
+                HttpURLConnection httpURLConnection= (HttpURLConnection)url.openConnection();
+                httpURLConnection.setReadTimeout(5000);
+                httpURLConnection.setConnectTimeout(5000);;
+
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.connect();
+
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                outputStream.write(postParameters.getBytes("UTF-8"));
+                Log.e("postParameters", postParameters);
+                outputStream.flush();
+                outputStream.close();
+
+                // response
+                InputStream inputStream;
+                int responseStatusCode = httpURLConnection.getResponseCode();
+                String responseStatusMessage = httpURLConnection.getResponseMessage();
+                Log.e("response", "POST response Code - " + responseStatusCode);
+                Log.e("response", "POST response Message - "+ responseStatusMessage);
+
+                if (responseStatusCode == HttpURLConnection.HTTP_OK) {
+                    // 정상적인 응답 데이터
+                    Log.e("inputstream: ", "정상적");
+                    inputStream = httpURLConnection.getInputStream();
+                } else {
+                    // error
+                    Log.e("inputstream: ", "비정상적: " + httpURLConnection.getErrorStream());
+                    inputStream = httpURLConnection.getErrorStream();
+                }
+
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+                StringBuilder sb = new StringBuilder();
+                String line;
+
+                while((line = bufferedReader.readLine()) != null){
+                    sb.append(line);
+                }
+                bufferedReader.close();
+                return sb.toString().trim();
+
+            } catch (Exception e) {
+                Log.e("ERROR", "InsertDataError ", e);
+            }
+            return null;
+        }
+
+        private void showResult(String result){
+            try {
+                JSONObject jsonObject = new JSONObject(result);
+                JSONArray jsonArray = jsonObject.getJSONArray("login");
+
+                for(int i=0;i<jsonArray.length();i++){
+
+                    JSONObject item = jsonArray.getJSONObject(i);
+
+                    String name = item.getString("name");
+
+                    SharedPreferences sp_userName = getSharedPreferences("userName", MODE_PRIVATE);
+                    SharedPreferences sp_userID = getSharedPreferences("userID", MODE_PRIVATE);
+                    SharedPreferences.Editor editor1 = sp_userName.edit();
+                    SharedPreferences.Editor editor2 = sp_userID.edit();
+                    editor1.putString("userName", name);
+                    editor2.putString("userID", id);
+                    editor1.commit();
+                    editor2.commit();
+                    Log.e("Login ", name+"님 로그인");
+                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                    startActivity(intent);
+                }
+
+            } catch (JSONException e) {
+                Log.d("JSON", "showResult : ", e);
+            }
+
         }
     }
 }

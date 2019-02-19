@@ -3,11 +3,13 @@ package com.reziena.user.reziena_1;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -26,10 +28,28 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class TreatActivity_underleft extends AppCompatActivity {
+
+  private String IP_Address = "52.32.36.182";
+  String treatResult="";
 
   ImageView forehead, underleft, underright, eyeleft, eyeright, cheekl, cheekr, mouth, back;
   LinearLayout component;
@@ -118,66 +138,233 @@ public class TreatActivity_underleft extends AppCompatActivity {
     underleft.setOnClickListener(onClickListener);
   }
 
-  public void onStart() {
-    super.onStart();
-    wrinkle_txt.addValueEventListener(new ValueEventListener() {
-      @Override
-      public void onDataChange(DataSnapshot dataSnapshot) {
-        wrinkle_string = dataSnapshot.getValue(String.class);
-        if (wrinkle_string.equals("A")) {
-          level = 1;
-        }
-        if (wrinkle_string.equals("B")) {
-          level = 2;
-        }
-        if (wrinkle_string.equals("C")) {
-          level = 3;
-        }
-        if (level == 1) {
-          underleft.setImageResource(R.drawable.underleftlevel1);
-          underright.setImageResource(R.drawable.underrightlevel1);
-          component_txt.setText("PLEASE SET THE DEVICE\nON LEVEL 1,\nAND SELECT STARTIG AREA");
-        }
-        if (level == 2) {
-          underleft.setImageResource(R.drawable.underleftlevel2);
-          underright.setImageResource(R.drawable.underrightlevel2);
-          component_txt.setText("PLEASE SET THE DEVICE\nON LEVEL 2,\nAND SELECT STARTIG AREA");
-        }
-        if (level == 3) {
-          underleft.setImageResource(R.drawable.underleftlevel3);
-          underright.setImageResource(R.drawable.underrightlevel3);
-          component_txt.setText("PLEASE SET THE DEVICE\nON LEVEL 3,\nAND SELECT STARTIG AREA");
-        }
-      }
+  public void onStart() { super.onStart(); }
 
-      @Override
-      public void onCancelled(DatabaseError databaseError) {
-      }
-    });
-    underleftdata.addValueEventListener(new ValueEventListener() {
-      @Override
-      public void onDataChange(DataSnapshot dataSnapshot) {
-        underleftstring=dataSnapshot.getValue(String.class);
-        if (underleftstring.equals("true")) {
+  public void onResume() {
+    super.onResume();
+
+    GetData task = new GetData();
+    task.execute("http://"+IP_Address+"/callingTreat.php", "");
+
+    GetData2 task2 = new GetData2();
+    task2.execute("http://"+IP_Address+"/callingWrinkle.php", "");
+
+  }
+
+  class GetData extends AsyncTask<String, Void, String> {
+
+    @Override
+    protected void onPostExecute(String getResult) {
+      super.onPostExecute(getResult);
+
+      Log.e("treat3-", "onPostExecute - " + getResult);
+
+      if (!getResult.contains("No_results")) {
+        showResult(getResult);
+
+        // cheekl
+        if (treatResult.contains("uneye_l")) {
           underleft.setEnabled(false);
           underleft.setImageResource(R.drawable.underleftdone);
         }
-      }
-      @Override
-      public void onCancelled(DatabaseError databaseError) { }
-    });
-    underrightdata.addValueEventListener(new ValueEventListener() {
-      @Override
-      public void onDataChange(DataSnapshot dataSnapshot) {
-        underrightstring=dataSnapshot.getValue(String.class);
-        if (underrightstring.equals("true")) {
+
+        // cheekr
+        if (treatResult.contains("uneye_r")) {
           underright.setEnabled(false);
           underright.setImageResource(R.drawable.underrightdone);
         }
       }
-      @Override
-      public void onCancelled(DatabaseError databaseError) { }
-    });
+      else {
+        Log.e("treat3-response:", "no result");
+      }
+    }
+
+    @Override
+    protected String doInBackground(String... params) {
+      String serverURL = params[0];
+
+      SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ( "yyyy-MM-dd", Locale.KOREA );
+      Date currentTime = new Date();
+      String date = mSimpleDateFormat.format ( currentTime );
+
+      SharedPreferences sp_userID = getSharedPreferences("userID", MODE_PRIVATE);
+      String userID = sp_userID.getString("userID", "");
+      String postParameters = "date="+date+"&id="+userID;
+      Log.e("moisture-userID", userID);
+
+      try {
+        URL url = new URL(serverURL);
+
+        HttpURLConnection httpURLConnection= (HttpURLConnection)url.openConnection();
+        httpURLConnection.setReadTimeout(5000);
+        httpURLConnection.setConnectTimeout(5000);
+
+        httpURLConnection.setRequestMethod("POST");
+        httpURLConnection.connect();
+
+        OutputStream outputStream = httpURLConnection.getOutputStream();
+        outputStream.write(postParameters.getBytes("UTF-8"));
+        Log.e("treat2-postParameters", postParameters);
+        outputStream.flush();
+        outputStream.close();
+
+        InputStream inputStream;
+        int responseStatusCode = httpURLConnection.getResponseCode();
+        if(responseStatusCode == HttpURLConnection.HTTP_OK) {
+          inputStream = httpURLConnection.getInputStream();
+          Log.e("treat3-response", "code - HTTP_OK - " + responseStatusCode);
+        }
+        else{
+          inputStream = httpURLConnection.getErrorStream();
+          Log.e("treat3-response", "code - HTTP_NOT_OK - " + responseStatusCode);
+        }
+
+        InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+        StringBuilder sb = new StringBuilder();
+        String line;
+
+        while((line = bufferedReader.readLine()) != null){
+          sb.append(line);
+        }
+        bufferedReader.close();
+
+        return sb.toString().trim();
+
+      } catch (Exception e) {
+        Log.e("treat3-error-stream", e.getMessage());
+      }
+      return null;
+    }
+
+    private void showResult(String result){
+      try {
+        JSONObject jsonObject = new JSONObject(result);
+        JSONArray jsonArray = jsonObject.getJSONArray("getData");
+
+        for(int i=0;i<jsonArray.length();i++){
+
+          JSONObject item = jsonArray.getJSONObject(i);
+          treatResult+=item.getString("value");
+
+          Log.e("treatResult: ", treatResult+"");
+        }
+
+      } catch (JSONException e) {
+        Log.d("treatResult-JSON", "showResult : ", e);
+      }
+    }
+  }
+
+  class GetData2 extends AsyncTask<String, Void, String> {
+
+    @Override
+    protected void onPostExecute(String getResult) {
+      super.onPostExecute(getResult);
+
+      Log.e("wrinkle-", "onPostExecute - " + getResult);
+
+      showResult(getResult);
+
+      if (wrinkle_string.equals("A")) {
+        level = 1;
+      }
+      if (wrinkle_string.equals("B")) {
+        level = 2;
+      }
+      if (wrinkle_string.equals("C")) {
+        level = 3;
+      }
+      if (level == 1) {
+        underleft.setImageResource(R.drawable.underleftlevel1);
+        underright.setImageResource(R.drawable.underrightlevel1);
+        component_txt.setText("PLEASE SET THE DEVICE\nON LEVEL 1,\nAND SELECT STARTIG AREA");
+      }
+      if (level == 2) {
+        underleft.setImageResource(R.drawable.underleftlevel2);
+        underright.setImageResource(R.drawable.underrightlevel2);
+        component_txt.setText("PLEASE SET THE DEVICE\nON LEVEL 2,\nAND SELECT STARTIG AREA");
+      }
+      if (level == 3) {
+        underleft.setImageResource(R.drawable.underleftlevel3);
+        underright.setImageResource(R.drawable.underrightlevel3);
+        component_txt.setText("PLEASE SET THE DEVICE\nON LEVEL 3,\nAND SELECT STARTIG AREA");
+      }
+    }
+
+    @Override
+    protected String doInBackground(String... params) {
+      String serverURL = params[0];
+
+      SharedPreferences sp_userID = getSharedPreferences("userID", MODE_PRIVATE);
+      String userID = sp_userID.getString("userID", "");
+      String postParameters = "id="+userID;
+
+      try {
+        URL url = new URL(serverURL);
+
+        HttpURLConnection httpURLConnection= (HttpURLConnection)url.openConnection();
+        httpURLConnection.setReadTimeout(5000);
+        httpURLConnection.setConnectTimeout(5000);
+        httpURLConnection.setRequestMethod("POST");
+        //httpURLConnection.setDoInput(true);
+        httpURLConnection.connect();
+        Log.e("wrinkle-Connect", "complete");
+
+        OutputStream outputStream = httpURLConnection.getOutputStream();
+        outputStream.write(postParameters.getBytes("UTF-8"));
+        Log.e("wrinkle-postParameters", postParameters);
+        outputStream.flush();
+        outputStream.close();
+
+        InputStream inputStream;
+        int responseStatusCode = httpURLConnection.getResponseCode();
+        Log.d("wrinkle-response", "code - " + responseStatusCode);
+
+        if(responseStatusCode == HttpURLConnection.HTTP_OK) {
+          inputStream = httpURLConnection.getInputStream();
+        }
+        else{
+          inputStream = httpURLConnection.getErrorStream();
+        }
+
+        InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+        StringBuilder sb = new StringBuilder();
+        String line;
+
+        while((line = bufferedReader.readLine()) != null){
+          sb.append(line);
+        }
+        bufferedReader.close();
+
+        return sb.toString().trim();
+
+      } catch (Exception e) {
+        Log.e("wrinkle-error", e.getMessage());
+      }
+      return null;
+    }
+
+    private void showResult(String result){
+      try {
+        JSONObject jsonObject = new JSONObject(result);
+        JSONArray jsonArray = jsonObject.getJSONArray("getData");
+
+        for(int i=0;i<jsonArray.length();i++){
+
+          JSONObject item = jsonArray.getJSONObject(i);
+
+          wrinkle_string = item.getString("level");
+        }
+
+      } catch (JSONException e) {
+        Log.d("wrinkle-JSON", "showResult : ", e);
+      }
+
+    }
   }
 
 }

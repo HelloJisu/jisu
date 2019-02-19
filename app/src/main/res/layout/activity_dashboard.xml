@@ -86,6 +86,7 @@
                             android:layout_weight="0.07"/>
 
                         <TextView
+                            android:id="@+id/dash_setName"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="0.6"
@@ -177,6 +178,7 @@
                                 tools:ignore="MissingPrefix" />
 
                             <ImageView
+                                android:id="@+id/mois_up"
                                 android:layout_width="14.25dp"
                                 android:layout_height="14.25dp"
                                 android:layout_alignParentEnd="true"
@@ -189,6 +191,7 @@
                                 tools:ignore="MissingPrefix" />
 
                             <ImageView
+                                android:id="@+id/mois_down"
                                 android:layout_width="14.25dp"
                                 android:layout_height="14.25dp"
                                 android:layout_alignParentEnd="true"
@@ -309,6 +312,7 @@
                                 tools:ignore="MissingPrefix" />
 
                             <ImageView
+                                android:id="@+id/wrinkle_up"
                                 android:layout_width="14.25dp"
                                 android:layout_height="14.25dp"
                                 android:layout_alignParentEnd="true"
@@ -321,6 +325,7 @@
                                 tools:ignore="MissingPrefix" />
 
                             <ImageView
+                                android:id="@+id/wrinkle_down"
                                 android:layout_width="14.25dp"
                                 android:layout_height="14.25dp"
                                 android:layout_alignParentEnd="true"

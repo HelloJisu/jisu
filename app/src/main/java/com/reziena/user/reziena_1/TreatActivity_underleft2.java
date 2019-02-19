@@ -3,11 +3,13 @@ package com.reziena.user.reziena_1;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -34,6 +36,12 @@ import com.reziena.user.reziena_1.utils.RSBlurProcessor;
 
 import org.opencv.core.Point;
 
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -61,6 +69,8 @@ public class TreatActivity_underleft2 extends AppCompatActivity {
     String part;
     AnimationDrawable utlani1,utlani2,utlani3,utlani4,utlani5,utlani6,utlani7,utlani8,utlani9,utlani10,utlani11,utlani12,utlani13;
     static String finish;
+
+    private String IP_Address = "52.32.36.182";
 
     public static void intentpage(String string) {
         finish=string;
@@ -193,8 +203,9 @@ public class TreatActivity_underleft2 extends AppCompatActivity {
                                 underleftstring="true";
                             }
                             if(count==15){
-                                databaseReference.child("result").child("underleft_data").setValue(data);
-                                databaseReference.child("result").child("underleftstring").setValue(underleftstring);
+                                setData task = new setData();
+                                task.execute("http://"+IP_Address+"/saveTreat.php", "uneye_l");
+
                                 if (! TreatActivity_underleft2.this.isFinishing()) {
                                     Intent intent = new Intent(getApplicationContext(),DoneActivity.class);
                                     intent.putExtra("stringlist","underleft");
@@ -221,28 +232,52 @@ public class TreatActivity_underleft2 extends AppCompatActivity {
 
     public void onStart() {
         super.onStart();
-        underleftdata.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                underleftstring=dataSnapshot.getValue(String.class);
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) { }
-        });
-        wrinkle_txt.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                wrinkle_string = dataSnapshot.getValue(String.class);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-
     }
 
+    class setData extends AsyncTask<String, Void, String> {
 
+        @Override
+        protected String doInBackground(String... params) {
+            String serverURL = params[0];
+            String where = params[1];
+
+            SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ( "yyyy-MM-dd", Locale.KOREA );
+            Date currentTime = new Date();
+            String date = mSimpleDateFormat.format ( currentTime );
+
+            SharedPreferences sp_userID = getSharedPreferences("userID", MODE_PRIVATE);
+            String userID = sp_userID.getString("userID", "");
+            String postParameters = "date="+date+"&id="+userID+"&where="+where;
+            Log.e("cheekl-postParameters", "update/"+postParameters);
+
+            try {
+                URL url = new URL(serverURL);
+
+                HttpURLConnection httpURLConnection= (HttpURLConnection)url.openConnection();
+                httpURLConnection.setReadTimeout(5000);
+                httpURLConnection.setConnectTimeout(5000);;
+
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.connect();
+
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                outputStream.write(postParameters.getBytes("UTF-8"));
+                outputStream.flush();
+                outputStream.close();
+
+                // response
+                int responseStatusCode = httpURLConnection.getResponseCode();
+                String responseStatusMessage = httpURLConnection.getResponseMessage();
+                Log.e("response-update", "POST response Code - " + responseStatusCode);
+                Log.e("response-update", "POST response Message - "+ responseStatusMessage);
+
+            } catch (Exception e) {
+                Log.e("ERROR", "updateDataError ", e);
+            }
+            return null;
+
+        }
+    }
 
     @SuppressLint("WrongViewCast")
     @Override

@@ -3,50 +3,40 @@ package com.reziena.user.reziena_1;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.Resources;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.renderscript.RenderScript;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
-import android.text.style.ForegroundColorSpan;
 import android.util.Log;
-import android.view.Display;
 import android.view.View;
-import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+
 import com.reziena.user.reziena_1.utils.RSBlurProcessor;
 
-import org.opencv.core.Point;
-
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class TreatActivity_cheekleft2 extends AppCompatActivity {
 
-    private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-    private DatabaseReference databaseReference = firebaseDatabase.getReference();
-    private DatabaseReference wrinkle_txt;
     RenderScript rs;
     Bitmap blurBitMap;
     private static Bitmap bitamp;
-    private DatabaseReference underrightdata,underleftdata,cheekleftdata,cheekrightdata;
     public static Activity cheekleftactivity;
     String wrinkle_string;
     ImageView backgroundimg;
@@ -65,12 +55,13 @@ public class TreatActivity_cheekleft2 extends AppCompatActivity {
     static String finish;
     ImageView content1, content2;
 
+    private String IP_Address = "52.32.36.182";
 
     public void animation() {
         second = new TimerTask() {
             @Override
             public void run() {
-                Log.e("카운터",String.valueOf(count));
+                //Log.e("카운터_anitimer",String.valueOf(count));
                 count++;
                 runOnUiThread(new Runnable() {
                     @Override
@@ -265,8 +256,13 @@ public class TreatActivity_cheekleft2 extends AppCompatActivity {
                             cheekleftstring="true";
                         }
                             if(count==23){
-                                databaseReference.child("result").child("cheekleft_data").setValue(data);
-                                databaseReference.child("result").child("cheekleftstring").setValue(cheekleftstring);
+
+                                setData task = new setData();
+                                task.execute("http://"+IP_Address+"/saveTreat.php", "cheek_l");
+
+                                //checkTreat task = new checkTreat();
+                                //task.execute("http://"+IP_Address+"/checkTreat.php", "cheek_l");
+
                                 if (! TreatActivity_cheekleft2.this.isFinishing()) {
                                     Intent intent = new Intent(getApplicationContext(),DoneActivity.class);
                                     intent.putExtra("stringlist","cheekleft");
@@ -287,29 +283,55 @@ public class TreatActivity_cheekleft2 extends AppCompatActivity {
         };
         Timer timer = new Timer();
         timer.schedule(second, 0, 1000);
+    }
 
+    class setData extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            String serverURL = params[0];
+            String where = params[1];
+
+            SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ( "yyyy-MM-dd", Locale.KOREA );
+            Date currentTime = new Date();
+            String date = mSimpleDateFormat.format ( currentTime );
+
+            SharedPreferences sp_userID = getSharedPreferences("userID", MODE_PRIVATE);
+            String userID = sp_userID.getString("userID", "");
+            String postParameters = "date="+date+"&id="+userID+"&where="+where;
+            Log.e("cheekl-postParameters", "update/"+postParameters);
+
+            try {
+                URL url = new URL(serverURL);
+
+                HttpURLConnection httpURLConnection= (HttpURLConnection)url.openConnection();
+                httpURLConnection.setReadTimeout(5000);
+                httpURLConnection.setConnectTimeout(5000);;
+
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.connect();
+
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                outputStream.write(postParameters.getBytes("UTF-8"));
+                outputStream.flush();
+                outputStream.close();
+
+                // response
+                int responseStatusCode = httpURLConnection.getResponseCode();
+                String responseStatusMessage = httpURLConnection.getResponseMessage();
+                Log.e("response-update", "POST response Code - " + responseStatusCode);
+                Log.e("response-update", "POST response Message - "+ responseStatusMessage);
+
+            } catch (Exception e) {
+                Log.e("ERROR", "updateDataError ", e);
+            }
+            return null;
+
+        }
     }
 
     public void onStart() {
         super.onStart();
-        cheekrightdata.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                cheekrightstring=dataSnapshot.getValue(String.class);
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) { }
-        });
-        wrinkle_txt.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                wrinkle_string = dataSnapshot.getValue(String.class);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
     }
 
     @SuppressLint("WrongViewCast")
@@ -318,8 +340,6 @@ public class TreatActivity_cheekleft2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_treat_cheekleft2);
 
-        cheekleftdata = databaseReference.child("result").child("cheekleftstring");
-        cheekrightdata = databaseReference.child("result").child("cheekrightstring");
         cheekleftactivity = TreatActivity_cheekleft2.this;
 
         //값 받아오기
@@ -357,8 +377,6 @@ public class TreatActivity_cheekleft2 extends AppCompatActivity {
         c_tleft_txt2=(TextView)findViewById(R.id.c_tleft_txt2);
         component_txt=findViewById(R.id.componenttxt_cl);
         backgroundimg=findViewById(R.id.background);
-
-        wrinkle_txt = databaseReference.child("result").child("winkle");
 
         animation();
 
