@@ -127,7 +127,7 @@ public class HomeActivity extends AppCompatActivity {
 
     int moisture_per=0, wrinkle_per=0;
 
-    ImageView mois_up, mois_down, wrinkle_up, wrinkle_down;
+    ImageView mois_up, mois_down, wrinkle_up, wrinkle_down, imageView2;
     int max_mois, max_wrink;
 
     private String userName;
@@ -197,6 +197,8 @@ public class HomeActivity extends AppCompatActivity {
         mois_down = findViewById(R.id.mois_down);
         wrinkle_up = findViewById(R.id.wrinkle_up);
         wrinkle_down = findViewById(R.id.wrinkle_down);
+
+        imageView2 = findViewById(R.id.imageView2);
 
         // check
         //Calendar cal = Calendar.getInstance();
@@ -441,6 +443,18 @@ public class HomeActivity extends AppCompatActivity {
                         break;
                     case R.id.image:
                         doTakeAlbumAction();
+                    case R.id.imageView2:
+                        SharedPreferences sp_userName = getSharedPreferences("userName", MODE_PRIVATE);
+                        SharedPreferences sp_userID = getSharedPreferences("userID", MODE_PRIVATE);
+                        SharedPreferences.Editor editor1 = sp_userName.edit();
+                        SharedPreferences.Editor editor2 = sp_userID.edit();
+                        editor1.remove("userName");
+                        editor2.remove("userID");
+                        editor1.commit();
+                        editor2.commit();
+                        Log.e("remove", "yeal~!");
+                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(intent);
                 }
             }
         };
@@ -454,6 +468,7 @@ public class HomeActivity extends AppCompatActivity {
         arrow.setOnClickListener(onClickListener);
         treatbtn.setOnClickListener(onClickListener);
         logo.setOnClickListener(onClickListener);
+        imageView2.setOnClickListener(onClickListener);
 
         // SharedPreferences에서 이름 받아오기
         SharedPreferences sp_userName = getSharedPreferences("userName", MODE_PRIVATE);
@@ -461,6 +476,7 @@ public class HomeActivity extends AppCompatActivity {
         home_setName.setText("GOOD MORNING, "+ userName+"!");
         dash_setName.setText("GOOD MORNING, "+ userName+"!");
         Log.e("SharedPreferences", userName);
+
     }
 
     private void checkPermissions() {

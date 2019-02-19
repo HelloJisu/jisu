@@ -1103,12 +1103,13 @@
         </LinearLayout>
 
 
-
         <ImageView
             android:id="@+id/backgroundimage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop"
+            tools:layout_editor_absoluteX="50dp"
+            tools:layout_editor_absoluteY="0dp" />
 
     </android.support.constraint.ConstraintLayout>
 
