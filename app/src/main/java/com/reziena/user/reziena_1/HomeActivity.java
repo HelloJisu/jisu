@@ -432,7 +432,7 @@ public class HomeActivity extends AppCompatActivity {
                         editor2.remove("userID");
                         editor1.commit();
                         editor2.commit();
-                        Log.e("remove", "yeal~!");
+                        Log.e("remove", "yeal~!"); //하기실어
                         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(intent);
                 }
