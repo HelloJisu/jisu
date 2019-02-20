@@ -54,8 +54,7 @@
         <activity android:name=".TreatActivity_underright2" android:noHistory="true"/>
         <activity android:name=".LoadingActivity"/>
         <activity android:name=".HomeActivity"/>
-        <activity android:name=".MainActivity"
-            android:noHistory="true"/>
+        <activity android:name=".MainActivity" android:noHistory="true"/>
         <activity android:name=".SigninActivity"/>
         <activity android:name=".LoginmainActivity"/>
         <activity

@@ -122,7 +122,7 @@ public class HomeActivity extends AppCompatActivity {
     private int id_view;
     private String absolutePath;
     String wrinklestringg;
-    View screenshot, screenshotdash;
+
     TextView home_setName, dash_setName;
 
     int moisture_per=0, wrinkle_per=0;
@@ -187,8 +187,6 @@ public class HomeActivity extends AppCompatActivity {
         backgroundimg=findViewById(R.id.backgroundimage);
         dashback=findViewById(R.id.dashback);
         skintype_main=findViewById(R.id.skintype_main);
-        screenshot=findViewById(R.id.screenshot);
-        screenshotdash=findViewById(R.id.screenshotdash);
         home_setName = findViewById(R.id.home_setName);
         dash_setName = findViewById(R.id.dash_setName);
         String dialogstring;
