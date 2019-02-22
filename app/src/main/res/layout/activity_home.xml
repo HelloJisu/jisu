@@ -164,10 +164,10 @@
             android:weightSum="2960"
             android:orientation="vertical">
 
-           <LinearLayout
-               android:layout_width="match_parent"
-               android:layout_height="0dp"
-               android:layout_weight="850"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="850"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -721,7 +721,7 @@
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-        
+
         <LinearLayout
             android:id="@+id/home2"
             android:layout_width="match_parent"
@@ -785,45 +785,45 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="510"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="304"
-            android:weightSum="1440"
-            android:orientation="horizontal">
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="19"/>
-            <LinearLayout
-                android:id="@+id/treatBtn"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1402"
-                android:background="@drawable/treatbtn"
-                android:weightSum="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="304"
+                android:weightSum="1440"
                 android:orientation="horizontal">
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.037"/>
-
-                <TextView
+                    android:layout_weight="19"/>
+                <LinearLayout
+                    android:id="@+id/treatBtn"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.926"
-                    android:gravity="center"
-                    android:shadowColor="#80F9BEBE"
-                    android:shadowDx="0"
-                    android:shadowDy="0"
-                    android:shadowRadius="30"
-                    android:text="TREAT NOW"
-                    android:textColor="#FFFFFF"
-                    android:textSize="14.5sp"
-                    android:textStyle="bold"
-                    app:fontFamily="@font/roboto" />
+                    android:layout_weight="1402"
+                    android:background="@drawable/treatbtn"
+                    android:weightSum="1"
+                    android:orientation="horizontal">
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.037"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.926"
+                        android:gravity="center"
+                        android:shadowColor="#80F9BEBE"
+                        android:shadowDx="0"
+                        android:shadowDy="0"
+                        android:shadowRadius="30"
+                        android:text="TREAT NOW"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14.5sp"
+                        android:textStyle="bold"
+                        app:fontFamily="@font/roboto" />
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -859,7 +859,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="2120"/>
 
-            </LinearLayout>
+        </LinearLayout>
         <LinearLayout
             android:id="@+id/home4"
             android:layout_width="match_parent"
@@ -938,7 +938,7 @@
                         android:textSize="10sp"
                         app:fontFamily="@font/roboto" />
                 </LinearLayout>
-                </LinearLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -968,16 +968,16 @@
                 android:orientation="horizontal"
                 android:weightSum="1">
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.58"/>
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.25"
-                        android:src="@drawable/skintypeline"/>
-                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.58"/>
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.25"
+                    android:src="@drawable/skintypeline"/>
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -1101,7 +1101,6 @@
                     tools:ignore="MissingConstraints" />
             </LinearLayout>
         </LinearLayout>
-
 
         <ImageView
             android:id="@+id/backgroundimage"

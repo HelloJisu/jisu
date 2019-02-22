@@ -95,7 +95,6 @@ public class DoneActivity extends AppCompatActivity implements View.OnClickListe
 
         finishtxt = findViewById(R.id.finishtxt);
 
-
         Log.e("underright", String.valueOf(underrightstring));
         Log.e("underleft", String.valueOf(underleftstring));
         Log.e("cheekrightt", String.valueOf(cheekrightstring));
@@ -188,6 +187,7 @@ public class DoneActivity extends AppCompatActivity implements View.OnClickListe
                         finish();
                     }
                     else {
+                        HomeActivity.send("uneye_l->start");
                         intent = new Intent(v.getContext(), TreatActivity_underleft2.class);
                         v.getContext().startActivity(intent);
                         underright.finish();
@@ -202,6 +202,7 @@ public class DoneActivity extends AppCompatActivity implements View.OnClickListe
                         finish();
                     }
                     else {
+                        HomeActivity.send("uneye_r->start");
                         intent = new Intent(v.getContext(), TreatActivity_underright2.class);
                         v.getContext().startActivity(intent);
                         underleft.finish();
@@ -216,6 +217,7 @@ public class DoneActivity extends AppCompatActivity implements View.OnClickListe
                         finish();
                     }
                     else {
+                        HomeActivity.send("cheek_l->start");
                         intent = new Intent(v.getContext(), TreatActivity_cheekleft2.class);
                         v.getContext().startActivity(intent);
                         cheekright.finish();
@@ -230,6 +232,7 @@ public class DoneActivity extends AppCompatActivity implements View.OnClickListe
                         finish();
                     }
                     else {
+                        HomeActivity.send("cheek_r->start");
                         intent = new Intent(v.getContext(), TreatActivity_cheekright2.class);
                         v.getContext().startActivity(intent);
                         cheekleft.finish();

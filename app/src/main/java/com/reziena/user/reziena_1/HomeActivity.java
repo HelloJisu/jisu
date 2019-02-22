@@ -4,10 +4,12 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -61,6 +63,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -68,6 +71,8 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Set;
 import java.util.TimeZone;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.UUID;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -76,21 +81,25 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
 public class HomeActivity extends AppCompatActivity {
 
-    BluetoothAdapter mBtAdapter;
+    static BluetoothAdapter mBtAdapter;
     String deviceName;
     private String mDeviceAddress = "";
     LoginActivity loginActivity = (LoginActivity) LoginActivity.loginactivity;
 
     BluetoothDevice device;
 
-    BluetoothConnectionService mBluetoothConnection;
+    static boolean isFirst = true;
+
+    static BluetoothConnectionService mBluetoothConnection;
 
     // 스마트폰끼리의 UUID
-    private static final UUID MY_UUID = UUID.fromString("8ce255c0-200a-11e0-ac64-0800200c9a66"); //  - 00001180-0000-1000-8000-00805f9b34fb //00000000-0000-1000-8000-00805f9b34fb
+    private static final UUID MY_UUID = UUID.fromString("00000003-0000-1000-8000-00805f9b34fb");
     private final static byte[] PIN  = {1, 2, 3, 4};
     private static final int REQUEST_LOCATION = 1;
+    private static final int REQUEST_ENABLE_BT = 1;
 
     int count; /**discovery된 device가 몇개인지*/
+    int countDown=45;
     ArrayList<String> address = new ArrayList<>(); /** discovery한 address */
     ArrayList<String> bondedDevice = new ArrayList<>();
 
@@ -122,16 +131,19 @@ public class HomeActivity extends AppCompatActivity {
     private int id_view;
     private String absolutePath;
     String wrinklestringg;
-    View screenshot, screenshotdash;
+
     TextView home_setName, dash_setName;
 
     int moisture_per=0, wrinkle_per=0;
+
+    String btTag = "BLUETOOTH_CONNECT";
 
     ImageView mois_up, mois_down, wrinkle_up, wrinkle_down, imageView2;
     int max_mois, max_wrink;
 
     private String userName;
     private String IP_Address = "52.32.36.182";
+    static String devName = "상아";     //Galaxy Note8, Galaxy S9
 
     private String DB_skintype, DB_moisture="", DB_wrinkle="";
 
@@ -187,10 +199,9 @@ public class HomeActivity extends AppCompatActivity {
         backgroundimg=findViewById(R.id.backgroundimage);
         dashback=findViewById(R.id.dashback);
         skintype_main=findViewById(R.id.skintype_main);
-        screenshot=findViewById(R.id.screenshot);
-        screenshotdash=findViewById(R.id.screenshotdash);
         home_setName = findViewById(R.id.home_setName);
         dash_setName = findViewById(R.id.dash_setName);
+        String dialogstring;
 
         mois_up = findViewById(R.id.mois_up);
         mois_down = findViewById(R.id.mois_down);
@@ -256,6 +267,24 @@ public class HomeActivity extends AppCompatActivity {
         // set hideable or not
         bottomSheetBehavior.setHideable(false);
 
+        Intent subintent = getIntent();
+        dialogstring = subintent.getExtras().getString("name");
+
+        if(dialogstring!=null){
+            if(dialogstring.equals("skintypedialog")){
+                final Intent intent = new Intent(getApplicationContext(),SkintypeAsk.class);
+                new Handler().postDelayed(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        startActivity(intent);
+                        screenshot();
+                    }
+                }, 100);
+            }
+        }
+
         //animation
         final Animation scaletranslate = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_scaletranslate);
         final Animation alpha = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_alpha);
@@ -309,7 +338,6 @@ public class HomeActivity extends AppCompatActivity {
             }
 
         });
-
 
         View.OnClickListener onClickListener = new View.OnClickListener() {
             Intent intent;
@@ -435,6 +463,7 @@ public class HomeActivity extends AppCompatActivity {
                         Log.e("remove", "yeal~!"); //하기실어
                         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(intent);
+                        finish();
                 }
             }
         };
@@ -456,6 +485,8 @@ public class HomeActivity extends AppCompatActivity {
         home_setName.setText("GOOD MORNING, "+ userName+"!");
         dash_setName.setText("GOOD MORNING, "+ userName+"!");
         Log.e("SharedPreferences", userName);
+
+        if (isFirst) getBondedDevices();
 
     }
 
@@ -482,27 +513,69 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    private void getBondedDevices() {
+    public static void send(String message) {
+        byte[] bytes = message.getBytes(Charset.defaultCharset());
+        mBluetoothConnection.write(bytes);
+    }
 
+    private void getBondedDevices() {
+        isFirst = false;
+        String isHave="";
         mBtAdapter = BluetoothAdapter.getDefaultAdapter();
+        Log.e(btTag, "getBondedDevices() init");
+
+        // 장치가 블루투스 지원하지 않는 경우
+        if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
+            Log.e("STATUS", "BLE 지원 불가능");
+            android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
+            builder.setTitle("BLE 지원 안됨");
+            builder.setMessage("블루투스가 지원이 안됩니다,");
+            builder.setNegativeButton("취소",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+            android.support.v7.app.AlertDialog alert = builder.create();
+            alert.show();
+            finish();
+        }
+
+        // 장치가 블루투스 지원하는 경우
+        // 블루투스가 꺼져있으면 사용자에게 블루투스 활성화를 요청한다
+        if (!mBtAdapter.isEnabled()) {
+            Log.e("STATUS", "BLE 비활성상태");
+            //Toast.makeText(getApplicationContext(), "BLE 비활성상태", Toast.LENGTH_SHORT).show();
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);  // 뒤에것은 어떤 요청인지 알기 위해
+        }
+
         Set<BluetoothDevice> pairedDevices = mBtAdapter.getBondedDevices();
         if (pairedDevices.size()>0) {
             for (BluetoothDevice bond : pairedDevices) {
-
                 deviceName = bond.getName();
-                if (deviceName.equals("Galaxy Note8")) {
-                    Log.e("devName:", deviceName);
-                    Log.e("devAdd:", bond.getAddress());
+                Log.e(btTag, "bonded name:" + deviceName);
+                if (deviceName.equals(devName)) {
+                    isHave += "yes";
+                    Log.e(btTag, "devName: "+deviceName);
+                    Log.e(btTag, "devAdd: "+ bond.getAddress());
                     connectToDevice(bond.getAddress());
                 }
             }
+            if (!isHave.contains("yes")) {
+                discoveryStart();
+            }
         }
-        else {
-            // 페어링 디바이스가 없을 때
-        }
+        else { discoveryStart(); }
     }
 
-    private boolean connectToDevice(final String address) {
+    public void discoveryStart() {
+        Intent intent = new Intent(getApplicationContext(), BTOnActivity.class);
+        startActivity(intent);
+    }
+
+    public boolean connectToDevice(String address) {
         /** Filtering Broadcast Receiver */
         IntentFilter filter3 = new IntentFilter();
         filter3.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
@@ -513,16 +586,20 @@ public class HomeActivity extends AppCompatActivity {
         this.registerReceiver(mBroadcastReceiver3, filter3);
 
         if (mBtAdapter == null || address == null) {
-            Log.e("STATUS", "mBtAdapter==null & address==null");
+            Log.e(btTag, "mBtAdapter==null & address==null");
             return false;
         }
         mDeviceAddress = address;
         device = mBtAdapter.getRemoteDevice(mDeviceAddress);
 
-        Log.e("BT", "startBTConnection: initializing RFCOM Bluetooth Connection");
+        Log.e(btTag, "startBTConnection: initializing RFCOM Bluetooth Connection");
 
         mBluetoothConnection = new BluetoothConnectionService(getApplicationContext());
         mBluetoothConnection.startClient(device, MY_UUID);
+
+        unregisterReceiver(mBroadcastReceiver3);
+        discoveryStart();
+
         return true;
     }
 
@@ -1072,8 +1149,6 @@ public class HomeActivity extends AppCompatActivity {
 
         GetData3 task3 = new GetData3();
         task3.execute("http://"+IP_Address+"/callingSkintype.php", "");
-
-        getBondedDevices();
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -1097,53 +1172,61 @@ public class HomeActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode,resultCode,data);
 
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // BT 활성화 아니오 눌렀을 경우 끝
+        if (requestCode == REQUEST_ENABLE_BT && resultCode == Activity.RESULT_CANCELED) {
+            finish();
+            return;
+        }
+
         if(resultCode!=RESULT_OK)
             return;
 
-            switch(requestCode)
-            {
-                case PICK_FROM_ALBUM: {
-                    mImageCaptureUri = data.getData();
-                    Log.d("SmartWheel", mImageCaptureUri.getPath().toString());
-                }
-                case PICK_FROM_CAMERA:{
-                    Intent intent = new Intent("com.android.camera.action.CROP");
-                    intent.setDataAndType(mImageCaptureUri,"image/");
+        switch(requestCode)
+        {
+            case PICK_FROM_ALBUM: {
+                mImageCaptureUri = data.getData();
+                Log.d("SmartWheel", mImageCaptureUri.getPath().toString());
+            }
+            case PICK_FROM_CAMERA:{
+                Intent intent = new Intent("com.android.camera.action.CROP");
+                intent.setDataAndType(mImageCaptureUri,"image/");
 
-                    intent.putExtra("outputX",200);
-                    intent.putExtra("outputY",200);
-                    intent.putExtra("aspectX",1);
-                    intent.putExtra("aspectY",1);
-                    intent.putExtra("scale",true);
-                    intent.putExtra("return-data",true);
-                    startActivityForResult(intent,CROP_FROM_IMAGE);
+                intent.putExtra("outputX",200);
+                intent.putExtra("outputY",200);
+                intent.putExtra("aspectX",1);
+                intent.putExtra("aspectY",1);
+                intent.putExtra("scale",true);
+                intent.putExtra("return-data",true);
+                startActivityForResult(intent,CROP_FROM_IMAGE);
+                break;
+            }
+            case CROP_FROM_IMAGE:{
+                if(resultCode!=RESULT_OK){
+                    return;
+                }
+                final Bundle extras = data.getExtras();
+
+                String filePath = Environment.getExternalStorageDirectory().getAbsolutePath()+
+                        "/SmartWheel"+System.currentTimeMillis()+".jpg";
+
+                if(extras!=null){
+                    Bitmap photo = extras.getParcelable("data");
+                    //Glide.with(this).load(filePath).bitmapTransform(new CropCircleTransformation(new CustomBitmapPool())).into(image);
+
+                    image.setImageBitmap(photo);
+                    image_main.setImageBitmap(photo);
+
+                    databaseReference.child("result").child("filepath").setValue(filePath);
+
+                    storeCropImage(photo,filePath);
+                    absolutePath = filePath;
                     break;
                 }
-                case CROP_FROM_IMAGE:{
-                    if(resultCode!=RESULT_OK){
-                        return;
-                    }
-                    final Bundle extras = data.getExtras();
-
-                    String filePath = Environment.getExternalStorageDirectory().getAbsolutePath()+
-                            "/SmartWheel"+System.currentTimeMillis()+".jpg";
-
-                    if(extras!=null){
-                        Bitmap photo = extras.getParcelable("data");
-                        //Glide.with(this).load(filePath).bitmapTransform(new CropCircleTransformation(new CustomBitmapPool())).into(image);
-
-                        image.setImageBitmap(photo);
-                        image_main.setImageBitmap(photo);
-
-                        databaseReference.child("result").child("filepath").setValue(filePath);
-
-                        storeCropImage(photo,filePath);
-                        absolutePath = filePath;
-                        break;
-                    }
-                    File f = new File(mImageCaptureUri.getPath());
-                    if(f.exists()){
-                        f.delete();
+                File f = new File(mImageCaptureUri.getPath());
+                if(f.exists()){
+                    f.delete();
                 }
             }
         }
@@ -1244,19 +1327,21 @@ public class HomeActivity extends AppCompatActivity {
             //Log.e(TAG, "Now Action?::" + action);
 
             if(BluetoothDevice.ACTION_ACL_CONNECTED.equals(intent.getAction())) {
-                Log.e("Now Action?::", action);
+                Log.e(btTag,"Now Action?:: " + action);
                 Toast toast = Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_SHORT);
                 toast.show();
             }
             else if(BluetoothDevice.ACTION_ACL_DISCONNECTED.equals(intent.getAction())) {
-                Log.e("Now Action?::", action);
+                Log.e(btTag,"Now Action?:: " + action);
             }
             else if (BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED.equals(intent.getAction())) {
-                Log.e("Now Action?::", action);
+                Log.e(btTag,"Now Action?:: " + action);
             }
             else if (BluetoothAdapter.ACTION_CONNECTION_STATE_CHANGED.equals(intent.getAction())) {
-                Log.e("Now Action?::", action);
+                Log.e(btTag,"Now Action?:: " + action);
             }
         }
     };
+
+
 }

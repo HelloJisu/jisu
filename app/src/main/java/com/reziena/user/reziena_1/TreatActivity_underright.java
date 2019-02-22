@@ -120,6 +120,7 @@ public class TreatActivity_underright extends AppCompatActivity {
             break;
 
           case R.id.underright_ur:
+            HomeActivity.send("uneye_r->start");
             intent = new Intent(getBaseContext(), TreatActivity_underright2.class);
             startActivity(intent);
             overridePendingTransition(0, 0);

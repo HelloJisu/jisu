@@ -260,9 +260,6 @@ public class TreatActivity_cheekleft2 extends AppCompatActivity {
                                 setData task = new setData();
                                 task.execute("http://"+IP_Address+"/saveTreat.php", "cheek_l");
 
-                                //checkTreat task = new checkTreat();
-                                //task.execute("http://"+IP_Address+"/checkTreat.php", "cheek_l");
-
                                 if (! TreatActivity_cheekleft2.this.isFinishing()) {
                                     Intent intent = new Intent(getApplicationContext(),DoneActivity.class);
                                     intent.putExtra("stringlist","cheekleft");
