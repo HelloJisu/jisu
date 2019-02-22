@@ -21,7 +21,6 @@
     <string name="q15">"15 _ Based on the places you've lived, how much daily sun exposure have you received in your life?"</string>
     <string name="q16">"16 _ How often do you currently eat fruits and vegetables?"</string>
     <string name="facebook_app_id">2544519015562288</string>
-    <string name="kakao_app_key"> 96ded70d36cb40fe98317129bdd5f53f</string>
     <string name="client_id">c3bbe70b4b274e4b948bd974928da387</string>
     <string name="callback_url">https://instagram.com/</string>
     <string name="base_url">https://api.instagram.com/</string>

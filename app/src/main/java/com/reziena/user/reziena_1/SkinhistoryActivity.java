@@ -65,6 +65,8 @@ public class SkinhistoryActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
+        super.onBackPressed();
+        homeactivity.backgroundimg.setImageResource(0);
+
     }
 }

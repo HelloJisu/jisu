@@ -13,8 +13,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -33,7 +31,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -61,11 +58,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 import java.util.Set;
 import java.util.TimeZone;
 import java.util.UUID;
@@ -110,8 +104,8 @@ public class HomeActivity extends AppCompatActivity {
     RelativeLayout card, design_bottom_sheet, arrow;
     LinearLayout toolbar_dash,moisture,wrinkles,skin_type, toolbar,treatbtn, historyBtn, dashboard;
     LinearLayout home1,home2,home3,home4,home5,home8,home9;
-    LinearLayout dash6,dash1,dash8,dash9,dash10;
-    ImageView layer1, logo,backgroundimg,dashback;
+    LinearLayout dash6,dash1,dash2,dash3,dash8,dash9,dash10;
+    ImageView layer1, logo,backgroundimg,dashback,dashbackimg;
     CircleImageView image, image_main;
     BottomSheetBehavior bottomSheetBehavior;
     TextView skintype_result, moisture_score, wrinkle_score, moisture_status, wrinkle_status, moisture_score_main, wrinkle_score_main, question,skintype_main;
@@ -132,7 +126,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private String userName;
     private String IP_Address = "52.32.36.182";
-
+    boolean isPageOpen=false;
     private String DB_skintype, DB_moisture="", DB_wrinkle="";
 
     @SuppressLint("WrongViewCast")
@@ -155,7 +149,6 @@ public class HomeActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         image = findViewById(R.id.image); // profile
         image_main = findViewById(R.id.image_main); // profile
-        layer1 = findViewById(R.id.layer1);
         arrow = findViewById(R.id.arrow_dash);
         treatbtn = findViewById(R.id.treatBtn);
         skintype_result = findViewById(R.id.skintype_result);
@@ -179,16 +172,19 @@ public class HomeActivity extends AppCompatActivity {
         home3=findViewById(R.id.home3);
         home4=findViewById(R.id.home4);
         home5=findViewById(R.id.home5);
-        home8=findViewById(R.id.home8);
         home9=findViewById(R.id.home9);
         dash1=findViewById(R.id.dash1);
+        dash2=findViewById(R.id.dash2);
+        dash3=findViewById(R.id.dash3);
         dash8=findViewById(R.id.dash8);
         dash9=findViewById(R.id.dash9);
         backgroundimg=findViewById(R.id.backgroundimage);
         dashback=findViewById(R.id.dashback);
+        dashbackimg=findViewById(R.id.dashbackground);
         skintype_main=findViewById(R.id.skintype_main);
         home_setName = findViewById(R.id.home_setName);
         dash_setName = findViewById(R.id.dash_setName);
+        layer1=findViewById(R.id.layer1);
         String dialogstring;
 
         mois_up = findViewById(R.id.mois_up);
@@ -249,7 +245,6 @@ public class HomeActivity extends AppCompatActivity {
 
         // 시작할 때 DashBoard와 기계 이미지 안보이게 하기
         dashboard.setVisibility(View.INVISIBLE);
-        layer1.setVisibility(View.INVISIBLE);
 
 
         // set hideable or not
@@ -275,11 +270,16 @@ public class HomeActivity extends AppCompatActivity {
 
 
         //animation
-        final Animation scaletranslate = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_scaletranslate);
+        final Animation scaletranslate = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.animationdown);
         final Animation alpha = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_alpha);
         final Animation alpha2 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_alpha2);
         final Animation scaletranslate2 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_scaletranslate2);
         alphaback = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anim_alpha_back);
+        final Animation animationup = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.animationup);
+        final Animation animationdown = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.animationdown);
+        final Animation translateup = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.translateup);
+        final Animation translatedown = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.translatedown);
+
 
         wrinkle_txt = databaseReference.child("result").child("winkle");
         moisture_txt = databaseReference.child("result").child("moisture");
@@ -307,7 +307,6 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onStateChanged(@NonNull View view, int i) {
                 dashboard.setVisibility(View.INVISIBLE);
-                layer1.setVisibility(View.INVISIBLE);
 
                 // Dash -> Home으로 Dragging 해도 화면 전환이 되지 않게 함
                 if (i == 1) {      //STATE_DRAGGING
@@ -317,7 +316,6 @@ public class HomeActivity extends AppCompatActivity {
                 // Dash 화면
                 if (i == 3) {      //STATE_EXPANDED
                     dashboard.setVisibility(View.VISIBLE);
-                    layer1.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -355,6 +353,7 @@ public class HomeActivity extends AppCompatActivity {
 
                         break;
                     case R.id.wrinkles:
+
                         intent = new Intent(getApplicationContext(), WrinklesActivity.class);
                         overridePendingTransition(0,0);
                         startActivity(intent);
@@ -381,7 +380,8 @@ public class HomeActivity extends AppCompatActivity {
                         }, 20);
                         break;
                     case R.id.toolbar:
-                        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                        dashbackimg.startAnimation(animationup);
+                         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                         dashboard.setVisibility(View.VISIBLE);
                         dashboard.startAnimation(alpha);
                         home1.setVisibility(View.INVISIBLE);
@@ -393,23 +393,36 @@ public class HomeActivity extends AppCompatActivity {
                         dash8.setVisibility(View.VISIBLE);
                         dash9.setVisibility(View.VISIBLE);
                         layer1.setVisibility(View.VISIBLE);
-                        layer1.startAnimation(alpha);
+                        layer1.startAnimation(translateup);
                         toolbar.setVisibility(View.INVISIBLE);
                         break;
                     case R.id.arrow_dash:
                     case R.id.toolbar_dash:
-                        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                        dashbackimg.startAnimation(animationdown);
+                        new Handler().postDelayed(new Runnable()
+                        {
+                            @Override
+                            public void run() {
+                                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                            }
+                        }, 13);
+                        new Handler().postDelayed(new Runnable()
+                        {
+                            @Override
+                            public void run() {
+                                dash1.setVisibility(View.INVISIBLE);
+                            }
+                        }, 5);
                         dashboard.startAnimation(alpha2);
-                        layer1.setVisibility(View.INVISIBLE);
+                        //layer1.setVisibility(View.INVISIBLE);
                         home1.setVisibility(View.VISIBLE);
                         home2.setVisibility(View.VISIBLE);
                         home3.setVisibility(View.VISIBLE);
                         home4.setVisibility(View.VISIBLE);
                         home5.setVisibility(View.VISIBLE);
-                        dash1.setVisibility(View.INVISIBLE);
-                        dash8.setVisibility(View.INVISIBLE);
-                        dash9.setVisibility(View.INVISIBLE);
-                        layer1.startAnimation(alpha2);
+                        //dash8.setVisibility(View.INVISIBLE);
+                        //dash9.setVisibility(View.INVISIBLE);
+                        layer1.startAnimation(translatedown);
                         toolbar.setVisibility(View.VISIBLE);
                         break;
                     case R.id.logo:
@@ -470,11 +483,13 @@ public class HomeActivity extends AppCompatActivity {
 
         // SharedPreferences에서 이름 받아오기
         SharedPreferences sp_userName = getSharedPreferences("userName", MODE_PRIVATE);
+        SharedPreferences sp_userID = getSharedPreferences("userID", MODE_PRIVATE);
         userName = sp_userName.getString("userName", "");
-        home_setName.setText("GOOD MORNING, "+ userName+"!");
-        dash_setName.setText("GOOD MORNING, "+ userName+"!");
-        Log.e("SharedPreferences", userName);
-
+        if (sp_userName.getString("userID", "")!=null && userName!=null) {
+            home_setName.setText("GOOD MORNING, "+ userName+"!");
+            dash_setName.setText("GOOD MORNING, "+ userName+"!");
+            Log.e("SharedPreferences", userName);
+        }
     }
 
     private void checkPermissions() {

@@ -35,7 +35,6 @@ public class WrinkleResultActivity extends AppCompatActivity {
   TextView okay, result_grade, result_per;
   String grade, per;
   HomeActivity homeactivity = (HomeActivity)HomeActivity.homeactivity;
-  MainActivity mainActivity = (MainActivity)MainActivity.mainnactivity;
 
   private String IP_Address = "52.32.36.182";
 
@@ -93,8 +92,8 @@ public class WrinkleResultActivity extends AppCompatActivity {
         switch (v.getId()) {
           case R.id.okay: case R.id.imageButton:
             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-            homeactivity.dashback.setImageResource(0);
-            mainActivity.finish();
+            startActivity(intent);
+            homeactivity.finish();
             finish();
         }
       }

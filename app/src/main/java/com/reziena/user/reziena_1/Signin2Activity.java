@@ -81,7 +81,7 @@ public class Signin2Activity extends AppCompatActivity {
         Intent subintent = getIntent();
 
         namestring = subintent.getExtras().getString("name");
-        emailstring = subintent.getExtras().getString("email");
+        emailstring = subintent.getExtras().getString("id");
         profileurl = subintent.getExtras().getString("profile");
 
         name = findViewById(R.id.name);
@@ -119,18 +119,15 @@ public class Signin2Activity extends AppCompatActivity {
 
                         break;
                     case R.id.signin:
+                        String emailsign = email.getText().toString();
+                        String namesign = name.getText().toString();
                         genderresult=findViewById(gender.getCheckedRadioButtonId());
                         if(genderresult==null){
                             Toast toast = Toast.makeText(getApplicationContext(),"돌아가라!",Toast.LENGTH_LONG);
                             toast.show();
                         }else{
                             setData task = new setData();
-                            task.execute("http://"+IP_Address+"/saveMoisture.php", namestring, emailstring, profileurl);
-
-                            Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
-                            intent.putExtra("name","skintypedialog");
-                            startActivity(intent);
-                            finish();
+                            task.execute("http://"+IP_Address+"/saveUser.php", namesign, emailsign, profileurl);
                         }
                         break;
                     case R.id.signinprofile:
@@ -145,6 +142,8 @@ public class Signin2Activity extends AppCompatActivity {
     }
 
     class setData extends AsyncTask<String, Void, String> {
+        String name, email, profile;
+
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
@@ -162,9 +161,9 @@ public class Signin2Activity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             String serverURL = params[0];
-            String name = params[1];
-            String email = params[2];
-            String profile = params[3];
+            name = params[1];
+            email = params[2];
+            profile = params[3];
 
             SharedPreferences sp_userID = getSharedPreferences("userID", MODE_PRIVATE);
             String userID = sp_userID.getString("userID", "");
@@ -223,31 +222,23 @@ public class Signin2Activity extends AppCompatActivity {
         }
 
         private void settings(String result){
-            try {
-                JSONObject jsonObject = new JSONObject(result);
-                JSONArray jsonArray = jsonObject.getJSONArray("login");
-
-                for(int i=0;i<jsonArray.length();i++){
-
-                    SharedPreferences sp_userName = getSharedPreferences("userName", MODE_PRIVATE);
-                    SharedPreferences sp_userID = getSharedPreferences("userID", MODE_PRIVATE);
-                    SharedPreferences.Editor editor1 = sp_userName.edit();
-                    SharedPreferences.Editor editor2 = sp_userID.edit();
-                    editor1.putString("userName", namestring);
-                    editor2.putString("userID", emailstring);
-                    editor1.commit();
-                    editor2.commit();
-                    Log.e("Login ", namestring+"님 로그인");
-                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                    intent.putExtra("name","skintypedialog");
-                    startActivity(intent);
-                    finish();
-                }
-
-            } catch (JSONException e) {
-                Log.d("JSON", "showResult : ", e);
+            if (result.contains("null")) {
+                Log.e("null", "you have null");
+            } else {
+                SharedPreferences sp_userName = getSharedPreferences("userName", MODE_PRIVATE);
+                SharedPreferences sp_userID = getSharedPreferences("userID", MODE_PRIVATE);
+                SharedPreferences.Editor editor1 = sp_userName.edit();
+                SharedPreferences.Editor editor2 = sp_userID.edit();
+                editor1.putString("userName", name);
+                editor2.putString("userID", email);
+                editor1.commit();
+                editor2.commit();
+                Log.e("Login ", namestring+"님 로그인");
+                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                intent.putExtra("name","skintypedialog");
+                startActivity(intent);
+                finish();
             }
-
         }
     }
 

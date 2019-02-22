@@ -120,6 +120,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="0.01"/>
                 <LinearLayout
+                    android:id="@+id/dash3"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="0.40"
@@ -397,6 +398,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="0.205"/>
                 <LinearLayout
+                    android:id="@+id/dash2"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="0.205"

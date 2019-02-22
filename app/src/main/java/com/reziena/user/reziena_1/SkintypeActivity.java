@@ -503,6 +503,8 @@ public class SkintypeActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
+        super.onBackPressed();
+        homeactivity.backgroundimg.setImageResource(0);
+        homeactivity.dashback.setImageResource(0);
     }
 }

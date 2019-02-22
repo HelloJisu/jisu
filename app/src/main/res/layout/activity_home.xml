@@ -148,11 +148,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1410"/>
-            <LinearLayout
+            <ImageView
                 android:id="@+id/dashbackground"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="721"
+                android:layout_weight="700"
                 android:background="@drawable/dashbackground"
                 tools:ignore="Orientation" />
         </LinearLayout>
@@ -1012,6 +1012,7 @@
             android:id="@+id/layer1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:visibility="gone"
             android:background="@drawable/dashbackground2"/>
 
         <LinearLayout
@@ -1102,7 +1103,6 @@
             </LinearLayout>
         </LinearLayout>
 
-
         <ImageView
             android:id="@+id/backgroundimage"
             android:layout_width="match_parent"
@@ -1110,6 +1110,8 @@
             android:scaleType="centerCrop"
             tools:layout_editor_absoluteX="50dp"
             tools:layout_editor_absoluteY="0dp" />
+
+
 
     </android.support.constraint.ConstraintLayout>
 
