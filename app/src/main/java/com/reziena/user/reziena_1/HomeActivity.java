@@ -85,7 +85,7 @@ public class HomeActivity extends AppCompatActivity {
     private static final int REQUEST_LOCATION = 1;
 
     int count; /**discovery된 device가 몇개인지*/
-    ArrayList<String> address = new ArrayList<>(); /** discovery한 address */
+    ArrayList<String> address = new ArrayList<>(); /** discovery한 address이다 */
     ArrayList<String> bondedDevice = new ArrayList<>();
 
 
