@@ -619,11 +619,6 @@
 
     </LinearLayout>
 
-    <View
-        android:id="@+id/screenshotdash"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
     <ImageView
         android:id="@+id/dashback"
         android:layout_width="match_parent"

@@ -38,6 +38,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -125,6 +126,7 @@ public class TreatActivity_cheekleft extends AppCompatActivity {
                         break;
 
                     case R.id.cheek_left_cl:
+                        HomeActivity.send("cheek_l->start");
                         intent = new Intent(getBaseContext(), TreatActivity_cheekleft2.class);
                         startActivity(intent);
                         overridePendingTransition(0, 0);
