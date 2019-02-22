@@ -89,7 +89,7 @@ public class Signin2Activity extends AppCompatActivity {
         profile = findViewById(R.id.signinprofile);
         signin = findViewById(R.id.signin);
         signinfinish = findViewById(R.id.signinfinish);
-        gender = findViewById(R.id.radioGroup1);
+        gender = findViewById(R.id.radioGroup1); //ㅎㅎ
 
         Spinner s = (Spinner)findViewById(R.id.spinner1);
         s.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -125,7 +125,12 @@ public class Signin2Activity extends AppCompatActivity {
                             toast.show();
                         }else{
                             setData task = new setData();
-                            task.execute("http://"+IP_Address+"/saveUser.php", namestring, emailstring, profileurl);
+                            task.execute("http://"+IP_Address+"/saveMoisture.php", namestring, emailstring, profileurl);
+
+                            Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
+                            intent.putExtra("name","skintypedialog");
+                            startActivity(intent);
+                            finish();
                         }
                         break;
                     case R.id.signinprofile:

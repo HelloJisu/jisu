@@ -53,6 +53,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -62,7 +63,13 @@ import com.kakao.usermgmt.callback.MeResponseCallback;
 import com.kakao.usermgmt.response.model.UserProfile;
 import com.kakao.util.exception.KakaoException;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.security.MessageDigest;
 import java.util.Arrays;
 
@@ -83,6 +90,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private Context mContext;
     private SessionCallback mKakaocallback;
     private String tokeninsta = null;
+    private String tokenfb = null;
     private AppPreferences appPreferences = null;
     private AuthenticationDialog authenticationDialog = null;
     private View info = null;
@@ -90,7 +98,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     String gomail, goname, goprofile;
     String kaname, kaemail, kaprofile;
     String isname, isprofile;
+    AccessToken accessToken;
+    AccessToken tokenfab;
     public static Activity loginactivity;
+
+    private String IP_Address = "52.32.36.182";
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,6 +110,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         loginactivity = LoginActivity.this;
         mLoginCallback = new LoginCallback();
         appPreferences = new AppPreferences(this);
+        accessToken = AccessToken.getCurrentAccessToken();
 
         Log.e("start", "login");
         SharedPreferences userName = getSharedPreferences("userName", MODE_PRIVATE);
@@ -121,8 +134,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         mAuth = FirebaseAuth.getInstance();
 
         tokeninsta = appPreferences.getString(AppPreferences.TOKEN);
-        if (tokeninsta != null) {
-            getUserInfoByAccessToken(tokeninsta);
+
+        if(tokenfb != null){
+            LoginManager loginManager = LoginManager.getInstance();
+            loginManager.logInWithReadPermissions(LoginActivity.this, Arrays.asList("public_profile", "email"));
+            loginManager.registerCallback(callbackManager, mLoginCallback);
         }
 
         FacebookSdk.sdkInitialize(this.getApplicationContext());
@@ -154,10 +170,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         //Picasso.with(this).load().into(pic);
         String id = appPreferences.getString(AppPreferences.USER_ID); //인스타그램 아이디
         isname = appPreferences.getString(AppPreferences.USER_NAME); //인스타그램 이름
-        Intent intent = new Intent(getApplicationContext(),Signin2Activity.class);
-        intent.putExtra("name",isname);
-        intent.putExtra("profile",isprofile);
-        startActivity(intent);
+
+        getUser task = new getUser();
+        task.execute("http://"+IP_Address+"/getUser.php", id, isname, isprofile, "instagram");
     }
 
     public void logout() {
@@ -177,6 +192,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private void getUserInfoByAccessToken(String token) {
         new RequestInstagramAPI().execute();
     }
+
     private class RequestInstagramAPI extends AsyncTask<Void, String, String> {
 
         @Override
@@ -254,7 +270,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             public void onSuccess(UserProfile userProfile) {
                 kaprofile = userProfile.getProfileImagePath();
                 String userId = String.valueOf(userProfile.getId());
-                kaname = userProfile.getNickname();
+                kaname = userProfile.getNickname();//카카오톡
                 kaemail = userProfile.getEmail();
 
                 Log.e("success", "prifileUrl:" + kaprofile); //카카오톡 프로필 url
@@ -262,11 +278,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 Log.e("success", "userName:" + kaname); //카카오톡 이름
                 Log.e("success","usereemail"+kaemail); //카카오톡 이메일
 
-                Intent intent = new Intent(getApplicationContext(),Signin2Activity.class);
-                intent.putExtra("name",kaname);
-                intent.putExtra("profile",kaprofile);
-                intent.putExtra("email",kaemail);
-                startActivity(intent);
+                getUser task = new getUser();
+                task.execute("http://"+IP_Address+"/getUser.php", kaemail, kaname, kaprofile, "kakao");
             }
 
             @Override
@@ -314,11 +327,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     Log.e("GoogleLogin", "personId=" + personId); //구글 아이디
                     Log.e("GoogleLogin", "tokenKey=" + tokenKey);
 
-                    Intent intent = new Intent(getApplicationContext(),Signin2Activity.class);
-                    intent.putExtra("name",goname);
-                    intent.putExtra("profile",goprofile);
-                    intent.putExtra("email",gomail);
-                    startActivity(intent);
+                    getUser task = new getUser();
+                    task.execute("http://"+IP_Address+"/getUser.php", gomail, goname, goprofile, "google");
 
                 } else {
                     Log.e("GoogleLogin", "login fail cause=" + result.getStatus().getStatusMessage());
@@ -345,63 +355,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 });
     }
 
-    public void signinintent (String name, String email, String profile){
-
-    }
-
-    private void initFacebook() {//FaceBook Init
-        FacebookSdk.sdkInitialize(this.getApplicationContext());
-        callbackManager = CallbackManager.Factory.create();
-        LoginManager.getInstance().registerCallback(callbackManager,
-                new FacebookCallback<LoginResult>() {
-                    @Override
-                    public void onSuccess(LoginResult loginResult) {
-                        Log.d("Success", String.valueOf(loginResult.getAccessToken()));
-                        Log.d("Success", String.valueOf(Profile.getCurrentProfile().getId())); //페이스북 아이디
-                        Log.d("Success", String.valueOf(Profile.getCurrentProfile().getName())); //페이스북 이름
-                        Log.d("Success", String.valueOf(Profile.getCurrentProfile().getProfilePictureUri(300, 300))); //페이스북 이미지
-                        requestUserProfile(loginResult);
-                    }
-
-                    @Override
-                    public void onCancel() {
-
-                        Log.e("나간다","나간다고");
-                    }
-
-                    @Override
-                    public void onError(FacebookException exception) {
-                    }
-                });
-    }
-
-    public void requestUserProfile(LoginResult loginResult){
-        GraphRequest request = GraphRequest.newMeRequest(
-                loginResult.getAccessToken(),
-                new GraphRequest.GraphJSONObjectCallback() {
-                    @Override
-                    public void onCompleted(JSONObject object, GraphResponse response) {
-                        try {
-                            String email = response.getJSONObject().getString("email").toString();
-                            String name = response.getJSONObject().getString("name").toString();
-                            String profile = String.valueOf(Profile.getCurrentProfile().getProfilePictureUri(300, 300));
-                            Intent intent = new Intent(getApplicationContext(),Signin2Activity.class);
-                            intent.putExtra("name",name);
-                            intent.putExtra("email",email);
-                            intent.putExtra("profile",profile);
-                            startActivity(intent);
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                });
-        Bundle parameters = new Bundle();
-        parameters.putString("fields", "id,name,email,gender,birthday");
-        request.setParameters(parameters);
-        request.executeAsync();
-    }
 
     private void getAppKeyHash() {
         try {
@@ -437,8 +390,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 startActivity(intent);
                 break;
             case R.id.facebook:
-                LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "email", "user_friends"));
-                initFacebook();
+                LoginManager loginManager = LoginManager.getInstance();
+                loginManager.logInWithReadPermissions(LoginActivity.this, Arrays.asList("public_profile", "email"));
+                loginManager.registerCallback(callbackManager, mLoginCallback);
                 break;
             case R.id.google:
                 btn_login.performClick();
@@ -455,6 +409,188 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 authenticationDialog.setCancelable(true);
                 authenticationDialog.show();
                 break;
+        }
+    }
+
+    public class LoginCallback implements FacebookCallback<LoginResult> {
+        // 로그인 성공 시 호출 됩니다. Access Token 발급 성공.
+
+        @Override
+        public void onSuccess(LoginResult loginResult) {
+            Log.e("Callback :: ", "onSuccess");
+            requestMe(loginResult.getAccessToken());
+            tokenfab=loginResult.getAccessToken();
+            tokenfb=loginResult.getAccessToken().toString();
+        }
+
+
+        // 로그인 창을 닫을 경우, 호출됩니다.
+        @Override
+        public void onCancel() {
+            Log.e("Callback :: ", "onCancel");
+        }
+
+        // 로그인 실패 시에 호출됩니다.
+        @Override
+        public void onError(FacebookException error) {
+            Log.e("Callback :: ", "onError : " + error.getMessage());
+        }
+
+
+        // 사용자 정보 요청
+        public void requestMe(AccessToken token) {// 페이스북
+            GraphRequest graphRequest = GraphRequest.newMeRequest(token,
+                    new GraphRequest.GraphJSONObjectCallback() {
+                        @Override
+                        public void onCompleted(JSONObject object, GraphResponse response) {
+                            try {
+                                String email = response.getJSONObject().getString("email").toString();
+                                String name = response.getJSONObject().getString("name").toString();
+                                String profile = String.valueOf(Profile.getCurrentProfile().getProfilePictureUri(300, 300));
+
+                                getUser task = new getUser();
+                                task.execute("http://"+IP_Address+"/getUser.php", email, name, profile, "facebook");
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+
+            Bundle parameters = new Bundle();
+            parameters.putString("fields", "id,name,email,gender,birthday");
+            graphRequest.setParameters(parameters);
+            graphRequest.executeAsync();
+        }
+    }
+
+    class getUser extends AsyncTask<String, Void, String> {
+        String id, name, profile, kind;
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            Log.e("login-onPostExecute", "response - " + result);
+
+            if (result == null){
+                Log.e("onPostExecute", "erre");
+            }
+            else {
+                if (result.contains("yes")) {
+                    SharedPreferences sp_userName = getSharedPreferences("userName", MODE_PRIVATE);
+                    SharedPreferences sp_userID = getSharedPreferences("userID", MODE_PRIVATE);
+                    SharedPreferences sp_profile = getSharedPreferences("profile", MODE_PRIVATE);
+                    SharedPreferences.Editor editor1 = sp_userName.edit();
+                    SharedPreferences.Editor editor2 = sp_userID.edit();
+                    SharedPreferences.Editor editor3 = sp_profile.edit();
+                    editor1.putString("userName", name);
+                    editor2.putString("userID", id);
+                    editor3.putString("profile", profile);
+                    editor1.commit();
+                    editor2.commit();
+                    editor3.commit();
+                    Log.e("Login ", name+"님 로그인");
+                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    switch (kind) {
+                        case "facebook":
+                            Intent intent1 = new Intent(getApplicationContext(),Signin2Activity.class);
+                            intent1.putExtra("id",id);
+                            intent1.putExtra("name",name);
+                            intent1.putExtra("profile",profile);
+                            startActivity(intent1);
+                            break;
+                        case "kakao":
+                            Intent intent2 = new Intent(getApplicationContext(),Signin2Activity.class);
+                            intent2.putExtra("name",kaname);
+                            intent2.putExtra("profile",kaprofile);
+                            intent2.putExtra("id",kaemail);
+                            startActivity(intent2);
+                            break;
+                        case "google":
+                            Intent intent3 = new Intent(getApplicationContext(),Signin2Activity.class);//구글
+                            intent3.putExtra("name",goname);
+                            intent3.putExtra("profile",goprofile);
+                            intent3.putExtra("id",gomail);
+                            startActivity(intent3);
+                            break;
+                        case "instagram":
+                            Intent intent = new Intent(getApplicationContext(),Signin2Activity.class);
+                            intent.putExtra("name",isname);
+                            intent.putExtra("profile",isprofile);
+                            startActivity(intent);// 바로 홈으로
+                            break;
+
+                    }
+                }
+            }
+            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+            startActivity(intent);
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            String serverURL = params[0];
+
+            id = params[1];
+            name = params[2];
+            profile = params[3];
+            kind = params[4];
+
+            String postParameters = "id="+id;
+
+            try {
+                URL url = new URL(serverURL);
+
+                HttpURLConnection httpURLConnection= (HttpURLConnection)url.openConnection();
+                httpURLConnection.setReadTimeout(5000);
+                httpURLConnection.setConnectTimeout(5000);;
+
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.connect();
+
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                outputStream.write(postParameters.getBytes("UTF-8"));
+                Log.e("postParameters", postParameters);
+                outputStream.flush();
+                outputStream.close();
+
+                // response
+                InputStream inputStream;
+                int responseStatusCode = httpURLConnection.getResponseCode();
+                String responseStatusMessage = httpURLConnection.getResponseMessage();
+                Log.e("response", "POST response Code - " + responseStatusCode);
+                Log.e("response", "POST response Message - "+ responseStatusMessage);
+
+                if (responseStatusCode == HttpURLConnection.HTTP_OK) {
+                    // 정상적인 응답 데이터
+                    Log.e("inputstream: ", "정상적");
+                    inputStream = httpURLConnection.getInputStream();
+                } else {
+                    // error
+                    Log.e("inputstream: ", "비정상적: " + httpURLConnection.getErrorStream());
+                    inputStream = httpURLConnection.getErrorStream();
+                }
+
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+                StringBuilder sb = new StringBuilder();
+                String line;
+
+                while((line = bufferedReader.readLine()) != null){
+                    sb.append(line);
+                }
+                bufferedReader.close();
+                return sb.toString().trim();
+
+            } catch (Exception e) {
+                Log.e("ERROR", "InsertDataError ", e);
+            }
+            return null;
         }
     }
 }

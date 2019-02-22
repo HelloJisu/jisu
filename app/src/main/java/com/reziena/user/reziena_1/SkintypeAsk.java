@@ -40,6 +40,7 @@ public class SkintypeAsk extends AppCompatActivity {
         getWindow().getAttributes().height = height;
 
         okay = findViewById(R.id.okay);
+        no = findViewById(R.id.no);
 
         View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
@@ -58,6 +59,21 @@ public class SkintypeAsk extends AppCompatActivity {
                 }
             }
         };
+        no.setOnClickListener(onClickListener);
         okay.setOnClickListener(onClickListener);
+    }
+
+    public boolean dispatchTouchEvent(MotionEvent ev){
+        Rect dialogBounds = new Rect();
+        getWindow().getDecorView().getHitRect(dialogBounds);
+        if(!dialogBounds.contains((int)ev.getX(),(int) ev.getY())){
+            return false;
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
     }
 }

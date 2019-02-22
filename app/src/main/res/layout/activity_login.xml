@@ -18,6 +18,7 @@
             android:layout_height="0dp"
             android:layout_weight="254"/>
         <ImageView
+            android:id="@+id/logo"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="146"
@@ -218,13 +219,22 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="59"/>
-                <ImageView
-                    android:id="@+id/facebook"
+                <FrameLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="134"
+                    android:layout_weight="134">
+                <ImageView
+                    android:id="@+id/facebook"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:src="@drawable/facebook"
                     />
+                    <com.facebook.login.widget.LoginButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/login_button"
+                        android:alpha="0"/>
+                </FrameLayout>
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"

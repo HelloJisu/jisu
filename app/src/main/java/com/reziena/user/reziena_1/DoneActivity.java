@@ -183,14 +183,12 @@ public class DoneActivity extends AppCompatActivity implements View.OnClickListe
                     if(finishtxt.getText().equals("finish")){
                         intent = new Intent(v.getContext(), TreatActivity.class);
                         v.getContext().startActivity(intent);
-                        underright.finish();
                         finish();
                     }
                     else {
                         HomeActivity.send("uneye_l->start");
                         intent = new Intent(v.getContext(), TreatActivity_underleft2.class);
                         v.getContext().startActivity(intent);
-                        underright.finish();
                         finish();
                     }
                 }
@@ -198,14 +196,12 @@ public class DoneActivity extends AppCompatActivity implements View.OnClickListe
                     if(finishtxt.getText().equals("finish")){
                         intent = new Intent(v.getContext(), TreatActivity.class);
                         v.getContext().startActivity(intent);
-                        underleft.finish();
                         finish();
                     }
                     else {
                         HomeActivity.send("uneye_r->start");
                         intent = new Intent(v.getContext(), TreatActivity_underright2.class);
                         v.getContext().startActivity(intent);
-                        underleft.finish();
                         finish();
                     }
                 }
@@ -213,14 +209,12 @@ public class DoneActivity extends AppCompatActivity implements View.OnClickListe
                     if(finishtxt.getText().equals("finish")){
                         intent = new Intent(v.getContext(), TreatActivity.class);
                         v.getContext().startActivity(intent);
-                        cheekright.finish();
                         finish();
                     }
                     else {
                         HomeActivity.send("cheek_l->start");
                         intent = new Intent(v.getContext(), TreatActivity_cheekleft2.class);
                         v.getContext().startActivity(intent);
-                        cheekright.finish();
                         finish();
                     }
                 }
@@ -228,14 +222,12 @@ public class DoneActivity extends AppCompatActivity implements View.OnClickListe
                     if(finishtxt.getText().equals("finish")){
                         intent = new Intent(v.getContext(), TreatActivity.class);
                         v.getContext().startActivity(intent);
-                        cheekleft.finish();
                         finish();
                     }
                     else {
                         HomeActivity.send("cheek_r->start");
                         intent = new Intent(v.getContext(), TreatActivity_cheekright2.class);
                         v.getContext().startActivity(intent);
-                        cheekleft.finish();
                         finish();
                     }
                 }
@@ -245,28 +237,24 @@ public class DoneActivity extends AppCompatActivity implements View.OnClickListe
                 if (stringlist.equals("underrright")) {
                     intent = new Intent(v.getContext(), HomeActivity.class);
                     v.getContext().startActivity(intent);
-                    underright.finish();
                     homeActivity.finish();
                     finish();
                 }
                 if (stringlist.equals("underleft")) {
                     intent = new Intent(v.getContext(), HomeActivity.class);
                     v.getContext().startActivity(intent);
-                    underleft.finish();
                     homeActivity.finish();
                     finish();
                 }
                 if (stringlist.equals("cheekright")) {
                     intent = new Intent(v.getContext(), HomeActivity.class);
                     v.getContext().startActivity(intent);
-                    cheekright.finish();
                     homeActivity.finish();
                     finish();
                 }
                 if (stringlist.equals("cheekleft")) {
                     intent = new Intent(v.getContext(), HomeActivity.class);
                     v.getContext().startActivity(intent);
-                    cheekleft.finish();
                     homeActivity.finish();
                     finish();
                 }

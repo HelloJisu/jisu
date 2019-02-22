@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.reziena.user.reziena_1"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -34,6 +34,10 @@ android {
     productFlavors {
     }
     useLibrary 'org.apache.http.legacy'
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
 }
 
 dependencies {
@@ -64,6 +68,7 @@ dependencies {
     implementation 'com.daasuu:EasingInterpolator:1.0.0'
     implementation 'devs.mulham.horizontalcalendar:horizontalcalendar:1.1.7'
     implementation 'com.google.android.gms:play-services-auth:15.0.1'
+    implementation 'com.github.WindSekirun:SocialLogin:1.2.5'
     api 'com.kakao.sdk:usermgmt:1.14.0'
 }
 
