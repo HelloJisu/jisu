@@ -192,9 +192,6 @@ public class Signin2Activity extends AppCompatActivity {
             }
         });
 
-
-
-
         if(namestring!=null){
             name.setText(namestring);
         }

@@ -178,6 +178,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         isid = appPreferences.getString(AppPreferences.USER_ID); //인스타그램 아이디
         isname = appPreferences.getString(AppPreferences.USER_NAME); //인스타그램 이름
 
+        Log.e("인스타",isid);
+        Log.e("인스타",isname);
+
         getUser task = new getUser();
         task.execute("http://"+R.string.IP_Address+"/getUser.php", isid, isname, isprofile, "instagram");
     }
@@ -454,6 +457,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                 fbname = response.getJSONObject().getString("name").toString();
                                 fbprofile = String.valueOf(Profile.getCurrentProfile().getProfilePictureUri(300, 300));
                                 fbid = String.valueOf(Profile.getCurrentProfile().getId());
+
+                                Log.e("페북",fbname);
+                                Log.e("페북",fbprofile);
+                                Log.e("페북",fbid);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
