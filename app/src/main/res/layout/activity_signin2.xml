@@ -4,79 +4,181 @@
     android:orientation="vertical"
     android:gravity="center"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.ktds.cocomo.myapp.RegistActivity">
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/signinprofile"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:src="@drawable/ellipseprofile" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="EMAIL"
-        android:id="@+id/email" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="NAME"
-        android:id="@+id/name" />
-    <RadioGroup
-        android:id="@+id/radioGroup1"
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        >
-        <RadioButton
-            android:id="@+id/bt1"
-            android:layout_width="100dp"
-            android:layout_height="40dp"
-            android:text="WOMAN" />
-
-        <RadioButton
-            android:id="@+id/bt2"
-            android:layout_width="100dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="50dp"
-            android:text="MAN" />
-    </RadioGroup>
-
-    <Spinner
-        android:id="@+id/spinner1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:entries="@array/city"/>
+    android:layout_height="match_parent">
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <Button
-            android:id="@+id/signin"
-            android:text="가입"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <Button
-            android:id="@+id/signinfinish"
-            android:text="취소"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
+        android:layout_height="match_parent"
+        android:weightSum="2960"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="350"/>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/signinprofile"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="460"
+            android:src="@drawable/ellipseprofile" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1527"
+            android:weightSum="1"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.05"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.95"
+                android:weightSum="1440"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="280"/>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1160"
+                    android:weightSum="1"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.07"
+                        android:textSize="15dp"
+                        android:text=" NAME"
+                        android:fontFamily="@font/roboto"
+                        android:textColor="#ACAABE"
+                        android:gravity="center_vertical" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.14"
+                        android:weightSum="1"
+                        android:orientation="horizontal">
+                        <EditText
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.75"
+                            android:ems="10"
+                            android:hint="ENTER YOUR NAME"
+                            android:id="@+id/name" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.08" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.07"
+                        android:textSize="15dp"
+                        android:text=" GENDER"
+                        android:fontFamily="@font/roboto"
+                        android:textColor="#ACAABE"
+                        android:gravity="center_vertical" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.1"
+                        android:weightSum="1"
+                        android:orientation="horizontal">
+                        ﻿<Spinner
+                        android:id="@+id/gender"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.8" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.08" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.07"
+                        android:textSize="15dp"
+                        android:text=" BIRTHDAY"
+                        android:fontFamily="@font/roboto"
+                        android:textColor="#ACAABE"
+                        android:gravity="center_vertical" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.1"
+                        android:weightSum="1"
+                        android:orientation="horizontal">
+                        ﻿<Spinner
+                        android:id="@+id/birthday_year"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3" />
+                        ﻿<Spinner
+                        android:id="@+id/birthday_month"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3" />
+                        ﻿<Spinner
+                        android:id="@+id/birthday_day"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.08" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.07"
+                        android:textSize="15dp"
+                        android:text=" COUNTRY"
+                        android:fontFamily="@font/roboto"
+                        android:textColor="#ACAABE"
+                        android:gravity="center_vertical" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.1"
+                        android:weightSum="1"
+                        android:orientation="horizontal">
+                        ﻿<Spinner
+                        android:id="@+id/country"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.8" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/signin_signin2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="300"
+            android:orientation="vertical"
+            android:weightSum="1"
+            android:background="@drawable/loginrectangle">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.17"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.65"
+                android:text="LET'S START"
+                android:textColor="#FFFFFF"
+                android:gravity="center"
+                android:textSize="15dp"
+                android:fontFamily="@font/roboto"/>
+        </LinearLayout>
     </LinearLayout>
-
 </LinearLayout>

@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -101,6 +102,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     AccessToken accessToken;
     AccessToken tokenfab;
     public static Activity loginactivity;
+    Drawable alphalogin;
+    Drawable alphasignin;
+
 
     private String IP_Address = "52.32.36.182";
 
@@ -111,6 +115,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         mLoginCallback = new LoginCallback();
         appPreferences = new AppPreferences(this);
         accessToken = AccessToken.getCurrentAccessToken();
+
+
 
         Log.e("start", "login");
         SharedPreferences userName = getSharedPreferences("userName", MODE_PRIVATE);
@@ -153,6 +159,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         btn_login = findViewById(R.id.googlelogin);
         twittericon=findViewById(R.id.twitter);
         tokeninsta = appPreferences.getString(AppPreferences.TOKEN);
+
+        alphalogin = login.getBackground();
+        alphasignin = signin.getBackground();
 
         getAppKeyHash();
         twittericon.setOnClickListener(this);
@@ -604,5 +613,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             }
             return null;
         }
+    }
+
+    public void onResume() {
+        super.onResume();
+        alphalogin.setAlpha(255);
+        alphasignin.setAlpha(255);
+
     }
 }

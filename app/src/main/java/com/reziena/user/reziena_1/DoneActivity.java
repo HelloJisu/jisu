@@ -186,7 +186,7 @@ public class DoneActivity extends AppCompatActivity implements View.OnClickListe
                         finish();
                     }
                     else {
-                        HomeActivity.send("uneye_l->start");
+                        //HomeActivity.send("uneye_l->start");
                         intent = new Intent(v.getContext(), TreatActivity_underleft2.class);
                         v.getContext().startActivity(intent);
                         finish();
@@ -199,7 +199,7 @@ public class DoneActivity extends AppCompatActivity implements View.OnClickListe
                         finish();
                     }
                     else {
-                        HomeActivity.send("uneye_r->start");
+                        //HomeActivity.send("uneye_r->start");
                         intent = new Intent(v.getContext(), TreatActivity_underright2.class);
                         v.getContext().startActivity(intent);
                         finish();
@@ -212,7 +212,7 @@ public class DoneActivity extends AppCompatActivity implements View.OnClickListe
                         finish();
                     }
                     else {
-                        HomeActivity.send("cheek_l->start");
+                       // HomeActivity.send("cheek_l->start");
                         intent = new Intent(v.getContext(), TreatActivity_cheekleft2.class);
                         v.getContext().startActivity(intent);
                         finish();
@@ -225,7 +225,7 @@ public class DoneActivity extends AppCompatActivity implements View.OnClickListe
                         finish();
                     }
                     else {
-                        HomeActivity.send("cheek_r->start");
+                        //HomeActivity.send("cheek_r->start");
                         intent = new Intent(v.getContext(), TreatActivity_cheekright2.class);
                         v.getContext().startActivity(intent);
                         finish();

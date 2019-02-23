@@ -1,16 +1,22 @@
 package com.reziena.user.reziena_1;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -30,6 +36,7 @@ public class LoginmainActivity extends AppCompatActivity {
     private Button btnLogin;
     private String IP_Address = "52.32.36.182";
     private String id;
+    LinearLayout login,signin;
 
 
     @Override
@@ -38,14 +45,65 @@ public class LoginmainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login_main);
 
 
-        etID = findViewById(R.id.etID);
-        etPassword = findViewById(R.id.etPassword);
-        btnLogin = findViewById(R.id.btnLogin);
+        etID = findViewById(R.id.loginemail);
+        etPassword = findViewById(R.id.loginpasswor);
+        signin = findViewById(R.id.signin_login);
+        login = findViewById(R.id.login_login);
+
+        Drawable alphalogin = login.getBackground();
+        Drawable alphasignin = signin.getBackground();
+
+        alphalogin.setAlpha(50);
+        alphasignin.setAlpha(50);
 
         etID.setText("reziena");
-        etPassword.setText("1234");
+        //etPassword.setText("1234");
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
+
+        etID.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @SuppressLint("Range")
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String email = etID.getText().toString();
+
+                if( email.contains("@")&& email.contains(".")) {
+
+                    etPassword.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                        }
+
+                        @SuppressLint("Range")
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+                            String password = etPassword.getText().toString();
+                            alphalogin.setAlpha(255);//알파값 20
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable s) {
+
+                        }
+                    });
+                }
+                else{
+
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String id = etID.getText().toString();
