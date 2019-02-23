@@ -126,7 +126,7 @@ public class TreatActivity_cheekleft extends AppCompatActivity {
                         break;
 
                     case R.id.cheek_left_cl:
-                        HomeActivity.send("cheek_l->start");
+                       // HomeActivity.send("cheek_l->start");
                         intent = new Intent(getBaseContext(), TreatActivity_cheekleft2.class);
                         startActivity(intent);
                         overridePendingTransition(0, 0);

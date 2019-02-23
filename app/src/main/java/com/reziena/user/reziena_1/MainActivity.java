@@ -73,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.capture:
-                        mPreview.takePicture();
                         intent = new Intent(getApplicationContext(), WrinkleResultActivity.class);
                         overridePendingTransition(0,0);
                         startActivity(intent);
@@ -86,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
         mCameraTextureView = (TextureView) findViewById(R.id.textureView);
         mPreview = new Preview(this, mCameraTextureView);
     }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {

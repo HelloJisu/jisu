@@ -125,7 +125,7 @@ public class TreatActivity_cheekright extends AppCompatActivity {
             break;
 
           case R.id.cheek_right_cr:
-            HomeActivity.send("cheek_r->start");
+           // HomeActivity.send("cheek_r->start");
             intent = new Intent(getBaseContext(), TreatActivity_cheekright2.class);
             startActivity(intent);
             overridePendingTransition(0, 0);

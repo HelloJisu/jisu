@@ -56,6 +56,7 @@ public class WrinklesActivity extends AppCompatActivity {
                         int permissionCamera = ContextCompat.checkSelfPermission(WrinklesActivity.this, Manifest.permission.CAMERA);
                         if(permissionCamera == PackageManager.PERMISSION_DENIED) {
                             ActivityCompat.requestPermissions((Activity) WrinklesActivity.this, new String[]{Manifest.permission.CAMERA}, MainActivity.REQUEST_CAMERA);
+                            ActivityCompat.requestPermissions((Activity) WrinklesActivity.this, new String[]{Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS}, MainActivity.REQUEST_CAMERA);
                             Log.e("야야야!", "퍼미션 허용~");
                             permissionstring = "true";
                         } else {

@@ -126,7 +126,7 @@ public class TreatActivity_underleft extends AppCompatActivity {
             break;
 
           case R.id.underleft_ul:
-            //HomeActivity.send("uneye_l->start");
+            HomeActivity.send("uneye_l->start");
             intent = new Intent(getBaseContext(), TreatActivity_underleft2.class);
             startActivity(intent);
             overridePendingTransition(0, 0);
