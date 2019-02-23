@@ -68,11 +68,12 @@ public class Signin2Activity extends AppCompatActivity {
     private int id_view;
     private String absolutePath;//
     CircleImageView profile;
-    String month, year, genderstring, countrh, day;
+    String month, year, genderstring, countrystring, day;
     public static Activity skinhistoryactivity;
     HomeActivity homeactivity = (HomeActivity)HomeActivity.homeactivity;
     String namestring, emailstring, profileurl;
     private static final String DEFAULT_LOCAL = "Portugal";
+    public int yearint, dayint, monthint;
 
     private String IP_Address = "52.32.36.182";
 
@@ -94,9 +95,11 @@ public class Signin2Activity extends AppCompatActivity {
 
         Spinner birthday_year = findViewById(R.id.birthday_year);
         int year = Calendar.getInstance().get(Calendar.YEAR);
-        ArrayList<Integer> yearAdapter = new ArrayList<Integer>();
-        for( int i = 0; i < 100 ; i ++) { yearAdapter.add(year--); }
-        ArrayAdapter<Integer> arrayAdapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_dropdown_item);
+        ArrayList<Integer> yearAdapter = new ArrayList<>();
+        for(int i=0;i<100;i++){
+            yearAdapter.add(year--);
+        }
+        ArrayAdapter<Integer> arrayAdapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_dropdown_item,yearAdapter);
         birthday_year.setAdapter(arrayAdapter);
 
         Spinner birthday_month = findViewById(R.id.birthday_month);
@@ -104,6 +107,14 @@ public class Signin2Activity extends AppCompatActivity {
                 R.array.birthday_month, android.R.layout.simple_spinner_item);
         monthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         birthday_month.setAdapter(monthAdapter);
+
+        Spinner birthday_day = findViewById(R.id.birthday_day);
+        ArrayList<Integer> birthAdapter = new ArrayList<>();
+        for(int i=1;i<=31;i++){
+            birthAdapter.add(i++);
+        }
+        ArrayAdapter<Integer> birthdayAdapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_dropdown_item,birthAdapter);
+        birthday_day.setAdapter(birthdayAdapter);
 
         Spinner couuntry = findViewById(R.id.country);
         ArrayAdapter countryarray = ArrayAdapter.createFromResource(this,
@@ -116,6 +127,71 @@ public class Signin2Activity extends AppCompatActivity {
                 R.array.gender, android.R.layout.simple_spinner_item);
         countryarray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         gender.setAdapter(genderAdapter);
+
+
+        gender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                genderstring = gender.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+        birthday_year.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                yearint = Integer.parseInt(String.valueOf(birthday_year.getItemAtPosition(position)));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        birthday_month.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                monthint = Integer.parseInt(String.valueOf(birthday_month.getItemAtPosition(position)));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        birthday_day.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                dayint = Integer.parseInt(String.valueOf(birthday_day.getItemAtPosition(position)));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        couuntry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                countrystring = String.valueOf(couuntry.getItemAtPosition(position));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+
 
         if(namestring!=null){
             name.setText(namestring);

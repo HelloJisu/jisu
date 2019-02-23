@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="birthday_year">
-        <item>01</item>
+        <item></item>
         <item>02</item>
         <item>03</item>
         <item>04</item>
