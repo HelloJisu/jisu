@@ -275,7 +275,7 @@ public class TreatActivity_cheekright2 extends AppCompatActivity {
                             }
                             if(count==23){
                                 setData task = new setData();
-                                task.execute("http://"+R.string.IP_Address+"/saveTreat.php", "cheek_r");
+                                task.execute("http://"+HomeActivity.IP_Address+"/saveTreat.php", "cheek_r");
                                 if (! TreatActivity_cheekright2.this.isFinishing()) {
                                     Intent intent = new Intent(getApplicationContext(),DoneActivity.class);
                                     intent.putExtra("stringlist","cheekright");

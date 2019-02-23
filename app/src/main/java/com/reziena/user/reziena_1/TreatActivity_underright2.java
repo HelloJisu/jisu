@@ -62,8 +62,6 @@ public class TreatActivity_underright2 extends AppCompatActivity {
     ImageView content1, content2;
     AnimationDrawable utrani1,utrani2,utrani3,utrani4,utrani5,utrani6,utrani7,utrani8,utrani9,utrani10,utrani11,utrani12,utrani13;
 
-    private String IP_Address = "52.32.36.182";
-
     public void animation() {
         second = new TimerTask() {
             @Override
@@ -191,7 +189,7 @@ public class TreatActivity_underright2 extends AppCompatActivity {
                         }
                         if(count==15){
                             setData task = new setData();
-                            task.execute("http://"+IP_Address+"/saveTreat.php", "uneye_r");
+                            task.execute("http://"+HomeActivity.IP_Address+"/saveTreat.php", "uneye_r");
                             if (! TreatActivity_underright2.this.isFinishing()) {
                                 Intent intent = new Intent(getApplicationContext(),DoneActivity.class);
                                 intent.putExtra("stringlist","underrright");

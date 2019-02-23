@@ -48,7 +48,6 @@ import java.util.TimerTask;
 
 public class TreatActivity extends AppCompatActivity {
 
-    private String IP_Address = "52.32.36.182";
     String treatResult="";
 
     ImageView forehead, underleft, underright, eyeleft, eyeright, cheekl, cheekr, mouth, back;
@@ -188,7 +187,7 @@ public class TreatActivity extends AppCompatActivity {
         super.onResume();
 
         GetData task = new GetData();
-        task.execute("http://"+IP_Address+"/callingTreat.php", "");
+        task.execute("http://"+HomeActivity.IP_Address+"/callingTreat.php", "");
 
     }
 
@@ -200,7 +199,9 @@ public class TreatActivity extends AppCompatActivity {
 
             Log.e("treat1-", "onPostExecute - " + getResult);
 
-            if (!getResult.contains("No_results")) {
+            if (getResult==null) {}
+            else if (getResult.contains("No_results")) {}
+            else {
                 showResult(getResult);
 
                 // underleft

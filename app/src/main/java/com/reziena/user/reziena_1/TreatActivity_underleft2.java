@@ -202,7 +202,7 @@ public class TreatActivity_underleft2 extends AppCompatActivity {
                             }
                             if(count==15){
                                 setData task = new setData();
-                                task.execute("http://"+R.string.IP_Address+"/saveTreat.php", "uneye_l");
+                                task.execute("http://"+HomeActivity.IP_Address+"/saveTreat.php", "uneye_l");
 
                                 if (! TreatActivity_underleft2.this.isFinishing()) {
                                     Intent intent = new Intent(getApplicationContext(),DoneActivity.class);

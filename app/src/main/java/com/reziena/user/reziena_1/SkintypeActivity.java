@@ -171,7 +171,7 @@ public class SkintypeActivity extends AppCompatActivity {
         Log.i("wt: ", String.valueOf(wwt));
 
         setData task = new setData();
-        task.execute("http://"+R.string.IP_Address+"/saveSkintype.php", skin_type);
+        task.execute("http://"+HomeActivity.IP_Address+"/saveSkintype.php", skin_type);
 
     }
 
@@ -227,7 +227,7 @@ public class SkintypeActivity extends AppCompatActivity {
                 BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
                 StringBuilder sb = new StringBuilder();
-                String line = null;
+                String line;
 
                 while ((line=bufferedReader.readLine()) != null) {
                     sb.append(line);
@@ -235,7 +235,7 @@ public class SkintypeActivity extends AppCompatActivity {
                 }
 
             } catch (Exception e) {
-                Log.e("skintype-ERROR", "InsertDataError ", e);
+                Log.e("skintype-ERROR", "InsertDataError "+e.getMessage());
             }
             return null;
         }

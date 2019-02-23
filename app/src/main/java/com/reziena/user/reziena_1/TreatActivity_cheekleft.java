@@ -144,10 +144,10 @@ public class TreatActivity_cheekleft extends AppCompatActivity {
         super.onResume();
 
         GetData task = new GetData();
-        task.execute("http://"+R.string.IP_Address+"/callingTreat.php", "");
+        task.execute("http://"+HomeActivity.IP_Address+"/callingTreat.php", "");
 
         GetData2 task2 = new GetData2();
-        task2.execute("http://"+R.string.IP_Address+"/callingWrinkle.php", "");
+        task2.execute("http://"+HomeActivity.IP_Address+"/callingWrinkle.php", "");
     }
 
     class GetData extends AsyncTask<String, Void, String> {
@@ -158,7 +158,8 @@ public class TreatActivity_cheekleft extends AppCompatActivity {
 
             Log.e("treat3-", "onPostExecute - " + getResult);
 
-            if (!getResult.contains("No_results")) {
+            if (getResult==null) {}
+            else {
                 showResult(getResult);
 
                 // cheekl
@@ -172,9 +173,6 @@ public class TreatActivity_cheekleft extends AppCompatActivity {
                     cheekr.setEnabled(false);
                     cheekr.setImageResource(R.drawable.cheekrightdone);
                 }
-            }
-            else {
-                Log.e("treat3-response:", "no result");
             }
         }
 
@@ -264,31 +262,34 @@ public class TreatActivity_cheekleft extends AppCompatActivity {
 
             Log.e("wrinkle-", "onPostExecute - " + getResult);
 
-            showResult(getResult);
-
-            if (wrinkle_string.equals("A")) {
-                level = 1;
-            }
-            if (wrinkle_string.equals("B")) {
-                level = 2;
-            }
-            if (wrinkle_string.equals("C")) {
-                level = 3;
-            }
-            if (level == 1) {
-                cheekl.setImageResource(R.drawable.cheekleftlevel1);
-                cheekr.setImageResource(R.drawable.cheekrightlevel1);
-                component_txt.setText("PLEASE SET THE DEVICE\nON LEVEL 1,\nAND SELECT STARTIG AREA");
-            }
-            if (level == 2) {
-                cheekl.setImageResource(R.drawable.cheekleftlevel2);
-                cheekr.setImageResource(R.drawable.cheekrightlevel2);
-                component_txt.setText("PLEASE SET THE DEVICE\nON LEVEL 2,\nAND SELECT STARTIG AREA");
-            }
-            if (level == 3) {
-                cheekl.setImageResource(R.drawable.cheekleftlevel3);
-                cheekr.setImageResource(R.drawable.cheekrightlevel3);
-                component_txt.setText("PLEASE SET THE DEVICE\nON LEVEL 3,\nAND SELECT STARTIG AREA");
+            if (getResult==null) {}
+            else if (getResult.contains("No_results")) {}
+            else {
+                showResult(getResult);
+                if (wrinkle_string.equals("A")) {
+                    level = 1;
+                }
+                if (wrinkle_string.equals("B")) {
+                    level = 2;
+                }
+                if (wrinkle_string.equals("C")) {
+                    level = 3;
+                }
+                if (level == 1) {
+                    cheekl.setImageResource(R.drawable.cheekleftlevel1);
+                    cheekr.setImageResource(R.drawable.cheekrightlevel1);
+                    component_txt.setText("PLEASE SET THE DEVICE\nON LEVEL 1,\nAND SELECT STARTIG AREA");
+                }
+                if (level == 2) {
+                    cheekl.setImageResource(R.drawable.cheekleftlevel2);
+                    cheekr.setImageResource(R.drawable.cheekrightlevel2);
+                    component_txt.setText("PLEASE SET THE DEVICE\nON LEVEL 2,\nAND SELECT STARTIG AREA");
+                }
+                if (level == 3) {
+                    cheekl.setImageResource(R.drawable.cheekleftlevel3);
+                    cheekr.setImageResource(R.drawable.cheekrightlevel3);
+                    component_txt.setText("PLEASE SET THE DEVICE\nON LEVEL 3,\nAND SELECT STARTIG AREA");
+                }
             }
         }
 

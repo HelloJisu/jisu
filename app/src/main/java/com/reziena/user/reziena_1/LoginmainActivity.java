@@ -34,7 +34,6 @@ public class LoginmainActivity extends AppCompatActivity {
 
     private EditText etID, etPassword;
     private Button btnLogin;
-    private String IP_Address = "52.32.36.182";
     private String id;
     LinearLayout login,signin;
 
@@ -110,7 +109,7 @@ public class LoginmainActivity extends AppCompatActivity {
                 String pw = etPassword.getText().toString();
 
                 Login task = new Login();
-                task.execute("http://"+IP_Address+"/login.php", id, pw);
+                task.execute("http://"+HomeActivity.IP_Address+"/login.php", id, pw);
 
             }
         });

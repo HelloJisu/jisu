@@ -36,8 +36,6 @@ public class WrinkleResultActivity extends AppCompatActivity {
   String grade, per;
   HomeActivity homeactivity = (HomeActivity)HomeActivity.homeactivity;
 
-  private String IP_Address = "52.32.36.182";
-
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -77,7 +75,7 @@ public class WrinkleResultActivity extends AppCompatActivity {
     }
 
     setData task = new setData();
-    task.execute("http://"+IP_Address+"/saveWrinkle.php", per);
+    task.execute("http://"+HomeActivity.IP_Address+"/saveWrinkle.php", per);
 
     Log.e("Wrinkle-grade", grade);
 
@@ -91,10 +89,14 @@ public class WrinkleResultActivity extends AppCompatActivity {
       public void onClick(View v) {
         switch (v.getId()) {
           case R.id.okay: case R.id.imageButton:
-            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-            startActivity(intent);
-            homeactivity.finish();
-            finish();
+            // Dashboard로 넘어가게 하기
+            //homeactivity.dashback.setImageResource(0);
+            //finish();
+            break;
+
+            //Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+            //startActivity(intent);
+            //homeactivity.finish();
         }
       }
     };

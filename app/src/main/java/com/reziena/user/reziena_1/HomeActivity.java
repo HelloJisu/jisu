@@ -86,6 +86,8 @@ public class HomeActivity extends AppCompatActivity {
     private String mDeviceAddress = "";
     LoginActivity loginActivity = (LoginActivity) LoginActivity.loginactivity;
 
+    boolean measureWrinkle=false;
+
     BluetoothDevice device;
 
     static boolean isFirst = true;
@@ -142,7 +144,7 @@ public class HomeActivity extends AppCompatActivity {
     int max_mois, max_wrink;
 
     private String userName;
-    private String IP_Address = "52.32.36.182";
+    public static String IP_Address = "52.32.36.182";
     static String devName = "상아";     //Galaxy Note8, Galaxy S9
 
     private String DB_skintype, DB_moisture="", DB_wrinkle="";
@@ -350,9 +352,13 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.treatBtn:
-                        intent = new Intent(getApplicationContext(), LoadingActivity.class);
-                        overridePendingTransition(0,0);
-                        startActivity(intent);
+                        if (measureWrinkle) {
+                            intent = new Intent(getApplicationContext(), LoadingActivity.class);
+                            overridePendingTransition(0, 0);
+                            startActivity(intent);
+                        } else {
+                            // wrinkle level이 없다고 팝업 띄우기
+                        }
                         break;
                     case R.id.moisture:
                         intent = new Intent(getApplicationContext(), MoistureActivity.class);
@@ -814,8 +820,8 @@ public class HomeActivity extends AppCompatActivity {
         protected void onPostExecute(String getResult) {
             super.onPostExecute(getResult);
 
-
             if (getResult==null) {
+                measureWrinkle = false;
                 Log.e("getdata-wrinkle", "getResult==null");
                 DB_wrinkle = "-";
                 wrinkle_up.setVisibility(View.INVISIBLE);
@@ -891,6 +897,7 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         private void showResult(String result){
+            measureWrinkle = true;
             try {
                 JSONObject jsonObject = new JSONObject(result);
                 JSONArray jsonArray = jsonObject.getJSONArray("getData");
@@ -1029,18 +1036,16 @@ public class HomeActivity extends AppCompatActivity {
             //Log.e("setArrow-Result", getResult);
             Log.e("현재디비", DB_moisture+DB_wrinkle);
 
-            if (getResult==null) {
-                mois_up.setVisibility(View.INVISIBLE);
-                mois_down.setVisibility(View.INVISIBLE);
-                wrinkle_up.setVisibility(View.INVISIBLE);
-                wrinkle_down.setVisibility(View.INVISIBLE);
-            }
-            else if (getResult.contains("No_results")) {
+            Log.e("setArrow", getResult);
+
+            showResult(getResult);
+
+            if (getResult.contains("No_results")) {
                 if (getResult.contains("moisture")) {
                     mois_up.setVisibility(View.INVISIBLE);
                     mois_down.setVisibility(View.INVISIBLE);
                 }
-                if (getResult.contains("wrinkle")) {
+                else if (getResult.contains("wrinkle")) {
                     wrinkle_up.setVisibility(View.INVISIBLE);
                     wrinkle_down.setVisibility(View.INVISIBLE);
                 }
@@ -1161,8 +1166,8 @@ public class HomeActivity extends AppCompatActivity {
                     }
                     if (dbName.equals("wrinkle")) {
                         int before_wrink = item.getInt("level");
-                        if (before_wrink < moisture_per) { wrink = "up"; }
-                        else if (before_wrink == moisture_per) { wrink = "else"; }
+                        if (before_wrink < wrinkle_per) { wrink = "up"; }
+                        else if (before_wrink == wrinkle_per) { wrink = "else"; }
                         else { wrink = "down"; }
                         Log.e("setArrow", dbName + "/현재값:" + DB_wrinkle  + "/전에값" + before_wrink);
                     }

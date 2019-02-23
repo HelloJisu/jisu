@@ -144,10 +144,10 @@ public class TreatActivity_underleft extends AppCompatActivity {
     super.onResume();
 
     GetData task = new GetData();
-    task.execute("http://"+R.string.IP_Address+"/callingTreat.php", "");
+    task.execute("http://"+HomeActivity.IP_Address+"/callingTreat.php", "");
 
     GetData2 task2 = new GetData2();
-    task2.execute("http://"+R.string.IP_Address+"/callingWrinkle.php", "");
+    task2.execute("http://"+HomeActivity.IP_Address+"/callingWrinkle.php", "");
 
   }
 
@@ -159,23 +159,21 @@ public class TreatActivity_underleft extends AppCompatActivity {
 
       Log.e("treat3-", "onPostExecute - " + getResult);
 
-      if (!getResult.contains("No_results")) {
+      if (getResult == null) {
+      } else {
         showResult(getResult);
-
-        // cheekl
-        if (treatResult.contains("uneye_l")) {
-          underleft.setEnabled(false);
-          underleft.setImageResource(R.drawable.underleftdone);
-        }
-
-        // cheekr
-        if (treatResult.contains("uneye_r")) {
-          underright.setEnabled(false);
-          underright.setImageResource(R.drawable.underrightdone);
-        }
       }
-      else {
-        Log.e("treat3-response:", "no result");
+
+      // cheekl
+      if (treatResult.contains("uneye_l")) {
+        underleft.setEnabled(false);
+        underleft.setImageResource(R.drawable.underleftdone);
+      }
+
+      // cheekr
+      if (treatResult.contains("uneye_r")) {
+        underright.setEnabled(false);
+        underright.setImageResource(R.drawable.underrightdone);
       }
     }
 
@@ -263,33 +261,35 @@ public class TreatActivity_underleft extends AppCompatActivity {
     protected void onPostExecute(String getResult) {
       super.onPostExecute(getResult);
 
-      Log.e("wrinkle-", "onPostExecute - " + getResult);
+      if (getResult == null) {}
+      else if (getResult.contains("No_results")) {}
+      else {
+        showResult(getResult);
 
-      showResult(getResult);
-
-      if (wrinkle_string.equals("A")) {
-        level = 1;
-      }
-      if (wrinkle_string.equals("B")) {
-        level = 2;
-      }
-      if (wrinkle_string.equals("C")) {
-        level = 3;
-      }
-      if (level == 1) {
-        underleft.setImageResource(R.drawable.underleftlevel1);
-        underright.setImageResource(R.drawable.underrightlevel1);
-        component_txt.setText("PLEASE SET THE DEVICE\nON LEVEL 1,\nAND SELECT STARTIG AREA");
-      }
-      if (level == 2) {
-        underleft.setImageResource(R.drawable.underleftlevel2);
-        underright.setImageResource(R.drawable.underrightlevel2);
-        component_txt.setText("PLEASE SET THE DEVICE\nON LEVEL 2,\nAND SELECT STARTIG AREA");
-      }
-      if (level == 3) {
-        underleft.setImageResource(R.drawable.underleftlevel3);
-        underright.setImageResource(R.drawable.underrightlevel3);
-        component_txt.setText("PLEASE SET THE DEVICE\nON LEVEL 3,\nAND SELECT STARTIG AREA");
+        if (wrinkle_string.equals("A")) {
+          level = 1;
+        }
+        if (wrinkle_string.equals("B")) {
+          level = 2;
+        }
+        if (wrinkle_string.equals("C")) {
+          level = 3;
+        }
+        if (level == 1) {
+          underleft.setImageResource(R.drawable.underleftlevel1);
+          underright.setImageResource(R.drawable.underrightlevel1);
+          component_txt.setText("PLEASE SET THE DEVICE\nON LEVEL 1,\nAND SELECT STARTIG AREA");
+        }
+        if (level == 2) {
+          underleft.setImageResource(R.drawable.underleftlevel2);
+          underright.setImageResource(R.drawable.underrightlevel2);
+          component_txt.setText("PLEASE SET THE DEVICE\nON LEVEL 2,\nAND SELECT STARTIG AREA");
+        }
+        if (level == 3) {
+          underleft.setImageResource(R.drawable.underleftlevel3);
+          underright.setImageResource(R.drawable.underrightlevel3);
+          component_txt.setText("PLEASE SET THE DEVICE\nON LEVEL 3,\nAND SELECT STARTIG AREA");
+        }
       }
     }
 

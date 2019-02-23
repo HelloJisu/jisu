@@ -78,8 +78,6 @@ public class Signin2Activity extends AppCompatActivity {
     public int yearint, dayint, monthint;
     Drawable alphasignin;
 
-    private String IP_Address = "52.32.36.182";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -218,7 +216,7 @@ public class Signin2Activity extends AppCompatActivity {
                         String saveName = name.getText().toString();
                         String birth = yearint+"/"+monthint+"/"+dayint;
                         setData task = new setData();
-                        task.execute("http://"+ IP_Address +"/saveUser.php", idstring, password, saveName, genderstring, birth, profileurl, countrystring);
+                        task.execute("http://"+ HomeActivity.IP_Address +"/saveUser.php", idstring, password, saveName, genderstring, birth, profileurl, countrystring);
                         break;
                     case R.id.signinprofile:
                         doTakeAlbumAction();

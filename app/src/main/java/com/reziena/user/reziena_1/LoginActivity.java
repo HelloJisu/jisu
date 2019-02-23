@@ -181,7 +181,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         Log.e("인스타",isname);
 
         getUser task = new getUser();
-        task.execute("http://"+R.string.IP_Address+"/getUser.php", isid, "", isprofile, "instagram");
+        task.execute("http://"+HomeActivity.IP_Address+"/getUser.php", isid, "", isprofile, "instagram");
     }
 
     public void logout() {
@@ -287,7 +287,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 Log.e("success", "userName:" + kaname); //카카오톡 이름
 
                 getUser task = new getUser();
-                task.execute("http://"+R.string.IP_Address+"/getUser.php", kaid, kaname, kaprofile, "kakao");
+                task.execute("http://"+HomeActivity.IP_Address+"/getUser.php", kaid, kaname, kaprofile, "kakao");
             }
 
             @Override
@@ -335,7 +335,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 Log.e("GoogleLogin", "tokenKey=" + tokenKey);
 
                 getUser task = new getUser();
-                task.execute("http://"+R.string.IP_Address+"/getUser.php", goid, goname, goprofile, "google");
+                task.execute("http://"+HomeActivity.IP_Address+"/getUser.php", goid, goname, goprofile, "google");
 
             } else {
                 Log.e("GoogleLogin", "login fail cause=" + result.getStatus().getStatusMessage());
@@ -455,7 +455,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                 fbid = String.valueOf(Profile.getCurrentProfile().getId());
 
                                 getUser task = new getUser();
-                                task.execute("http://"+R.string.IP_Address+"/getUser.php", fbid, fbname, fbprofile, "facebook");
+                                task.execute("http://"+HomeActivity.IP_Address+"/getUser.php", fbid, fbname, fbprofile, "facebook");
 
                                 Log.e("페북",fbname);
                                 Log.e("페북",fbprofile);
