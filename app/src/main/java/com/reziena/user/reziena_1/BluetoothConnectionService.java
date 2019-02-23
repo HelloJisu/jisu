@@ -40,7 +40,7 @@ public class BluetoothConnectionService {
     private ConnectThread mConnectThread;
     private BluetoothDevice mmDevice;
     private UUID deviceUUID;
-    //ProgressDialog mProgressDialog;
+    private boolean success=false;
 
     private ConnectedThread mConnectedThread;
 
@@ -171,18 +171,18 @@ public class BluetoothConnectionService {
             try {
                 Log.e(btTag, "run: Try to ConnectThread");
                 mmSocket.connect();
-                HomeActivity.isConnected = true;
+                success = true;
                 Log.e(btTag, "run: ConnectThread connected.");
             } catch (IOException e) {
                 try {
-                    HomeActivity.isConnected = false;
+                    success = false;
                     Log.e("reConnect", "Started " + e.getMessage());
                     mmSocket =(BluetoothSocket) mmDevice.getClass().getMethod("createRfcommSocket", new Class[] {int.class}).invoke(mmDevice,1);
                     mmSocket.connect();
                     Log.e("reConnect", "complete");
-                    HomeActivity.isConnected = true;
+                    success = true;
                 } catch (Exception e1) {
-                    HomeActivity.isConnected = false;
+                    success = false;
                     Log.e("reConnect", "Error again with " + e1.getMessage());
 
                     // Close the socket
@@ -202,9 +202,9 @@ public class BluetoothConnectionService {
             }
 
             //will talk about this in the 3rd video
-            Log.e("SUCCESS?", String.valueOf(HomeActivity.isConnected));
+            Log.e("SUCCESS?", String.valueOf(success));
 
-            if (HomeActivity.isConnected) {
+            if (success) {
                 connected(mmSocket, mmDevice);
             } else {
                 cancel();
