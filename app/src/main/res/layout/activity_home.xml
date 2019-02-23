@@ -211,7 +211,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="0.24"
                         android:gravity="center"
-                        android:text="MON"
+                        android:text="1ST"
                         android:textColor="#ACAABE"
                         android:textSize="12sp"
                         app:fontFamily="@font/roboto" />
@@ -272,7 +272,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="0.24"
                         android:gravity="center"
-                        android:text="TUE"
+                        android:text="2ND"
                         android:textColor="#ACAABE"
                         android:textSize="12sp"
                         app:fontFamily="@font/roboto" />
@@ -332,7 +332,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="0.24"
                         android:gravity="center"
-                        android:text="WED"
+                        android:text="3RD"
                         android:textColor="#ACAABE"
                         android:textSize="12sp"
                         app:fontFamily="@font/roboto" />
@@ -392,7 +392,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="0.24"
                         android:gravity="center"
-                        android:text="THU"
+                        android:text="4TH"
                         android:textColor="#ACAABE"
                         android:textSize="12sp"
                         app:fontFamily="@font/roboto" />
@@ -439,7 +439,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="0.38"
-                        android:alpha="0.7"
                         android:gravity="center"
                         app:srcCompat="@drawable/noncheck"
                         />
@@ -453,7 +452,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="0.24"
                         android:gravity="center"
-                        android:text="FRI"
+                        android:text="5TH"
                         android:textColor="#ACAABE"
                         android:textSize="12sp"
                         app:fontFamily="@font/roboto" />
