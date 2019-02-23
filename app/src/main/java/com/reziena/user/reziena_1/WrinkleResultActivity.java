@@ -107,14 +107,14 @@ public class WrinkleResultActivity extends AppCompatActivity {
     @Override
     protected String doInBackground(String... params) {
       String serverURL = params[0];
-      String grade = params[1];
+      String per = params[1];
       SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ( "yyyy-MM-dd", Locale.KOREA );
       Date currentTime = new Date();
       String date = mSimpleDateFormat.format ( currentTime );
 
       SharedPreferences sp_userID = getSharedPreferences("userID", MODE_PRIVATE);
       String userID = sp_userID.getString("userID", "");
-      String postParameters = "date="+date+"&id="+userID+"&grade="+grade;
+      String postParameters = "date="+date+"&id="+userID+"&per="+per;
       Log.e("wrinkle-postParameters", "/////"+postParameters);
 
       try {

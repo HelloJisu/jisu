@@ -668,14 +668,21 @@ public class HomeActivity extends AppCompatActivity {
 
             Log.e("moisture-", "onPostExecute - " + getResult);
 
-            if (getResult.contains("No_results")) {
+            if (getResult==null) {
                 DB_moisture = "-";
                 mois_up.setVisibility(View.INVISIBLE);
                 mois_down.setVisibility(View.INVISIBLE);
+            } else {
+                if (getResult.contains("No_results")) {
+                    DB_moisture = "-";
+                    mois_up.setVisibility(View.INVISIBLE);
+                    mois_down.setVisibility(View.INVISIBLE);
+                }
+                showResult(getResult);
+                moisture_score_main.setText(DB_moisture);
+                moisture_score.setText(DB_moisture);
             }
-            showResult(getResult);
-            moisture_score_main.setText(DB_moisture);
-            moisture_score.setText(DB_moisture);
+
 
             SetArrow setTask1 = new SetArrow();
             setTask1.execute("http://"+IP_Address+"/setArrow.php", "moisture");
@@ -784,14 +791,21 @@ public class HomeActivity extends AppCompatActivity {
 
             Log.e("wrinkle-", "onPostExecute - " + getResult);
 
-            if (getResult.contains("No_results")) {
+            if (getResult==null) {
                 DB_wrinkle = "-";
                 wrinkle_up.setVisibility(View.INVISIBLE);
                 wrinkle_down.setVisibility(View.INVISIBLE);
+            } else {
+                if (getResult.contains("No_results")) {
+                    DB_wrinkle = "-";
+                    wrinkle_up.setVisibility(View.INVISIBLE);
+                    wrinkle_down.setVisibility(View.INVISIBLE);
+                } else {
+                    showResult(getResult);
+                    wrinkle_score_main.setText(DB_wrinkle);
+                    wrinkle_score.setText(DB_wrinkle);
+                }
             }
-            showResult(getResult);
-            wrinkle_score_main.setText(DB_wrinkle);
-            wrinkle_score.setText(DB_wrinkle);
 
             SetArrow setTask2 = new SetArrow();
             setTask2.execute("http://"+IP_Address+"/setArrow.php", "wrinkle");
@@ -895,12 +909,17 @@ public class HomeActivity extends AppCompatActivity {
             super.onPostExecute(getResult);
 
             Log.e("skintype-", "onPostExecute - " + getResult);
-            if (getResult.contains("No_results")) {
+            if (getResult==null) {
                 DB_skintype = "No data yet";
+            } else {
+                if (getResult.contains("No_results")) {
+                    DB_skintype = "No data yet";
+                } else {
+                    showResult(getResult);
+                    skintype_main.setText(DB_skintype);
+                    skintype_result.setText(DB_skintype);
+                }
             }
-            showResult(getResult);
-            skintype_main.setText(DB_skintype);
-            skintype_result.setText(DB_skintype);
         }
 
         @Override
@@ -985,10 +1004,16 @@ public class HomeActivity extends AppCompatActivity {
         protected void onPostExecute(String getResult) {
             super.onPostExecute(getResult);
 
-            Log.e("setArrow-Result", getResult);
+            //Log.e("setArrow-Result", getResult);
             Log.e("현재디비", DB_moisture+DB_wrinkle);
 
-            if (getResult.contains("No_results")) {
+            if (getResult==null) {
+                mois_up.setVisibility(View.INVISIBLE);
+                mois_down.setVisibility(View.INVISIBLE);
+                wrinkle_up.setVisibility(View.INVISIBLE);
+                wrinkle_down.setVisibility(View.INVISIBLE);
+            }
+            else if (getResult.contains("No_results")) {
                 if (getResult.contains("moisture")) {
                     mois_up.setVisibility(View.INVISIBLE);
                     mois_down.setVisibility(View.INVISIBLE);
@@ -998,10 +1023,7 @@ public class HomeActivity extends AppCompatActivity {
                     wrinkle_down.setVisibility(View.INVISIBLE);
                 }
             }
-            else {
-                showResult(getResult);
-            }
-            if (getResult.contains("moisture")) {
+            else if (getResult.contains("moisture")) {
                 if(mois.equals("up")) {
                     Log.e("setting-moisture", "up");
                     mois_up.setVisibility(View.VISIBLE);
@@ -1016,7 +1038,8 @@ public class HomeActivity extends AppCompatActivity {
                     mois_down.setVisibility(View.INVISIBLE);
                 }
                 moisture_status.setText("Great!");
-            } if (getResult.contains("wrinkle")) {
+            }
+            else if (getResult.contains("wrinkle")) {
                 if(wrink.equals("up")) {
                     Log.e("setting-wrinkle", "up");
                     wrinkle_up.setVisibility(View.VISIBLE);
