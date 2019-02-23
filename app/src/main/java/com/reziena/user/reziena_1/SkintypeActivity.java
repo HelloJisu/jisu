@@ -56,8 +56,6 @@ public class SkintypeActivity extends AppCompatActivity {
     LinearLayout content1, content2;
     int width;
 
-    private String IP_Address = "52.32.36.182";
-
     public SkintypeActivity() {
     }
 
@@ -173,7 +171,7 @@ public class SkintypeActivity extends AppCompatActivity {
         Log.i("wt: ", String.valueOf(wwt));
 
         setData task = new setData();
-        task.execute("http://"+IP_Address+"/saveSkintype.php", skin_type);
+        task.execute("http://"+R.string.IP_Address+"/saveSkintype.php", skin_type);
 
     }
 

@@ -70,8 +70,6 @@ public class TreatActivity_underleft2 extends AppCompatActivity {
     AnimationDrawable utlani1,utlani2,utlani3,utlani4,utlani5,utlani6,utlani7,utlani8,utlani9,utlani10,utlani11,utlani12,utlani13;
     static String finish;
 
-    private String IP_Address = "52.32.36.182";
-
     public static void intentpage(String string) {
         finish=string;
     }
@@ -204,7 +202,7 @@ public class TreatActivity_underleft2 extends AppCompatActivity {
                             }
                             if(count==15){
                                 setData task = new setData();
-                                task.execute("http://"+IP_Address+"/saveTreat.php", "uneye_l");
+                                task.execute("http://"+R.string.IP_Address+"/saveTreat.php", "uneye_l");
 
                                 if (! TreatActivity_underleft2.this.isFinishing()) {
                                     Intent intent = new Intent(getApplicationContext(),DoneActivity.class);

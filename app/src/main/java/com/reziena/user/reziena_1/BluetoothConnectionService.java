@@ -6,6 +6,7 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -16,6 +17,8 @@ import java.io.OutputStream;
 import java.lang.reflect.Method;
 import java.nio.charset.Charset;
 import java.util.UUID;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * Created by User on 12/21/2016.
@@ -37,7 +40,7 @@ public class BluetoothConnectionService {
     private ConnectThread mConnectThread;
     private BluetoothDevice mmDevice;
     private UUID deviceUUID;
-    //ProgressDialog mProgressDialog;
+    private boolean success=false;
 
     private ConnectedThread mConnectedThread;
 
@@ -165,7 +168,6 @@ public class BluetoothConnectionService {
             }
 
             // Make a connection to the BluetoothSocket
-            Boolean success = false;
             try {
                 Log.e(btTag, "run: Try to ConnectThread");
                 mmSocket.connect();
@@ -173,12 +175,14 @@ public class BluetoothConnectionService {
                 Log.e(btTag, "run: ConnectThread connected.");
             } catch (IOException e) {
                 try {
+                    success = false;
                     Log.e("reConnect", "Started " + e.getMessage());
                     mmSocket =(BluetoothSocket) mmDevice.getClass().getMethod("createRfcommSocket", new Class[] {int.class}).invoke(mmDevice,1);
                     mmSocket.connect();
                     Log.e("reConnect", "complete");
                     success = true;
                 } catch (Exception e1) {
+                    success = false;
                     Log.e("reConnect", "Error again with " + e1.getMessage());
 
                     // Close the socket
@@ -204,6 +208,8 @@ public class BluetoothConnectionService {
                 connected(mmSocket, mmDevice);
             } else {
                 cancel();
+                Intent intent = new Intent(getApplicationContext(), BTOnActivity.class);
+                mContext.startActivity(intent);
                 Log.e("Error","doesn't connected");
             }
         }

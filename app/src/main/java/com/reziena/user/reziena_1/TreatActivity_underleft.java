@@ -48,7 +48,6 @@ import java.util.TimerTask;
 
 public class TreatActivity_underleft extends AppCompatActivity {
 
-  private String IP_Address = "52.32.36.182";
   String treatResult="";
 
   ImageView forehead, underleft, underright, eyeleft, eyeright, cheekl, cheekr, mouth, back;
@@ -126,7 +125,7 @@ public class TreatActivity_underleft extends AppCompatActivity {
             break;
 
           case R.id.underleft_ul:
-          //  HomeActivity.send("uneye_l->start");
+            HomeActivity.send("uneye_l->start");
             intent = new Intent(getBaseContext(), TreatActivity_underleft2.class);
             startActivity(intent);
             overridePendingTransition(0, 0);
@@ -145,10 +144,10 @@ public class TreatActivity_underleft extends AppCompatActivity {
     super.onResume();
 
     GetData task = new GetData();
-    task.execute("http://"+IP_Address+"/callingTreat.php", "");
+    task.execute("http://"+R.string.IP_Address+"/callingTreat.php", "");
 
     GetData2 task2 = new GetData2();
-    task2.execute("http://"+IP_Address+"/callingWrinkle.php", "");
+    task2.execute("http://"+R.string.IP_Address+"/callingWrinkle.php", "");
 
   }
 

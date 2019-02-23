@@ -231,6 +231,7 @@ public class TreatActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... params) {
+
             String serverURL = params[0];
 
             SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ( "yyyy-MM-dd", Locale.KOREA );
