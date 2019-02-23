@@ -476,24 +476,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
             Log.e("login-onPostExecute", "response - " + result);
 
-            if (result.contains("yes")) {
-                SharedPreferences sp_userName = getSharedPreferences("userName", MODE_PRIVATE);
-                SharedPreferences sp_userID = getSharedPreferences("userID", MODE_PRIVATE);
-                SharedPreferences sp_profile = getSharedPreferences("profile", MODE_PRIVATE);
-                SharedPreferences.Editor editor1 = sp_userName.edit();
-                SharedPreferences.Editor editor2 = sp_userID.edit();
-                SharedPreferences.Editor editor3 = sp_profile.edit();
-                editor1.putString("userName", name);
-                editor2.putString("userID", id);
-                editor3.putString("profile", profile);
-                editor1.commit();
-                editor2.commit();
-                editor3.commit();
-                Log.e("Login ", name+"님 로그인");
-                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                startActivity(intent);
-                finish();
-            } else {
+            if (result==null) {
                 Log.e("onPostExecute", "회원없음");
                 Intent intent1 = new Intent(getApplicationContext(),Signin2Activity.class);
                 intent1.putExtra("id",id);
@@ -501,6 +484,35 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 intent1.putExtra("profile",profile);
                 startActivity(intent1);
                 finish();
+            } else {
+                if (result.contains("yes")) {
+                    SharedPreferences sp_userName = getSharedPreferences("userName", MODE_PRIVATE);
+                    SharedPreferences sp_userID = getSharedPreferences("userID", MODE_PRIVATE);
+                    SharedPreferences sp_profile = getSharedPreferences("profile", MODE_PRIVATE);
+                    SharedPreferences.Editor editor1 = sp_userName.edit();
+                    SharedPreferences.Editor editor2 = sp_userID.edit();
+                    SharedPreferences.Editor editor3 = sp_profile.edit();
+                    editor1.putString("userName", name);
+                    editor2.putString("userID", id);
+                    editor3.putString("profile", profile);
+                    editor1.commit();
+                    editor2.commit();
+                    editor3.commit();
+                    Log.e("Login ", name+"님 로그인");
+                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    {
+                        Log.e("onPostExecute", "회원없음");
+                        Intent intent1 = new Intent(getApplicationContext(),Signin2Activity.class);
+                        intent1.putExtra("id",id);
+                        intent1.putExtra("name",name);
+                        intent1.putExtra("profile",profile);
+                        startActivity(intent1);
+                        finish();
+                    }
+                }
             }
         }
 

@@ -111,7 +111,7 @@ public class Signin2Activity extends AppCompatActivity {
         Spinner birthday_day = findViewById(R.id.birthday_day);
         ArrayList<Integer> birthAdapter = new ArrayList<>();
         for(int i=1;i<=31;i++){
-            birthAdapter.add(i++);
+            birthAdapter.add(i);
         }
         ArrayAdapter<Integer> birthdayAdapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_dropdown_item,birthAdapter);
         birthday_day.setAdapter(birthdayAdapter);
@@ -205,8 +205,11 @@ public class Signin2Activity extends AppCompatActivity {
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.signin:
-                        String emailsign = email.getText().toString();
-                        String namesign = name.getText().toString();
+                        gender;
+                        yearint;
+                        dayint;
+                        monthint;
+                        countrystring; //이거 저장하자 상아야
 
                         break;
                     case R.id.signinprofile:
