@@ -49,7 +49,6 @@ import java.util.TimerTask;
 
 public class TreatActivity_cheekleft extends AppCompatActivity {
 
-    private String IP_Address = "52.32.36.182";
     String treatResult="";
 
     ImageView forehead, underleft, underright, eyeleft, eyeright, cheekl, cheekr, mouth, back;
@@ -145,10 +144,10 @@ public class TreatActivity_cheekleft extends AppCompatActivity {
         super.onResume();
 
         GetData task = new GetData();
-        task.execute("http://"+IP_Address+"/callingTreat.php", "");
+        task.execute("http://"+R.string.IP_Address+"/callingTreat.php", "");
 
         GetData2 task2 = new GetData2();
-        task2.execute("http://"+IP_Address+"/callingWrinkle.php", "");
+        task2.execute("http://"+R.string.IP_Address+"/callingWrinkle.php", "");
     }
 
     class GetData extends AsyncTask<String, Void, String> {

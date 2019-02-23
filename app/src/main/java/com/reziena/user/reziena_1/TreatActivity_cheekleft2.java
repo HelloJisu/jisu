@@ -55,8 +55,6 @@ public class TreatActivity_cheekleft2 extends AppCompatActivity {
     static String finish;
     ImageView content1, content2;
 
-    private String IP_Address = "52.32.36.182";
-
     public void animation() {
         second = new TimerTask() {
             @Override
@@ -258,7 +256,7 @@ public class TreatActivity_cheekleft2 extends AppCompatActivity {
                             if(count==23){
 
                                 setData task = new setData();
-                                task.execute("http://"+IP_Address+"/saveTreat.php", "cheek_l");
+                                task.execute("http://"+R.string.IP_Address+"/saveTreat.php", "cheek_l");
 
                                 if (! TreatActivity_cheekleft2.this.isFinishing()) {
                                     Intent intent = new Intent(getApplicationContext(),DoneActivity.class);

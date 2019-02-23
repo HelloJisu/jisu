@@ -24,7 +24,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -47,8 +46,6 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -63,12 +60,11 @@ public class Signin2Activity extends AppCompatActivity {
     private static final int PICK_FROM_CAMERA = 0;
     private static final int PICK_FROM_ALBUM = 1;
     private static final int CROP_FROM_IMAGE = 2;
-    LinearLayout signin;
+    Button signin, signinfinish;
     private Uri mImageCaptureUri;
     private int id_view;
     private String absolutePath;//
     CircleImageView profile;
-    String month, year, genderstring, countrh, day;
     public static Activity skinhistoryactivity;
     HomeActivity homeactivity = (HomeActivity)HomeActivity.homeactivity;
     String namestring, emailstring, profileurl;
@@ -89,36 +85,27 @@ public class Signin2Activity extends AppCompatActivity {
         profileurl = subintent.getExtras().getString("profile");
 
         name = findViewById(R.id.name);
+        email = findViewById(R.id.email);
         profile = findViewById(R.id.signinprofile);
-        signin = findViewById(R.id.signin_signin2);
+        signin = findViewById(R.id.signin);
+        signinfinish = findViewById(R.id.signinfinish);
+        gender = findViewById(R.id.radioGroup1); //ㅎㅎ
 
-        Spinner birthday_year = findViewById(R.id.birthday_year);
-        int year = Calendar.getInstance().get(Calendar.YEAR);
-        ArrayList<Integer> yearAdapter = new ArrayList<Integer>();
-        for( int i = 0; i < 100 ; i ++) { yearAdapter.add(year--); }
-        ArrayAdapter<Integer> arrayAdapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_dropdown_item);
-        birthday_year.setAdapter(arrayAdapter);
-
-        Spinner birthday_month = findViewById(R.id.birthday_month);
-        ArrayAdapter monthAdapter = ArrayAdapter.createFromResource(this,
-                R.array.birthday_month, android.R.layout.simple_spinner_item);
-        monthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        birthday_month.setAdapter(monthAdapter);
-
-        Spinner couuntry = findViewById(R.id.country);
-        ArrayAdapter countryarray = ArrayAdapter.createFromResource(this,
-                R.array.country, android.R.layout.simple_spinner_item);
-        countryarray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        couuntry.setAdapter(countryarray);
-
-        Spinner gender = findViewById(R.id.gender);
-        ArrayAdapter genderAdapter = ArrayAdapter.createFromResource(this,
-                R.array.gender, android.R.layout.simple_spinner_item);
-        countryarray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        gender.setAdapter(genderAdapter);
+        Spinner s = (Spinner)findViewById(R.id.spinner1);
+        s.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
 
         if(namestring!=null){
             name.setText(namestring);
+        }
+        if(emailstring!=null){
+            email.setText(emailstring);
         }
         if(profile!=null){
             Glide.with(this).load(profileurl).into(profile);
@@ -128,10 +115,20 @@ public class Signin2Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 switch (v.getId()) {
+                    case R.id.signinfinish:
+
+                        break;
                     case R.id.signin:
                         String emailsign = email.getText().toString();
                         String namesign = name.getText().toString();
-
+                        genderresult=findViewById(gender.getCheckedRadioButtonId());
+                        if(genderresult==null){
+                            Toast toast = Toast.makeText(getApplicationContext(),"돌아가라!",Toast.LENGTH_LONG);
+                            toast.show();
+                        }else{
+                            setData task = new setData();
+                            task.execute("http://"+IP_Address+"/saveUser.php", namesign, emailsign, profileurl);
+                        }
                         break;
                     case R.id.signinprofile:
                         doTakeAlbumAction();
@@ -140,6 +137,7 @@ public class Signin2Activity extends AppCompatActivity {
             }
         };
         signin.setOnClickListener(onClickListener);
+        signinfinish.setOnClickListener(onClickListener);
         profile.setOnClickListener(onClickListener);
     }
 
