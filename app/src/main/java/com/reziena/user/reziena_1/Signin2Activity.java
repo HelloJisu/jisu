@@ -71,7 +71,7 @@ public class Signin2Activity extends AppCompatActivity {
     String month, year, genderstring, countrystring, day;
     public static Activity skinhistoryactivity;
     HomeActivity homeactivity = (HomeActivity)HomeActivity.homeactivity;
-    String namestring, emailstring, profileurl;
+    String namestring, idstring, profileurl;
     private static final String DEFAULT_LOCAL = "Portugal";
     public int yearint, dayint, monthint;
 
@@ -86,7 +86,7 @@ public class Signin2Activity extends AppCompatActivity {
         Intent subintent = getIntent();
 
         namestring = subintent.getExtras().getString("name");
-        emailstring = subintent.getExtras().getString("id");
+        idstring = subintent.getExtras().getString("id");
         profileurl = subintent.getExtras().getString("profile");
 
         name = findViewById(R.id.name);
@@ -205,11 +205,11 @@ public class Signin2Activity extends AppCompatActivity {
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.signin:
-                        gender;
-                        yearint;
-                        dayint;
-                        monthint;
-                        countrystring; //이거 저장하자 상아야
+                        String saveName = name.getText().toString();
+                        String birth = yearint+"/"+monthint+"/"+dayint;
+
+                        setData task = new setData();
+                        task.execute("http://"+R.string.IP_Address+"/getUser.php", idstring, pw, saveName, genderstring, birth, profileurl, countrystring);
 
                         break;
                     case R.id.signinprofile:
