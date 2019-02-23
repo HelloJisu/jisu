@@ -693,23 +693,21 @@ public class HomeActivity extends AppCompatActivity {
         protected void onPostExecute(String getResult) {
             super.onPostExecute(getResult);
 
-            Log.e("moisture-", "onPostExecute - " + getResult);
-
             if (getResult==null) {
+                Log.e("getdata-moisture", "getResult==null");
                 DB_moisture = "-";
                 mois_up.setVisibility(View.INVISIBLE);
                 mois_down.setVisibility(View.INVISIBLE);
             } else {
+                Log.e("getdata-moisture", "getResult=="+getResult);
                 if (getResult.contains("No_results")) {
                     DB_moisture = "-";
                     mois_up.setVisibility(View.INVISIBLE);
                     mois_down.setVisibility(View.INVISIBLE);
-                }
-                showResult(getResult);
-                moisture_score_main.setText(DB_moisture);
-                moisture_score.setText(DB_moisture);
+                } else showResult(getResult);
             }
-
+            moisture_score_main.setText(DB_moisture);
+            moisture_score.setText(DB_moisture);
 
             SetArrow setTask1 = new SetArrow();
             setTask1.execute("http://"+IP_Address+"/setArrow.php", "moisture");
@@ -816,23 +814,22 @@ public class HomeActivity extends AppCompatActivity {
         protected void onPostExecute(String getResult) {
             super.onPostExecute(getResult);
 
-            Log.e("wrinkle-", "onPostExecute - " + getResult);
 
             if (getResult==null) {
+                Log.e("getdata-wrinkle", "getResult==null");
                 DB_wrinkle = "-";
                 wrinkle_up.setVisibility(View.INVISIBLE);
                 wrinkle_down.setVisibility(View.INVISIBLE);
             } else {
+                Log.e("getdata-wrinkle", "getResult=="+getResult);
                 if (getResult.contains("No_results")) {
                     DB_wrinkle = "-";
                     wrinkle_up.setVisibility(View.INVISIBLE);
                     wrinkle_down.setVisibility(View.INVISIBLE);
-                } else {
-                    showResult(getResult);
-                    wrinkle_score_main.setText(DB_wrinkle);
-                    wrinkle_score.setText(DB_wrinkle);
-                }
+                } else showResult(getResult);
             }
+            wrinkle_score_main.setText(DB_wrinkle);
+            wrinkle_score.setText(DB_wrinkle);
 
             SetArrow setTask2 = new SetArrow();
             setTask2.execute("http://"+IP_Address+"/setArrow.php", "wrinkle");
@@ -941,12 +938,10 @@ public class HomeActivity extends AppCompatActivity {
             } else {
                 if (getResult.contains("No_results")) {
                     DB_skintype = "No data yet";
-                } else {
-                    showResult(getResult);
-                    skintype_main.setText(DB_skintype);
-                    skintype_result.setText(DB_skintype);
-                }
+                } else showResult(getResult);
             }
+            skintype_main.setText(DB_skintype);
+            skintype_result.setText(DB_skintype);
         }
 
         @Override
