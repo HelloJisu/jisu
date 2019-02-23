@@ -89,7 +89,6 @@ public class Signin2Activity extends AppCompatActivity {
         namestring = subintent.getExtras().getString("name");
         idstring = subintent.getExtras().getString("id");
         profileurl = subintent.getExtras().getString("profile");
-        email = subintent.getExtras().getString("email");
         password = subintent.getExtras().getString("password");
 
         name = findViewById(R.id.name);
@@ -212,7 +211,7 @@ public class Signin2Activity extends AppCompatActivity {
                         String birth = yearint+"/"+monthint+"/"+dayint;
 
                         setData task = new setData();
-                        task.execute("http://"+R.string.IP_Address+"/getUser.php", idstring, pw, saveName, genderstring, birth, profileurl, countrystring);
+                        task.execute("http://"+R.string.IP_Address+"/saveUser.php", idstring, password, saveName, genderstring, birth, profileurl, countrystring);
 
                         break;
                     case R.id.signinprofile:
@@ -226,7 +225,7 @@ public class Signin2Activity extends AppCompatActivity {
     }
 
     class setData extends AsyncTask<String, Void, String> {
-        String name, email, profile;
+        String id, pw, name, gender, birth, profile, country;
 
         @Override
         protected void onPostExecute(String result) {
@@ -245,13 +244,18 @@ public class Signin2Activity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             String serverURL = params[0];
-            name = params[1];
-            email = params[2];
-            profile = params[3];
+
+            id = params[1];
+            pw = params[2];
+            name = params[3];
+            gender = params[4];
+            birth = params[5];
+            profile = params[6];
+            country = params[7];
 
             SharedPreferences sp_userID = getSharedPreferences("userID", MODE_PRIVATE);
             String userID = sp_userID.getString("userID", "");
-            String postParameters = "name="+name+"&email="+email+"&profile="+profile;
+            String postParameters = "id="+id+"&pw="+pw+"&name="+name+"&gender="+gender+"&birth="+birth+"&profile="+profile+"&country="+country;
             Log.e("sign-postParameters", postParameters);
 
             try {
@@ -306,18 +310,18 @@ public class Signin2Activity extends AppCompatActivity {
         }
 
         private void settings(String result){
-            if (result.contains("null")) {
+            if (result.contains("null")||result.contains("Error")) {
                 Log.e("null", "you have null");
-            } else {
+            } else if (result.contains("1 record added")){
                 SharedPreferences sp_userName = getSharedPreferences("userName", MODE_PRIVATE);
                 SharedPreferences sp_userID = getSharedPreferences("userID", MODE_PRIVATE);
                 SharedPreferences.Editor editor1 = sp_userName.edit();
                 SharedPreferences.Editor editor2 = sp_userID.edit();
                 editor1.putString("userName", name);
-                editor2.putString("userID", email);
+                editor2.putString("userID", id);
                 editor1.commit();
                 editor2.commit();
-                Log.e("Login ", namestring+"님 로그인");
+                Log.e("Login ", name+"님 로그인");
                 Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                 intent.putExtra("name","skintypedialog");
                 startActivity(intent);
