@@ -57,7 +57,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class Signin2Activity extends AppCompatActivity {
     TextView okay;
     private EditText name;
-    private EditText email;
+    private String email;
+    String password;
     RadioGroup gender;
     RadioButton genderresult;
     private static final int PICK_FROM_CAMERA = 0;
@@ -88,6 +89,8 @@ public class Signin2Activity extends AppCompatActivity {
         namestring = subintent.getExtras().getString("name");
         emailstring = subintent.getExtras().getString("id");
         profileurl = subintent.getExtras().getString("profile");
+        email = subintent.getExtras().getString("email");
+        password = subintent.getExtras().getString("password");
 
         name = findViewById(R.id.name);
         profile = findViewById(R.id.signinprofile);
@@ -205,11 +208,7 @@ public class Signin2Activity extends AppCompatActivity {
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.signin:
-                        gender;
-                        yearint;
-                        dayint;
-                        monthint;
-                        countrystring; //이거 저장하자 상아야
+                       
 
                         break;
                     case R.id.signinprofile:
