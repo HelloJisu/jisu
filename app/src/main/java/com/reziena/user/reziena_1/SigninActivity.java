@@ -128,6 +128,7 @@ public class SigninActivity extends AppCompatActivity {
 
                             Intent intent = new Intent(getApplicationContext(),Signin2Activity.class);
                             intent.putExtra("email",etEmail.getText().toString());
+                            intent.putExtra("password",etPassword.getText().toString());
                             startActivity(intent);
                             finish();
                         }
