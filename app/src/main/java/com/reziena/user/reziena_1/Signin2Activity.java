@@ -253,8 +253,6 @@ public class Signin2Activity extends AppCompatActivity {
             profile = params[6];
             country = params[7];
 
-            SharedPreferences sp_userID = getSharedPreferences("userID", MODE_PRIVATE);
-            String userID = sp_userID.getString("userID", "");
             String postParameters = "id="+id+"&pw="+pw+"&name="+name+"&gender="+gender+"&birth="+birth+"&profile="+profile+"&country="+country;
             Log.e("sign-postParameters", postParameters);
 
@@ -310,8 +308,8 @@ public class Signin2Activity extends AppCompatActivity {
         }
 
         private void settings(String result){
-            if (result.contains("null")||result.contains("Error")) {
-                Log.e("null", "you have null");
+            if (result.contains("Error")) {
+                Log.e("Error", "you have Error");
             } else if (result.contains("1 record added")){
                 SharedPreferences sp_userName = getSharedPreferences("userName", MODE_PRIVATE);
                 SharedPreferences sp_userID = getSharedPreferences("userID", MODE_PRIVATE);
