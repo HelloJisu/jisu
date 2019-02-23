@@ -176,13 +176,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         isprofile = appPreferences.getString(AppPreferences.PROFILE_PIC); //인스타그램 프로필
         //Picasso.with(this).load().into(pic);
         isid = appPreferences.getString(AppPreferences.USER_ID); //인스타그램 아이디
-        isname = appPreferences.getString(AppPreferences.USER_NAME); //인스타그램 이름
 
         Log.e("인스타",isid);
         Log.e("인스타",isname);
 
         getUser task = new getUser();
-        task.execute("http://"+R.string.IP_Address+"/getUser.php", isid, isname, isprofile, "instagram");
+        task.execute("http://"+R.string.IP_Address+"/getUser.php", isid, "", isprofile, "instagram");
     }
 
     public void logout() {
@@ -454,7 +453,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         @Override
                         public void onCompleted(JSONObject object, GraphResponse response) {
                             try {
-                                fbname = response.getJSONObject().getString("name").toString();
+                                fbname = response.getJSONObject().getString("name");
                                 fbprofile = String.valueOf(Profile.getCurrentProfile().getProfilePictureUri(300, 300));
                                 fbid = String.valueOf(Profile.getCurrentProfile().getId());
 
