@@ -434,9 +434,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         @Override
         public void onCancel() {
             Log.e("Callback :: ", "onCancel");
-
-            getUser task = new getUser();
-            task.execute("http://"+R.string.IP_Address+"/getUser.php", fbid, fbname, fbprofile, "facebook");
         }
 
         // 로그인 실패 시에 호출됩니다.
@@ -456,6 +453,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                 fbname = response.getJSONObject().getString("name");
                                 fbprofile = String.valueOf(Profile.getCurrentProfile().getProfilePictureUri(300, 300));
                                 fbid = String.valueOf(Profile.getCurrentProfile().getId());
+
+                                getUser task = new getUser();
+                                task.execute("http://"+R.string.IP_Address+"/getUser.php", fbid, fbname, fbprofile, "facebook");
 
                                 Log.e("페북",fbname);
                                 Log.e("페북",fbprofile);
@@ -581,7 +581,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 return sb.toString().trim();
 
             } catch (Exception e) {
-                Log.e("ERROR", "InsertDataError ", e);
+                Log.e("ERROR_loginActivity", "InsertDataError ", e);
             }
             return null;
         }

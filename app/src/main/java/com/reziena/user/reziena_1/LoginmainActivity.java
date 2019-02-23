@@ -189,7 +189,7 @@ public class LoginmainActivity extends AppCompatActivity {
                 return sb.toString().trim();
 
             } catch (Exception e) {
-                Log.e("ERROR", "InsertDataError ", e);
+                Log.e("ERROR_loginmainActivity", "InsertDataError ", e);
             }
             return null;
         }

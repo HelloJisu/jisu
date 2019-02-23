@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -75,6 +76,7 @@ public class Signin2Activity extends AppCompatActivity {
     String namestring, idstring, profileurl;
     private static final String DEFAULT_LOCAL = "Portugal";
     public int yearint, dayint, monthint;
+    Drawable alphasignin;
 
     private String IP_Address = "52.32.36.182";
 
@@ -94,6 +96,8 @@ public class Signin2Activity extends AppCompatActivity {
         name = findViewById(R.id.name);
         profile = findViewById(R.id.signinprofile);
         signin = findViewById(R.id.signin_signin2);
+
+        alphasignin = signin.getBackground();
 
         Spinner birthday_year = findViewById(R.id.birthday_year);
         int year = Calendar.getInstance().get(Calendar.YEAR);
@@ -195,21 +199,26 @@ public class Signin2Activity extends AppCompatActivity {
         if(namestring!=null){
             name.setText(namestring);
         }
-        if(profile!=null){
+
+        if(profileurl==null){
+            profile.setImageResource(R.drawable.profile_main);
+        }
+
+        if(profileurl!=null){
             Glide.with(this).load(profileurl).into(profile);
         }
+
+
 
         View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switch (v.getId()) {
-                    case R.id.signin:
+                    case R.id.signin_signin2:
                         String saveName = name.getText().toString();
                         String birth = yearint+"/"+monthint+"/"+dayint;
-
                         setData task = new setData();
-                        task.execute("http://"+R.string.IP_Address+"/saveUser.php", idstring, password, saveName, genderstring, birth, profileurl, countrystring);
-
+                        task.execute("http://"+ IP_Address +"/saveUser.php", idstring, password, saveName, genderstring, birth, profileurl, countrystring);
                         break;
                     case R.id.signinprofile:
                         doTakeAlbumAction();
@@ -249,6 +258,8 @@ public class Signin2Activity extends AppCompatActivity {
             birth = params[5];
             profile = params[6];
             country = params[7];
+
+            if (pw==null) pw="social";
 
             String postParameters = "id="+id+"&pw="+pw+"&name="+name+"&gender="+gender+"&birth="+birth+"&profile="+profile+"&country="+country;
             Log.e("sign-postParameters", postParameters);
@@ -298,7 +309,7 @@ public class Signin2Activity extends AppCompatActivity {
                 return sb.toString().trim();
 
             } catch (Exception e) {
-                Log.e("sign-ERROR", "InsertDataError ", e);
+                Log.e("sign-ERROR", "InsertDataError "+e.getMessage());
             }
             return null;
 
@@ -409,5 +420,10 @@ public class Signin2Activity extends AppCompatActivity {
         }catch(Exception e){
             e.printStackTrace();
         }
+    }
+
+    public void onResume() {
+        super.onResume();
+        alphasignin.setAlpha(255);
     }
 }
