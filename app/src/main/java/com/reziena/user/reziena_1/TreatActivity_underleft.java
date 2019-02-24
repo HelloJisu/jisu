@@ -266,13 +266,13 @@ public class TreatActivity_underleft extends AppCompatActivity {
       else {
         showResult(getResult);
 
-        if (wrinkle_string.equals("A")) {
+        if (wrinkle_string.equals("100")||wrinkle_string.equals("95")) {
           level = 1;
         }
-        if (wrinkle_string.equals("B")) {
+        if (wrinkle_string.equals("90")||wrinkle_string.equals("85")) {
           level = 2;
         }
-        if (wrinkle_string.equals("C")) {
+        if (wrinkle_string.equals("80")||wrinkle_string.equals("75")) {
           level = 3;
         }
         if (level == 1) {

@@ -23,7 +23,7 @@
             app:fontFamily="@font/roboto" />
 
         <TextView
-            android:id="@+id/finishtxt"
+            android:id="@+id/oppositTxT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -34,7 +34,7 @@
 
         <!-- okay -->
         <TextView
-            android:id="@+id/yes_ur"
+            android:id="@+id/positive"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -47,8 +47,10 @@
             android:textSize="15dp"
             app:fontFamily="@font/roboto" />
 
+
+        <!-- non_positive -->
         <TextView
-            android:id="@+id/cancle_ur"
+            android:id="@+id/non_positive"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"

@@ -192,7 +192,7 @@ public class TreatActivity_underright2 extends AppCompatActivity {
                             task.execute("http://"+HomeActivity.IP_Address+"/saveTreat.php", "uneye_r");
                             if (! TreatActivity_underright2.this.isFinishing()) {
                                 Intent intent = new Intent(getApplicationContext(),DoneActivity.class);
-                                intent.putExtra("stringlist","underrright");
+                                intent.putExtra("stringlist","underright");
                                 startActivity(intent);
                                 new Handler().postDelayed(new Runnable()
                                 {
