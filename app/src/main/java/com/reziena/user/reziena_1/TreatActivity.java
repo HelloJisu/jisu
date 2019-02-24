@@ -133,7 +133,6 @@ public class TreatActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             public void onClick(View v) {
                 level=1;
-
                 switch (v.getId()) {
                     case R.id.backw:
                             finish();
@@ -209,19 +208,16 @@ public class TreatActivity extends AppCompatActivity {
                     underleft.setEnabled(false);
                     underleft.setImageResource(R.drawable.underleftdone);
                 }
-
                 // underright
                 if (treatResult.contains("uneye_r")) {
                     underright.setEnabled(false);
                     underright.setImageResource(R.drawable.underrightdone);
                 }
-
                 // cheekl
                 if (treatResult.contains("cheek_l")) {
                     cheekl.setEnabled(false);
                     cheekl.setImageResource(R.drawable.cheekleftdone);
                 }
-
                 // cheekr
                 if (treatResult.contains("cheek_r")) {
                     cheekr.setEnabled(false);
@@ -303,7 +299,7 @@ public class TreatActivity extends AppCompatActivity {
                 }
 
             } catch (JSONException e) {
-                Log.d("treat1-JSON", "showResult : ", e);
+                Log.d("treat1-JSON", "showResult : "+e.getMessage());
             }
 
         }

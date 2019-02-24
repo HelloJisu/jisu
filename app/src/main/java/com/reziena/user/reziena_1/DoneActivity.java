@@ -5,7 +5,9 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Rect;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -27,6 +29,20 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import fr.tvbarthel.lib.blurdialogfragment.BlurDialogFragment;
 
@@ -50,7 +66,7 @@ public class DoneActivity extends AppCompatActivity implements View.OnClickListe
     String donestring;
     Intent intent;
     String stringlist;
-    TextView okay, finish;
+    TextView positive, non_positive;
     TreatActivity_cheekleft2 cheekleft = (TreatActivity_cheekleft2) TreatActivity_cheekleft2.cheekleftactivity;
     TreatActivity_cheekright2 cheekright = (TreatActivity_cheekright2) TreatActivity_cheekright2.cheekrightactivity;
     TreatActivity_underleft2 underleft = (TreatActivity_underleft2) TreatActivity_underleft2.underleftativity;
@@ -61,7 +77,9 @@ public class DoneActivity extends AppCompatActivity implements View.OnClickListe
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
     private DatabaseReference underrightdata, underleftdata, cheekleftdata, cheekrightdata;
     public String underrightstring, underleftstring, cheekrightstring, cheekleftstring;
-    TextView finishtxt;
+    TextView oppositTxT;
+
+    boolean uneye_l=false, uneye_r=false, cheek_l=false, cheek_r=false;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,18 +100,18 @@ public class DoneActivity extends AppCompatActivity implements View.OnClickListe
 
         stringlist = subintent.getExtras().getString("stringlist");
 
-        okay = findViewById(R.id.yes_ur);
-        finish = findViewById(R.id.cancle_ur);
+        positive = findViewById(R.id.positive);
+        non_positive = findViewById(R.id.non_positive);
 
-        okay.setOnClickListener(this);
-        finish.setOnClickListener(this);
+        positive.setOnClickListener(this);
+        non_positive.setOnClickListener(this);
 
         underrightdata = databaseReference.child("result").child("underrightstring");
         underleftdata = databaseReference.child("result").child("underleftstring");
         cheekleftdata = databaseReference.child("result").child("cheekleftstring");
         cheekrightdata = databaseReference.child("result").child("cheekrightstring");
 
-        finishtxt = findViewById(R.id.finishtxt);
+        oppositTxT = findViewById(R.id.oppositTxT);
 
         Log.e("underright", String.valueOf(underrightstring));
         Log.e("underleft", String.valueOf(underleftstring));
@@ -107,9 +125,9 @@ public class DoneActivity extends AppCompatActivity implements View.OnClickListe
                 cheekrightstring = string;
                 if (stringlist.equals("cheekleft")) {
                     if (cheekrightstring.equals("true")) {
-                        finishtxt.setText("finish");
-                        finish.setText("Main");
-                        okay.setText("Treat");
+                        oppositTxT.setText("finish");
+                        non_positive.setText("Main");
+                        positive.setText("Treat");
                     }
                 }
             }
@@ -125,9 +143,9 @@ public class DoneActivity extends AppCompatActivity implements View.OnClickListe
                 cheekleftstring = string;
                 if (stringlist.equals("cheekright")) {
                     if (cheekleftstring.equals("true")) {
-                        finishtxt.setText("finish");
-                        finish.setText("Main");
-                        okay.setText("Treat");
+                        oppositTxT.setText("finish");
+                        non_positive.setText("Main");
+                        positive.setText("Treat");
                     }
                 }
             }
@@ -141,11 +159,11 @@ public class DoneActivity extends AppCompatActivity implements View.OnClickListe
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String string = dataSnapshot.getValue(String.class);
                 underleftstring = string;
-                if (stringlist.equals("underrright")) {
+                if (stringlist.equals("underright")) {
                     if (underleftstring.equals("true")) {
-                        finishtxt.setText("finish");
-                        finish.setText("Main");
-                        okay.setText("Treat");
+                        oppositTxT.setText("finish");
+                        non_positive.setText("Main");
+                        positive.setText("Treat");
                     }
                 }
             }
@@ -161,9 +179,9 @@ public class DoneActivity extends AppCompatActivity implements View.OnClickListe
                 underrightstring = string;
                 if (stringlist.equals("underleft")) {
                     if (underrightstring.equals("true")) {
-                        finishtxt.setText("finish");
-                        finish.setText("Main");
-                        okay.setText("Treat");
+                        oppositTxT.setText("finish");
+                        non_positive.setText("Main");
+                        positive.setText("Treat");
                     }
                 }
             }
@@ -172,20 +190,28 @@ public class DoneActivity extends AppCompatActivity implements View.OnClickListe
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+    }
 
+    public void onResume() {
+        super.onResume();
+        GetData task = new GetData();
+        task.execute("http://"+HomeActivity.IP_Address+"/callingTreat.php", "");
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.yes_ur:
-                if (stringlist.equals("underrright")) {
-                    if(finishtxt.getText().equals("finish")){
+            case R.id.positive:
+                Log.e("onclick", "positive");
+                if (stringlist.equals("underright")) {
+                    if(oppositTxT.getText().equals("finish")){
+                        Log.e("선택한거", "finish");
                         intent = new Intent(v.getContext(), TreatActivity.class);
                         v.getContext().startActivity(intent);
                         finish();
                     }
                     else {
+                        Log.e("선택한거", "finish  X");
                         //HomeActivity.send("uneye_l->start");
                         intent = new Intent(v.getContext(), TreatActivity_underleft2.class);
                         v.getContext().startActivity(intent);
@@ -193,7 +219,7 @@ public class DoneActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 }
                 if (stringlist.equals("underleft")) {
-                    if(finishtxt.getText().equals("finish")){
+                    if(oppositTxT.getText().equals("finish")){
                         intent = new Intent(v.getContext(), TreatActivity.class);
                         v.getContext().startActivity(intent);
                         finish();
@@ -206,7 +232,7 @@ public class DoneActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 }
                 if (stringlist.equals("cheekright")) {
-                    if(finishtxt.getText().equals("finish")){
+                    if(oppositTxT.getText().equals("finish")){
                         intent = new Intent(v.getContext(), TreatActivity.class);
                         v.getContext().startActivity(intent);
                         finish();
@@ -219,7 +245,7 @@ public class DoneActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 }
                 if (stringlist.equals("cheekleft")) {
-                    if(finishtxt.getText().equals("finish")){
+                    if(oppositTxT.getText().equals("finish")){
                         intent = new Intent(v.getContext(), TreatActivity.class);
                         v.getContext().startActivity(intent);
                         finish();
@@ -233,33 +259,193 @@ public class DoneActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 finish();
                 break;
-            case R.id.cancle_ur:
-                if (stringlist.equals("underrright")) {
-                    intent = new Intent(v.getContext(), HomeActivity.class);
+            case R.id.non_positive:
+                Log.e("onclick", "non_positive");
+                if (stringlist.equals("underright")) {
+                    intent = new Intent(v.getContext(), TreatActivity.class);
                     v.getContext().startActivity(intent);
                     homeActivity.finish();
                     finish();
                 }
                 if (stringlist.equals("underleft")) {
-                    intent = new Intent(v.getContext(), HomeActivity.class);
+                    intent = new Intent(v.getContext(), TreatActivity.class);
                     v.getContext().startActivity(intent);
                     homeActivity.finish();
                     finish();
                 }
                 if (stringlist.equals("cheekright")) {
-                    intent = new Intent(v.getContext(), HomeActivity.class);
+                    intent = new Intent(v.getContext(), TreatActivity.class);
                     v.getContext().startActivity(intent);
                     homeActivity.finish();
                     finish();
                 }
                 if (stringlist.equals("cheekleft")) {
-                    intent = new Intent(v.getContext(), HomeActivity.class);
+                    intent = new Intent(v.getContext(), TreatActivity.class);
                     v.getContext().startActivity(intent);
                     homeActivity.finish();
                     finish();
                 }
                 break;
         }
+    }
+
+    class GetData extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected void onPostExecute(String getResult) {
+            super.onPostExecute(getResult);
+
+            Log.e("treat1-", "onPostExecute - " + getResult);
+
+            if (getResult==null) {}
+            else if (getResult.contains("No_results")) {}
+            else {
+                setResult(getResult);
+                // underleft
+                if (stringlist.equals("underleft")) {
+                    if (!uneye_r) {
+                        // uneye_r을 안했으면
+                        Log.e("현재: under_left", "근데 너 uneye_r안햇어"+String.valueOf(uneye_r));
+                        oppositTxT.setText("opposit");
+                        non_positive.setText("no");
+                        positive.setText("Treat_right");
+                    } else {
+                        // 했으면
+                        Log.e("현재: under_left", "근데 너 uneye_r햇어"+String.valueOf(uneye_r));
+                        oppositTxT.setText("finish");
+                        non_positive.setText("------");
+                        positive.setText("go home");
+                    }
+                }
+                // underright
+                if (stringlist.equals("underright")) {
+                    if (!uneye_l) {
+                        // uneye_l을 안했으면
+                        Log.e("현재: under_right", "근데 너 uneye_l안햇어"+String.valueOf(uneye_l));
+                        oppositTxT.setText("opposit");
+                        non_positive.setText("no");
+                        positive.setText("Treat_left");
+                    } else {
+                        // 했으면
+                        Log.e("현재: under_right", "근데 너 uneye_l햇어"+String.valueOf(uneye_l));
+                        oppositTxT.setText("finish");
+                        non_positive.setText("------");
+                        positive.setText("go home");
+                    }
+                }
+                // cheekl
+                if (stringlist.equals("cheekleft")) {
+                    if (!cheek_r) {
+                        // cheek_r을 안했으면
+                        oppositTxT.setText("opposit");
+                        non_positive.setText("no");
+                        positive.setText("Treat_left");
+                    } else {
+                        // 했으면
+                        oppositTxT.setText("finish");
+                        non_positive.setText("------");
+                        positive.setText("go home");
+                    }
+                }
+                // cheekr
+                if (stringlist.equals("cheekright")) {
+                    if (!cheek_l) {
+                        // cheek_l을 안했으면
+                        oppositTxT.setText("opposit");
+                    } else {
+                        // 했으면
+                        oppositTxT.setText("finish");
+                        non_positive.setText("------");
+                        positive.setText("go home");
+                    }
+                }
+            }
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            String serverURL = params[0];
+
+            SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ( "yyyy-MM-dd", Locale.KOREA );
+            Date currentTime = new Date();
+            String date = mSimpleDateFormat.format ( currentTime );
+
+            SharedPreferences sp_userID = getSharedPreferences("userID", MODE_PRIVATE);
+            String userID = sp_userID.getString("userID", "");
+            String postParameters = "date="+date+"&id="+userID;
+
+            try {
+                URL url = new URL(serverURL);
+
+                HttpURLConnection httpURLConnection= (HttpURLConnection)url.openConnection();
+                httpURLConnection.setReadTimeout(5000);
+                httpURLConnection.setConnectTimeout(5000);
+
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.connect();
+
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                outputStream.write(postParameters.getBytes("UTF-8"));
+                Log.e("treat1-postParameters", postParameters);
+                outputStream.flush();
+                outputStream.close();
+
+                InputStream inputStream;
+                int responseStatusCode = httpURLConnection.getResponseCode();
+                if(responseStatusCode == HttpURLConnection.HTTP_OK) {
+                    inputStream = httpURLConnection.getInputStream();
+                    Log.e("treat1-response", "code - HTTP_OK - " + responseStatusCode);
+                }
+                else{
+                    inputStream = httpURLConnection.getErrorStream();
+                    Log.e("treat1-response", "code - HTTP_NOT_OK - " + responseStatusCode);
+                }
+
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+                StringBuilder sb = new StringBuilder();
+                String line;
+
+                while((line = bufferedReader.readLine()) != null){
+                    sb.append(line);
+                }
+                bufferedReader.close();
+
+                return sb.toString().trim();
+
+            } catch (Exception e) {
+                Log.e("treat1-error-stream", e.getMessage());
+            }
+            return null;
+        }
+
+        private void setResult(String result) {
+            if (result.contains("uneye_l")) uneye_l=true;
+            if (result.contains("uneye_r")) uneye_r=true;
+            if (result.contains("cheek_l")) cheek_l=true;
+            if (result.contains("cheek_r")) cheek_r=true;
+            Log.e("un_l, un_r, ch_l, ch_r", String.valueOf(uneye_l)+String.valueOf(uneye_r)+String.valueOf(cheek_l)+String.valueOf(cheek_r));
+        }
+
+        /*private void showResult(String result){
+            try {
+                JSONObject jsonObject = new JSONObject(result);
+                JSONArray jsonArray = jsonObject.getJSONArray("getData");
+
+                for(int i=0;i<jsonArray.length();i++){
+
+                    JSONObject item = jsonArray.getJSONObject(i);
+                    treatResult+=item.getString("value");
+                }
+                Log.e("treatResult", treatResult);
+
+            } catch (JSONException e) {
+                Log.d("treat1-JSON", "showResult : "+e.getMessage());
+            }
+
+        }*/
     }
 
     public boolean dispatchTouchEvent(MotionEvent ev){

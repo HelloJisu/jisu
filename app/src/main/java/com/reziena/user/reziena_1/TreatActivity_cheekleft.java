@@ -266,28 +266,68 @@ public class TreatActivity_cheekleft extends AppCompatActivity {
             else if (getResult.contains("No_results")) {}
             else {
                 showResult(getResult);
-                if (wrinkle_string.equals("A")) {
+                if (wrinkle_string.equals("100")||wrinkle_string.equals("95")) {
                     level = 1;
                 }
-                if (wrinkle_string.equals("B")) {
+                if (wrinkle_string.equals("90")||wrinkle_string.equals("85")) {
                     level = 2;
                 }
-                if (wrinkle_string.equals("C")) {
+                if (wrinkle_string.equals("80")||wrinkle_string.equals("75")) {
                     level = 3;
                 }
+
                 if (level == 1) {
-                    cheekl.setImageResource(R.drawable.cheekleftlevel1);
-                    cheekr.setImageResource(R.drawable.cheekrightlevel1);
+                    // cheekl
+                    if (treatResult.contains("cheek_l")) {
+                        cheekl.setEnabled(false);
+                        cheekl.setImageResource(R.drawable.cheekleftdone);
+                    } else {
+                        cheekl.setImageResource(R.drawable.cheekleftlevel1);
+                    }
+
+                    // cheekr
+                    if (treatResult.contains("cheek_r")) {
+                        cheekr.setEnabled(false);
+                        cheekr.setImageResource(R.drawable.cheekrightdone);
+                    } else {
+                        cheekr.setImageResource(R.drawable.cheekrightlevel1);
+                    }
                     component_txt.setText("PLEASE SET THE DEVICE\nON LEVEL 1,\nAND SELECT STARTIG AREA");
                 }
                 if (level == 2) {
-                    cheekl.setImageResource(R.drawable.cheekleftlevel2);
-                    cheekr.setImageResource(R.drawable.cheekrightlevel2);
+                    if (treatResult.contains("cheek_l")) {
+                        cheekl.setEnabled(false);
+                        cheekl.setImageResource(R.drawable.cheekleftdone);
+                    } else {
+                        cheekl.setImageResource(R.drawable.cheekleftlevel2);
+                    }
+
+                    // cheekr
+                    if (treatResult.contains("cheek_r")) {
+                        cheekr.setEnabled(false);
+                        cheekr.setImageResource(R.drawable.cheekrightdone);
+                    } else {
+                        cheekr.setImageResource(R.drawable.cheekrightlevel2);
+                    }
                     component_txt.setText("PLEASE SET THE DEVICE\nON LEVEL 2,\nAND SELECT STARTIG AREA");
+                } else {
+
                 }
                 if (level == 3) {
-                    cheekl.setImageResource(R.drawable.cheekleftlevel3);
-                    cheekr.setImageResource(R.drawable.cheekrightlevel3);
+                    if (treatResult.contains("cheek_l")) {
+                        cheekl.setEnabled(false);
+                        cheekl.setImageResource(R.drawable.cheekleftdone);
+                    } else {
+                        cheekl.setImageResource(R.drawable.cheekleftlevel3);
+                    }
+
+                    // cheekr
+                    if (treatResult.contains("cheek_r")) {
+                        cheekr.setEnabled(false);
+                        cheekr.setImageResource(R.drawable.cheekrightdone);
+                    } else {
+                        cheekr.setImageResource(R.drawable.cheekrightlevel3);
+                    }
                     component_txt.setText("PLEASE SET THE DEVICE\nON LEVEL 3,\nAND SELECT STARTIG AREA");
                 }
             }
