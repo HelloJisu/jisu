@@ -20,12 +20,8 @@ import java.util.UUID;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
-/**
- * Created by User on 12/21/2016.
- */
-
 public class BluetoothConnectionService {
-    private static final String appName = "MYAPP";
+    private static final String appName = "Reziena";
 
     String btTag = "BLUETOOTH_CONNECT";
 
