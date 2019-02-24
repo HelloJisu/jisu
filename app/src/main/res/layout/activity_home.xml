@@ -194,7 +194,7 @@
                         android:layout_weight="0.20">
                     </LinearLayout>
                     <ImageView
-                        android:id="@+id/monCheck"
+                        android:id="@+id/check1"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="0.38"
@@ -255,7 +255,7 @@
                         android:layout_weight="0.2">
                     </LinearLayout>
                     <ImageView
-                        android:id="@+id/tueCheck"
+                        android:id="@+id/check2"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="0.38"
@@ -315,7 +315,7 @@
                         android:layout_weight="0.2">
                     </LinearLayout>
                     <ImageView
-                        android:id="@+id/wedCheck"
+                        android:id="@+id/check3"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="0.38"
@@ -375,7 +375,7 @@
                         android:layout_weight="0.2">
                     </LinearLayout>
                     <ImageView
-                        android:id="@+id/thuCheck"
+                        android:id="@+id/check4"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="0.38"
@@ -435,7 +435,7 @@
                         android:layout_weight="0.20">
                     </LinearLayout>
                     <ImageView
-                        android:id="@+id/friCheck"
+                        android:id="@+id/check5"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="0.38"

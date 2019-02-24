@@ -68,6 +68,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.TimeZone;
@@ -140,11 +141,16 @@ public class HomeActivity extends AppCompatActivity {
 
     String btTag = "BLUETOOTH_CONNECT";
 
+    String treatResult="";
+    ImageView[] check = new ImageView[5];
+    //ImageView check1, check2, check3, check4, check5;
+
     ImageView mois_up, mois_down, wrinkle_up, wrinkle_down, imageView2;
     int max_mois, max_wrink;
 
     private String userName;
     public static String IP_Address = "52.32.36.182";
+    static String day_string;
     static String devName = "상아";     //Galaxy Note8, Galaxy S9
 
     private String DB_skintype, DB_moisture="", DB_wrinkle="";
@@ -183,12 +189,11 @@ public class HomeActivity extends AppCompatActivity {
         logo = findViewById(R.id.logo);
         question = findViewById(R.id.question);
         historyBtn = findViewById(R.id.historyBtn);
-        ImageView monCheck, tueCheck, wedCheck, thuCheck, friCheck;
-        monCheck = findViewById(R.id.monCheck);
-        tueCheck = findViewById(R.id.tueCheck);
-        wedCheck = findViewById(R.id.wedCheck);
-        thuCheck = findViewById(R.id.thuCheck);
-        friCheck = findViewById(R.id.friCheck);
+        check[0] = findViewById(R.id.check1);
+        check[1] = findViewById(R.id.check2);
+        check[2] = findViewById(R.id.check3);
+        check[3] = findViewById(R.id.check4);
+        check[4] = findViewById(R.id.check5);
         home1=findViewById(R.id.home1);
         home2=findViewById(R.id.home2);
         home3=findViewById(R.id.home3);
@@ -215,46 +220,8 @@ public class HomeActivity extends AppCompatActivity {
 
         // check
         //Calendar cal = Calendar.getInstance();
-        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Los_Angeles"));
+        //Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Los_Angeles"));
         //cal.setTimeZone(time);
-        int day = cal.get(Calendar.DAY_OF_WEEK);    // 1=일 2=월 3=화 4=수 5=목 6=금 7=토// 1=일 2=월 3=화 4=수 5=목 6=금 7=토
-        switch (day) {
-            case 2: // 월
-                monCheck.setImageResource(R.drawable.ximg);
-                tueCheck.setImageResource(R.drawable.noncheck);
-                wedCheck.setImageResource(R.drawable.noncheck);
-                thuCheck.setImageResource(R.drawable.noncheck);
-                friCheck.setImageResource(R.drawable.noncheck);
-                break;
-            case 3: // 화
-                monCheck.setImageResource(R.drawable.ximg);
-                tueCheck.setImageResource(R.drawable.check);
-                wedCheck.setImageResource(R.drawable.noncheck);
-                thuCheck.setImageResource(R.drawable.noncheck);
-                friCheck.setImageResource(R.drawable.noncheck);
-                break;
-            case 4: // 수
-                monCheck.setImageResource(R.drawable.ximg);
-                tueCheck.setImageResource(R.drawable.check);
-                wedCheck.setImageResource(R.drawable.check);
-                thuCheck.setImageResource(R.drawable.noncheck);
-                friCheck.setImageResource(R.drawable.noncheck);
-                break;
-            case 5: // 목
-                monCheck.setImageResource(R.drawable.ximg);
-                tueCheck.setImageResource(R.drawable.check);
-                wedCheck.setImageResource(R.drawable.check);
-                thuCheck.setImageResource(R.drawable.check);
-                friCheck.setImageResource(R.drawable.noncheck);
-                break;
-            case 6: // 금
-                monCheck.setImageResource(R.drawable.ximg);
-                tueCheck.setImageResource(R.drawable.check);
-                wedCheck.setImageResource(R.drawable.check);
-                thuCheck.setImageResource(R.drawable.check);
-                friCheck.setImageResource(R.drawable.check);
-                break;
-        }
 
         // init the Bottom Sheet Behavior
         bottomSheetBehavior = BottomSheetBehavior.from(design_bottom_sheet);
@@ -824,8 +791,6 @@ public class HomeActivity extends AppCompatActivity {
                 measureWrinkle = false;
                 Log.e("getdata-wrinkle", "getResult==null");
                 DB_wrinkle = "-";
-                wrinkle_up.setVisibility(View.INVISIBLE);
-                wrinkle_down.setVisibility(View.INVISIBLE);
             } else {
                 Log.e("getdata-wrinkle", "getResult=="+getResult);
                 if (getResult.contains("No_results")) {
@@ -905,6 +870,7 @@ public class HomeActivity extends AppCompatActivity {
                 String level="";
                 for(int i=0;i<jsonArray.length();i++){
                     JSONObject item = jsonArray.getJSONObject(i);
+
                     level= item.getString("level");
                     wrinkle_per = item.getInt("level");
                     max_wrink = item.getInt("id");
@@ -1023,6 +989,141 @@ public class HomeActivity extends AppCompatActivity {
                 Log.d("JSON", "showResult : ", e);
             }
 
+        }
+    }
+
+    // calling Treat
+    class GetData4 extends AsyncTask<String, Void, String> {
+        List<String[]> wrinkleArray = new ArrayList<>();
+
+        @Override
+        protected void onPostExecute(String getResult) {
+            super.onPostExecute(getResult);
+
+            SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ( "yyyy-MM-dd", Locale.KOREA );
+            Date currentTime = new Date();
+            String date = mSimpleDateFormat.format ( currentTime );
+            String dates[] = date.split("-");
+            //String getDates[];
+
+            Log.e("getdata-treat", "getResult=="+getResult);
+            if (getResult.contains("No_results")) {
+                check[0].setImageResource(R.drawable.noncheck);
+                check[1].setImageResource(R.drawable.noncheck);
+                check[2].setImageResource(R.drawable.noncheck);
+                check[3].setImageResource(R.drawable.noncheck);
+                check[4].setImageResource(R.drawable.noncheck);
+            } else showResult(getResult);
+            if (getResult==null) {
+                measureWrinkle = false;
+                Log.e("getdata-treat", "getResult==null");
+                DB_wrinkle = "-";
+                wrinkle_up.setVisibility(View.INVISIBLE);
+                wrinkle_down.setVisibility(View.INVISIBLE);
+                check[0].setImageResource(R.drawable.noncheck);
+                check[1].setImageResource(R.drawable.noncheck);
+                check[2].setImageResource(R.drawable.noncheck);
+                check[3].setImageResource(R.drawable.noncheck);
+                check[4].setImageResource(R.drawable.noncheck);
+            } else {
+                for (int i = 0; i <= (wrinkleArray.size() / 5); i++) {
+                    //Log.e("WrinkleArray i " + i + "번째", wrinkleArray.get(i)[0] + "/" + wrinkleArray.get(i)[1] + "/" + wrinkleArray.get(i)[2]);
+                    try {
+                        for (int j = 0; j < 5; j++) {
+                            Log.e("WrinkleArray j " + j + "번째", wrinkleArray.get(j)[0] + "/" + wrinkleArray.get(j)[1] + "/" + wrinkleArray.get(j)[2]);
+                            if (wrinkleArray.get(i+j)[1].equals(wrinkleArray.get(i+j+1)[1])) {
+                                Log.e((i+j)+"번째 & ", (i+j+1)+"번째 날짜같음");
+                                if ((wrinkleArray.get(i+j)[2].contains("uneye_l") || wrinkleArray.get(i+j)[2].contains("uneye_r")) && (wrinkleArray.get(i+j+1)[2].contains("uneye_l") || wrinkleArray.get(i+j+1)[2].contains("uneye_r"))){
+                                    check[j].setImageResource(R.drawable.check);
+                                } else if ((wrinkleArray.get(i+j)[2].contains("cheek_l") || wrinkleArray.get(i+j)[2].contains("cheek_r")) && (wrinkleArray.get(i+j+1)[2].contains("cheek_l") || wrinkleArray.get(i+j+1)[2].contains("cheek_r"))){
+                                    Log.e("cheek", "both");
+                                    check[j].setImageResource(R.drawable.check);
+                                } else {
+                                    check[j].setImageResource(R.drawable.ximg);
+                                }
+                            }
+                            j++;
+                        }
+                    } catch (Exception e) {
+                        Log.e("Exception ", "e");
+                        if ((wrinkleArray.size() % 5) != 0) {
+                            for (int k = 4; k >= 5-(wrinkleArray.size() % 5); k--) {
+                                check[k].setImageResource(R.drawable.noncheck);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            String serverURL = params[0];
+
+            SharedPreferences sp_userID = getSharedPreferences("userID", MODE_PRIVATE);
+            String userID = sp_userID.getString("userID", "");
+            String postParameters = "id="+userID;
+
+            try {
+                URL url = new URL(serverURL);
+
+                HttpURLConnection httpURLConnection= (HttpURLConnection)url.openConnection();
+                httpURLConnection.setReadTimeout(5000);
+                httpURLConnection.setConnectTimeout(5000);
+                httpURLConnection.setRequestMethod("POST");
+                //httpURLConnection.setDoInput(true);
+                httpURLConnection.connect();
+                Log.e("wrinkle-Connect", "complete");
+
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                outputStream.write(postParameters.getBytes("UTF-8"));
+                Log.e("wrinkle-postParameters", postParameters);
+                outputStream.flush();
+                outputStream.close();
+
+                InputStream inputStream;
+                int responseStatusCode = httpURLConnection.getResponseCode();
+                Log.d("wrinkle-response", "code - " + responseStatusCode);
+
+                if(responseStatusCode == HttpURLConnection.HTTP_OK) {
+                    inputStream = httpURLConnection.getInputStream();
+                }
+                else{
+                    inputStream = httpURLConnection.getErrorStream();
+                }
+
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+                StringBuilder sb = new StringBuilder();
+                String line;
+
+                while((line = bufferedReader.readLine()) != null){
+                    sb.append(line);
+                }
+                bufferedReader.close();
+
+                return sb.toString().trim();
+
+            } catch (Exception e) {
+                Log.e("wrinkle-error", e.getMessage());
+            }
+            return null;
+        }
+
+        private void showResult(String result){
+            measureWrinkle = true;
+            try {
+                JSONObject jsonObject = new JSONObject(result);
+                JSONArray jsonArray = jsonObject.getJSONArray("getData");
+
+                for(int i=0;i<jsonArray.length();i++){
+                    JSONObject item = jsonArray.getJSONObject(i);
+                    wrinkleArray.add(new String[]{item.getString("id"),item.getString("date"),item.getString("value")});
+                }
+            } catch (JSONException e) {
+                Log.d("treat-JSON", "showResult : "+e.getMessage());
+            }
         }
     }
 
@@ -1198,6 +1299,9 @@ public class HomeActivity extends AppCompatActivity {
 
         GetData3 task3 = new GetData3();
         task3.execute("http://"+IP_Address+"/callingSkintype.php", "");
+
+        GetData4 task4 = new GetData4();
+        task4.execute("http://"+IP_Address+"/callingTreat.php", "");
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)

@@ -203,7 +203,7 @@ public class TreatActivity_underleft2 extends AppCompatActivity {
                             if(count==15){
                                 setData task = new setData();
                                 task.execute("http://"+HomeActivity.IP_Address+"/saveTreat.php", "uneye_l");
-
+                                Log.e("underleft", "save");
                                 if (! TreatActivity_underleft2.this.isFinishing()) {
                                     Intent intent = new Intent(getApplicationContext(),DoneActivity.class);
                                     intent.putExtra("stringlist","underleft");
@@ -225,7 +225,6 @@ public class TreatActivity_underleft2 extends AppCompatActivity {
         };
         Timer timer = new Timer();
         timer.schedule(second, 0, 1000);
-
     }
 
     public void onStart() {

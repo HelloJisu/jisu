@@ -25,8 +25,6 @@ import android.widget.Toast;
 import java.util.Timer;
 import java.util.TimerTask;import java.util.UUID;
 
-import static com.reziena.user.reziena_1.HomeActivity.mBtAdapter;
-
 public class BTOnActivity extends AppCompatActivity {
 
     int countDown;
@@ -101,7 +99,7 @@ public class BTOnActivity extends AppCompatActivity {
                     Log.e("countdown", String.valueOf(countDown));
                     // UI 작업 X
                     try {
-                        Thread.sleep(1000);
+                        t.sleep(1000);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -140,7 +138,7 @@ public class BTOnActivity extends AppCompatActivity {
         /** Start Broadcast Receiver */
         this.registerReceiver(mBroadcastReceiver1, filter1);
 
-        mBtAdapter.startDiscovery();
+        HomeActivity.mBtAdapter.startDiscovery();
     }
 
     private void bond() {
@@ -154,7 +152,7 @@ public class BTOnActivity extends AppCompatActivity {
     }
 
     public boolean connectToDevice(String address) {
-        device = mBtAdapter.getRemoteDevice(address);
+        device = HomeActivity.mBtAdapter.getRemoteDevice(address);
 
         /** Filtering Broadcast Receiver */
         IntentFilter filter3 = new IntentFilter();
@@ -165,7 +163,7 @@ public class BTOnActivity extends AppCompatActivity {
         /** Start Broadcast Receiver */
         this.registerReceiver(mBroadcastReceiver3, filter3);
 
-        if (mBtAdapter == null || address == null) {
+        if (HomeActivity.mBtAdapter == null || address == null) {
             Log.e("BT", "mBtAdapter==null & address==null");
             return false;
         }
@@ -224,7 +222,6 @@ public class BTOnActivity extends AppCompatActivity {
                 t.interrupt();
                 intent = new Intent(getApplicationContext(), HomeActivity.class);
                 startActivity(intent);
-
             }
         }
     };
@@ -234,7 +231,7 @@ public class BTOnActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
 
             action = intent.getAction();
-            Log.e("BT", "onReceive: ACTION____________come in Receiver1");
+            Log.e("BT", "onReceive: ACTION____________come in mBroadcastReceiver2");
             Log.e("action", action);
 
 
