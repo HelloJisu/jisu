@@ -73,7 +73,7 @@ public class Preview extends Thread {
 
             int permissionCamera = ContextCompat.checkSelfPermission(mContext, Manifest.permission.CAMERA);
             if(permissionCamera == PackageManager.PERMISSION_DENIED) {
-                ActivityCompat.requestPermissions((Activity) mContext, new String[]{Manifest.permission.CAMERA}, MainActivity.REQUEST_CAMERA);
+                //ActivityCompat.requestPermissions((Activity) mContext, new String[]{Manifest.permission.CAMERA}, MainActivity.REQUEST_CAMERA);
                 Log.e(TAG, "퍼미션 허용~");
             } else {
                 manager.openCamera(cameraId, mStateCallback, null);
