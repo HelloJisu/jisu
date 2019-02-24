@@ -126,7 +126,7 @@ public class HomeActivity extends AppCompatActivity {
     ImageView layer1, logo,backgroundimg,dashback,dashbackimg;
     CircleImageView image, image_main;
     BottomSheetBehavior bottomSheetBehavior;
-    TextView skintype_result, moisture_score, wrinkle_score, moisture_status, wrinkle_status, moisture_score_main, wrinkle_score_main, question,skintype_main;
+    TextView skintype_result, moisture_score, wrinkle_score, moisture_status, wrinkle_status, moisture_score_main, wrinkle_score_main, question,skintype_main,setting;
     private static final int PICK_FROM_CAMERA = 0;
     private static final int PICK_FROM_ALBUM = 1;
     private static final int CROP_FROM_IMAGE = 2;
@@ -166,6 +166,7 @@ public class HomeActivity extends AppCompatActivity {
         checkPermissions();
 
         // 값 받아오기\
+        setting=findViewById(R.id.setting);
         dashbackimg=findViewById(R.id.dashbackground);
         moisture = findViewById(R.id.moisture);
         wrinkles = findViewById(R.id.wrinkles);
@@ -447,7 +448,7 @@ public class HomeActivity extends AppCompatActivity {
                             public void run() {
                                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                             }
-                        }, 23);
+                        }, 30);
                         new Handler().postDelayed(new Runnable()
                         {
                             @Override
@@ -502,6 +503,10 @@ public class HomeActivity extends AppCompatActivity {
                     case R.id.image:
                         doTakeAlbumAction();
                     case R.id.imageView2:
+                        intent = new Intent(getApplicationContext(), BluetoothActivity.class);
+                        screenshot();
+                        startActivity(intent);
+                    case R.id.setting:
                         SharedPreferences sp_userName = getSharedPreferences("userName", MODE_PRIVATE);
                         SharedPreferences sp_userID = getSharedPreferences("userID", MODE_PRIVATE);
                         SharedPreferences.Editor editor1 = sp_userName.edit();
@@ -517,6 +522,7 @@ public class HomeActivity extends AppCompatActivity {
                 }
             }
         };
+        setting.setOnClickListener(onClickListener);
         image.setOnClickListener(onClickListener);
         historyBtn.setOnClickListener(onClickListener);
         moisture.setOnClickListener(onClickListener);
