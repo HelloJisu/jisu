@@ -2,16 +2,19 @@ package com.reziena.user.reziena_1;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-public class BluetoothActivity extends AppCompatActivity {
+public class SettingActivity extends AppCompatActivity {
     TextView okay;
     public static Activity bluetoothactivity;
     HomeActivity homeactivity = (HomeActivity)HomeActivity.homeactivity;
@@ -20,8 +23,8 @@ public class BluetoothActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bluetooth);
-        bluetoothactivity=BluetoothActivity.this;
+        setContentView(R.layout.activity_setting);
+        bluetoothactivity=SettingActivity.this;
 
         // popupt창 사이즈 지정
 
@@ -43,7 +46,17 @@ public class BluetoothActivity extends AppCompatActivity {
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.okay:
-                        homeactivity.backgroundimg.setImageResource(0);
+                        SharedPreferences sp_userName = getSharedPreferences("userName", MODE_PRIVATE);
+                        SharedPreferences sp_userID = getSharedPreferences("userID", MODE_PRIVATE);
+                        SharedPreferences.Editor editor1 = sp_userName.edit();
+                        SharedPreferences.Editor editor2 = sp_userID.edit();
+                        editor1.remove("userName");
+                        editor2.remove("userID");
+                        editor1.commit();
+                        editor2.commit();
+                        Log.e("remove", "yeal~!"); //하기실어
+                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(intent);
                         finish();
                         break;
                 }

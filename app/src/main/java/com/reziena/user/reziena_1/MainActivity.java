@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         capure=(View)findViewById(R.id.capture);
         mProgressBar = findViewById(R.id.progress1);
+        mainnactivity=MainActivity.this;
         mProgressBar.setVisibility(View.GONE);
         mainnactivity=MainActivity.this;
         View.OnClickListener onClickListener = new View.OnClickListener() {

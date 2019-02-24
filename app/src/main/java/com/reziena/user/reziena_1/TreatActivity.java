@@ -51,7 +51,7 @@ public class TreatActivity extends AppCompatActivity {
     String treatResult="";
 
     ImageView forehead, underleft, underright, eyeleft, eyeright, cheekl, cheekr, mouth, back;
-    LinearLayout component;
+    LinearLayout component,backbutton;
     TextView component_txt,u_tright_txt1,u_tright_txt2,u_tleft_txt1,u_tleft_txt2,c_tright_txt1,c_tright_txt2,c_tleft_txt1,c_tleft_txt2;
     RelativeLayout treatback, underright_layout, underleft_layout,treat_default,cheekright_layout,cheekleft_layout;
     int cheekcount=0, undercount=0, foreheadcount=0, level=0, timer_sec, count=0;
@@ -125,7 +125,7 @@ public class TreatActivity extends AppCompatActivity {
         u_tright_txt1=(TextView)findViewById(R.id.u_tright_txt1); u_tright_txt2=(TextView)findViewById(R.id.u_tright_txt2); u_tleft_txt1=(TextView)findViewById(R.id.u_tleft_txt1);
         u_tleft_txt2=(TextView)findViewById(R.id.u_tleft_txt2); c_tright_txt1=(TextView)findViewById(R.id.c_tright_txt1); c_tright_txt2=(TextView)findViewById(R.id.c_tright_txt2);
         c_tleft_txt1=(TextView)findViewById(R.id.c_tleft_txt1);c_tleft_txt2=(TextView)findViewById(R.id.c_tleft_txt2);
-
+        backbutton=findViewById(R.id.backbutton);
 
         View.OnClickListener onClickListener = new View.OnClickListener() {
             Intent intent;
@@ -134,7 +134,7 @@ public class TreatActivity extends AppCompatActivity {
             public void onClick(View v) {
                 level=1;
                 switch (v.getId()) {
-                    case R.id.backw:
+                    case R.id.backbutton:
                             finish();
                         break;
 
@@ -168,6 +168,7 @@ public class TreatActivity extends AppCompatActivity {
                 }
             }
         };
+        backbutton.setOnClickListener(onClickListener);
         back.setOnClickListener(onClickListener);
         forehead.setOnClickListener(onClickListener);
         underleft.setOnClickListener(onClickListener);

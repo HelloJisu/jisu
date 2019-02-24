@@ -35,6 +35,7 @@ public class WrinkleResultActivity extends AppCompatActivity {
   TextView okay, result_grade, result_per;
   String grade, per;
   HomeActivity homeactivity = (HomeActivity)HomeActivity.homeactivity;
+  MainActivity mainactivity = (MainActivity) MainActivity.mainnactivity;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +92,7 @@ public class WrinkleResultActivity extends AppCompatActivity {
           case R.id.okay: case R.id.imageButton:
             // Dashboard로 넘어가게 하기
             homeactivity.dashback.setImageResource(0);
+            mainactivity.finish();
             finish();
             break;
 

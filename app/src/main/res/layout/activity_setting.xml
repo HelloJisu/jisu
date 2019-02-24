@@ -15,7 +15,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Skin History"
+            android:text="Setting"
             android:textFontWeight="500"
             android:textSize="20dp"
             android:textColor="#180018"
@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="It is preparing now.\nBe ready for the new feature!"
+            android:text="Setting page"
             android:textSize="15dp"
             android:textColor="#180018"
             app:fontFamily="@font/roboto"/>

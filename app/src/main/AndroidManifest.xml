@@ -62,6 +62,12 @@
             android:name=".MoistureActivity"
             android:theme="@style/NoTitleDialog" />
         <activity
+            android:name=".BluetoothActivity"
+            android:theme="@style/NoTitleDialog" />
+        <activity
+            android:name=".SettingActivity"
+            android:theme="@style/NoTitleDialog" />
+        <activity
             android:name=".SkintypeActivity"
             android:theme="@style/NoTitleDialog" />
         <activity

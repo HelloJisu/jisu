@@ -502,23 +502,17 @@ public class HomeActivity extends AppCompatActivity {
                         break;
                     case R.id.image:
                         doTakeAlbumAction();
+                        break;
                     case R.id.imageView2:
                         intent = new Intent(getApplicationContext(), BluetoothActivity.class);
                         screenshot();
                         startActivity(intent);
+                        break;
                     case R.id.setting:
-                        SharedPreferences sp_userName = getSharedPreferences("userName", MODE_PRIVATE);
-                        SharedPreferences sp_userID = getSharedPreferences("userID", MODE_PRIVATE);
-                        SharedPreferences.Editor editor1 = sp_userName.edit();
-                        SharedPreferences.Editor editor2 = sp_userID.edit();
-                        editor1.remove("userName");
-                        editor2.remove("userID");
-                        editor1.commit();
-                        editor2.commit();
-                        Log.e("remove", "yeal~!"); //하기실어
-                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                        intent = new Intent(getApplicationContext(), SettingActivity.class);
+                        screenshotdash();
                         startActivity(intent);
-                        finish();
+                        break;
                 }
             }
         };
@@ -543,6 +537,7 @@ public class HomeActivity extends AppCompatActivity {
         Log.e("SharedPreferences", userName);
 
         if (isFirst) getBondedDevices();
+        else imageView2.setImageResource(R.drawable.ellipsehomethera_icon);
 
     }
 
