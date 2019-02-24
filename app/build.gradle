@@ -15,7 +15,8 @@ android {
         }
         externalNativeBuild {
             cmake {
-                cppFlags "-frtti -fexceptions"
+                arguments "-DANDROID_STL=c++_static" //, "-DANDROID_TOOLCHAIN=clang"
+                cppFlags "-std=c++11 -fexceptions"
             }
         }
     }
@@ -30,6 +31,7 @@ android {
             path "CMakeLists.txt"
         }
     }
+
     buildToolsVersion '28.0.3'
     productFlavors {
     }

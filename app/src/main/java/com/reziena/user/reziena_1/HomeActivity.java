@@ -318,6 +318,55 @@ public class HomeActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) { }
         });
 
+        switch (DB_moisture){
+            case "A+":
+                moisture_status.setText("Perfect!");
+                break;
+            case "A":
+                moisture_status.setText("Great!");
+                break;
+            case "B+":
+                moisture_status.setText("Good condition!");
+                break;
+            case "B":
+                moisture_status.setText("Let's keep going");
+                break;
+            case "C+":
+                moisture_status.setText("Found balance");
+                break;
+            case "C":
+                moisture_status.setText("Just trust us");
+                break;
+            case "-":
+                moisture_status.setText("Let's start mreasurement");
+                break;
+        }
+
+
+        switch (DB_wrinkle) {
+            case "A+":
+                wrinkle_status.setText("Perfect!");
+                break;
+            case "A":
+                wrinkle_status.setText("Great!");
+                break;
+            case "B+":
+                wrinkle_status.setText("Good condition!");
+                break;
+            case "B":
+                wrinkle_status.setText("Let's keep going");
+                break;
+            case "C+":
+                wrinkle_status.setText("Found balance");
+                break;
+            case "C":
+                wrinkle_status.setText("Just trust us");
+                break;
+            case "-":
+                wrinkle_status.setText("Let's start mreasurement");
+                break;
+        }
+
         // set callback for changes
         bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
 
@@ -357,7 +406,9 @@ public class HomeActivity extends AppCompatActivity {
                             overridePendingTransition(0, 0);
                             startActivity(intent);
                         } else {
-                            // wrinkle level이 없다고 팝업 띄우기
+                            intent = new Intent(getApplicationContext(),noActivity.class);
+                            screenshot();
+                            startActivity(intent);
                         }
                         break;
                     case R.id.moisture:
@@ -429,7 +480,7 @@ public class HomeActivity extends AppCompatActivity {
                             public void run() {
                                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                             }
-                        }, 13);
+                        }, 23);
                         new Handler().postDelayed(new Runnable()
                         {
                             @Override
@@ -715,6 +766,32 @@ public class HomeActivity extends AppCompatActivity {
             moisture_score_main.setText(DB_moisture);
             moisture_score.setText(DB_moisture);
 
+            Log.e("moisture",DB_moisture);
+
+            switch (DB_moisture){
+                case "A+":
+                    moisture_status.setText("Perfect!");
+                    break;
+                case "A":
+                    moisture_status.setText("Great!");
+                    break;
+                case "B+":
+                    moisture_status.setText("Good condition!");
+                    break;
+                case "B":
+                    moisture_status.setText("Let's keep going");
+                    break;
+                case "c+":
+                    moisture_status.setText("Found balance");
+                    break;
+                case "C":
+                    moisture_status.setText("Just trust us");
+                    break;
+                case "-":
+                    moisture_status.setText("Let's start mreasurement");
+                    break;
+            }
+
             SetArrow setTask1 = new SetArrow();
             setTask1.execute("http://"+IP_Address+"/setArrow.php", "moisture");
 
@@ -836,6 +913,32 @@ public class HomeActivity extends AppCompatActivity {
             }
             wrinkle_score_main.setText(DB_wrinkle);
             wrinkle_score.setText(DB_wrinkle);
+
+            Log.e("wrinkle",DB_wrinkle);
+
+            switch (DB_wrinkle) {
+                case "A+":
+                    wrinkle_status.setText("Perfect!");
+                    break;
+                case "A":
+                    wrinkle_status.setText("Great!");
+                    break;
+                case "B+":
+                    wrinkle_status.setText("Good condition!");
+                    break;
+                case "B":
+                    wrinkle_status.setText("Let's keep going");
+                    break;
+                case "C+":
+                    wrinkle_status.setText("Found balance");
+                    break;
+                case "C":
+                    wrinkle_status.setText("Just trust us");
+                    break;
+                case "-":
+                    wrinkle_status.setText("Let's start mreasurement");
+                    break;
+            }
 
             SetArrow setTask2 = new SetArrow();
             setTask2.execute("http://"+IP_Address+"/setArrow.php", "wrinkle");
@@ -1064,7 +1167,6 @@ public class HomeActivity extends AppCompatActivity {
                     mois_up.setVisibility(View.INVISIBLE);
                     mois_down.setVisibility(View.INVISIBLE);
                 }
-                moisture_status.setText("Great!");
             }
             else if (getResult.contains("wrinkle")) {
                 if(wrink.equals("up")) {
@@ -1082,7 +1184,6 @@ public class HomeActivity extends AppCompatActivity {
                     wrinkle_up.setVisibility(View.INVISIBLE);
                     wrinkle_down.setVisibility(View.INVISIBLE);
                 }
-                wrinkle_status.setText("Good Balance");
             }
         }
 

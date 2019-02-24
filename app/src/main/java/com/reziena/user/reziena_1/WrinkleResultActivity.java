@@ -90,8 +90,8 @@ public class WrinkleResultActivity extends AppCompatActivity {
         switch (v.getId()) {
           case R.id.okay: case R.id.imageButton:
             // Dashboard로 넘어가게 하기
-            //homeactivity.dashback.setImageResource(0);
-            //finish();
+            homeactivity.dashback.setImageResource(0);
+            finish();
             break;
 
             //Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
